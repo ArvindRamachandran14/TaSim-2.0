@@ -155,7 +155,7 @@ class MainForm(Tk) :
 
         if str(self.btn_text.get()) == "Connect":
 
-            bok = self.coord.Connect(self.serial_port_list.get(), self.baud_rate_list.get(), TAD_rec_count) #TAD_rec_count is the total number of records
+            bok = self.coord.Connect(self.tty_variable.get(), self.baud_rate_variable.get(), TAD_rec_count) #TAD_rec_count is the total number of records
 
             if bok:
 
