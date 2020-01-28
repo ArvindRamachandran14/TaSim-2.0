@@ -1,1 +1,1 @@
-{"baud_rate": "9600", "tty": "/dev/ttyUSB1", "time_out": "3"}
+{"baud_rate": "9600", "tty": "/dev/ttyUSB0", "time_out": "3"}
