@@ -167,13 +167,19 @@ class MainForm(Tk) :
 
                 bok = self.coord.Disconnect() #closes serial port
 
-                print('Disconnect')
-
                 self.coord.exit() # exit command to the TADAQ
 
                 self.bconnected = False
 
                 self.btn_text.set("Connect")
+
+
+        else:
+
+            self.coord.Disconnect()
+
+            self.btn_text.set("Connect")
+
 
 
     def onFileNew(self) :
