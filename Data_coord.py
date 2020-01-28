@@ -13,9 +13,7 @@ class Data_coord():
         return True
 
     def Disconnect(self):
-
-    	print('Disconnect')
-
-        self.ser_PC.close()
-
-        return False
+	
+	print('Disconnect')
+	self.ser_PC.close()
+	return False
