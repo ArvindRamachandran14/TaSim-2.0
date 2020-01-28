@@ -167,6 +167,8 @@ class MainForm(Tk) :
 
                 bok = self.coord.Disconnect() #closes serial port
 
+                print('Disconnect')
+
                 self.coord.exit() # exit command to the TADAQ
 
                 self.bconnected = False
