@@ -8,7 +8,7 @@ class Data_coord:
 
         return True
 
-    def Disconnect():
+    def Disconnect()
 
         ser_PC.close()
 
