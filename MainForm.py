@@ -206,11 +206,11 @@ class MainForm(Tk) :
 
             if bok:
 
-		pass 
+                pass
 
                 # To do: Do something dat_buf to update widgets
 
-                #: Update the forms - monitor, set up etc.
+                #: Update the forms - monitor, set up etc..
 
 def popupmsg(msg):
     popup = tk.Tk()

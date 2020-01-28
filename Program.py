@@ -10,25 +10,25 @@ import globals as g
 from MainForm import MainForm
 
 def main(argv) :
-	idx = 1
-	option = None
-	while idx < len(argv) :
-		if argv[idx] == 'option' :
-			if idx + 1 < len(argv) :
-				idx += 1
-				option = argv[idx]
-		idx += 1
+    idx = 1
+    option = None
+    while idx < len(argv) :
+        if argv[idx] == 'option' :
+            if idx + 1 < len(argv) :
+                idx += 1
+                option = argv[idx]
+        idx += 1
 
-	if not option == None :
-		print(option)
+    if not option == None :
+        print(option)
 
-	with open(g.cfgFile, 'r') as fCfg :
-		config = json.loads(fCfg.read())        # Read config file
-		g.initialize(config)              # Initialize the globals
+    with open(g.cfgFile, 'r') as fCfg :
+        config = json.loads(fCfg.read())        # Read config file
+        g.initialize(config)              # Initialize the globals
 
-	# Start the mainform
-	g.mainForm = MainForm()
-	g.mainForm.mainloop()
+    # Start the mainform
+    g.mainForm = MainForm()
+    g.mainForm.mainloop()
 
 # Actual main program
 main(sys.argv)
