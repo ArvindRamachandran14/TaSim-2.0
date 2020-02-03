@@ -15,6 +15,8 @@ import time
 
 import globals as g
 
+print(g.tty)
+
 ser = serial.Serial(g.tty, g.baud_rate, timeout=g.time_out)
 
 encoding = 'utf-8' # covers straight ascii 8 bit char codes 
