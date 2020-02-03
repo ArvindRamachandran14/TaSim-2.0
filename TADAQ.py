@@ -15,6 +15,8 @@ import time
 
 import globals as g
 
+ser = serial.Serial(g.tty, g.baud_rate, timeout=g.time_out)
+
 encoding = 'utf-8' # covers straight ascii 8 bit char codes 
 loop = None #variable timeer uses
 recCount = 21 #how many records are in the shared memory 
