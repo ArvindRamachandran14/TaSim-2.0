@@ -62,68 +62,17 @@ class producer() :
         self.startTime = None
         self.initialize()
 
-async def produce(self) :
-        temp1 = temp2 = temp3 = pH2O = pCO2 = 0.0
-        status = 0
-        tash = TAShare.from_buffer(self.mmShare)
-        while not self.bDone :
-            recIdx = tash.recIdx + 1
-            if recIdx >= tash.recCount :
-                recIdx = 0
-
-            # Get some data
-
-            data_list = self.getDataFromTA()
-
-            # Get the time
-            now = datetime.now()
-            seconds = now.hour * 3600 + now.minute * 60 + now.second + now.microsecond / 1000000
-            if self.startTime == None :
-                self.startTime = seconds
-            seconds = seconds - self.startTime
-
-            tash.data[recIdx].recNum = self.recNum
-            self.recNum += 1
-            tash.data[recIdx].recTime = seconds
-            tash.data[recIdx].SC_T1 = data_list[0]
-            tash.data[recIdx].SC_T2 = data_list[1]
-            tash.data[recIdx].CC_T1 = data_list[2]
-            tash.data[recIdx].DPG_T1 = data_list[3]
-            tash.data[recIdx].pH2O = data_list[4]
-            tash.data[recIdx].pCO2 = data_list[5]
-            tash.data[recIdx].Dew_point_temp = data_list[6]
-            tash.data[recIdx].Sample_weight = data_list[7]
-            tash.data[recIdx].Status = data_list[8]
-            tash.recIdx = recIdx
-
-            print('P: {0:4d} {1:10.3f} {2:10.3f} {3:10.3f} {4:10.3f} {5:10.3f} {6:10.3f} {7:10.3f} {8:10.3f} {9:10.3f} {10:d}'.format( \
-                    tash.data[recIdx].recNum, tash.data[recIdx].recTime, \
-                    tash.data[recIdx].SC_T1, tash.data[recIdx].SC_T2, tash.data[recIdx].CC_T1, tash.data[recIdx].DPG_T1, \
-                    tash.data[recIdx].pH2O, tash.data[recIdx].pCO2, tash.data[recIdx].Dew_point_temp, \
-                    tash.data[recIdx].Sample_weight, tash.data[recIdx].Status))
-          
-
-        
-            await asyncio.sleep(self.interval)
-        return 0
-
-
-    @asyncio.coroutine
-    def produce(self) :
-        temp1 = temp2 = temp3 = pH2O = pCO2 = 0.0
-        status = 0
-        tash = TAShare.from_buffer(self.mmShare)
-        while not self.bDone :
-            command = bytearray(tash.command).decode(encoding).rstrip('\x00')
-            if command == '%EXIT' :
-                self.mmfd.close()
-                self.bDone = True
-            else :
+    async def produce(self) :
+            temp1 = temp2 = temp3 = pH2O = pCO2 = 0.0
+            status = 0
+            tash = TAShare.from_buffer(self.mmShare)
+            while not self.bDone :
                 recIdx = tash.recIdx + 1
                 if recIdx >= tash.recCount :
                     recIdx = 0
 
                 # Get some data
+
                 data_list = self.getDataFromTA()
 
                 # Get the time
@@ -147,16 +96,17 @@ async def produce(self) :
                 tash.data[recIdx].Status = data_list[8]
                 tash.recIdx = recIdx
 
-                
                 print('P: {0:4d} {1:10.3f} {2:10.3f} {3:10.3f} {4:10.3f} {5:10.3f} {6:10.3f} {7:10.3f} {8:10.3f} {9:10.3f} {10:d}'.format( \
-                    tash.data[recIdx].recNum, tash.data[recIdx].recTime, \
-                    tash.data[recIdx].SC_T1, tash.data[recIdx].SC_T2, tash.data[recIdx].CC_T1, tash.data[recIdx].DPG_T1, \
-                    tash.data[recIdx].pH2O, tash.data[recIdx].pCO2, tash.data[recIdx].Dew_point_temp, \
-                    tash.data[recIdx].Sample_weight, tash.data[recIdx].Status))
+                        tash.data[recIdx].recNum, tash.data[recIdx].recTime, \
+                        tash.data[recIdx].SC_T1, tash.data[recIdx].SC_T2, tash.data[recIdx].CC_T1, tash.data[recIdx].DPG_T1, \
+                        tash.data[recIdx].pH2O, tash.data[recIdx].pCO2, tash.data[recIdx].Dew_point_temp, \
+                        tash.data[recIdx].Sample_weight, tash.data[recIdx].Status))
+              
 
-                
-                yield from asyncio.sleep(self.interval)
-        return 0
+            
+                await asyncio.sleep(self.interval)
+            return 0
+
     
     async def doCmd(self) :
         while not self.bDone :
