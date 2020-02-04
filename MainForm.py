@@ -13,16 +13,14 @@ import CtrlMon
 import CtrlTerm
 import CtrlCfg
 import serial
-import TADAQ
+#import TADAQ
 import Data_coord
 import globals as g
-
 
 class MainForm(Tk) :
     def __init__(self, *args, **kwargs) :
 
         # self.bconnected = False
-
 
         tk.Tk.__init__(self, *args, **kwargs) 
         tk.Tk.wm_title(self, 'Main Window') #window title

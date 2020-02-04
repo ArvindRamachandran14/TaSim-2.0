@@ -13,16 +13,18 @@ import CtrlMon
 import CtrlTerm
 import CtrlCfg
 import serial
-import TADAQ
+#import TADAQ
 import Data_coord
 import globals as g
 
+print(g.baud_rate)
 
 class MainForm(Tk) :
     def __init__(self, *args, **kwargs) :
 
         # self.bconnected = False
-
+	
+        print(g.baud_rate)
 
         tk.Tk.__init__(self, *args, **kwargs) 
         tk.Tk.wm_title(self, 'Main Window') #window title
@@ -155,7 +157,7 @@ class MainForm(Tk) :
 
         if str(self.btn_text.get()) == "Connect":
 
-            bok = self.coord.Connect(serial_port_list.get(), baud_rate_list.get(), TAD_rec_count) #TAD_rec_count is the total number of records
+            bok = self.coord.Connect(self.tty_variable.get(), self.baud_rate_variable.get(), TAD_rec_count) #TAD_rec_count is the total number of records
 
             if bok:
 
@@ -172,6 +174,14 @@ class MainForm(Tk) :
                 self.bconnected = False
 
                 self.btn_text.set("Connect")
+
+
+        else:
+
+            self.coord.Disconnect()
+
+            self.btn_text.set("Connect")
+
 
 
     def onFileNew(self) :
@@ -206,20 +216,11 @@ class MainForm(Tk) :
 
             if bok:
 
-<<<<<<< HEAD
-		pass 
-
-                # To do: Do something dat_buf to update widgets
-
-                #: Update the forms - monitor, set up etc.
-=======
                 pass
 
                 # To do: Do something dat_buf to update widgets
 
                 #: Update the forms - monitor, set up etc..
-
->>>>>>> f09a6a1954209a18ae7571b103827cce39fe78ef
 
 def popupmsg(msg):
     popup = tk.Tk()

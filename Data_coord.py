@@ -9,7 +9,7 @@ import mmap
 import os
 from datetime import datetime
 import asyncio
-import pykbhit as pykb
+#import pykbhit as pykb
 
 
 encoding = 'utf-8'
@@ -95,9 +95,11 @@ class Data_coord():
 
 	def Connect(self, serial_port, baud_rate, TAD_rec_count):
 
-		os.system('python TADAQ.py')
+		print('Connect')
 
-		asyncio.run(main())
+		#os.system('python TADAQ.py')
+
+		#asyncio.run(main())
 
 		return True
 

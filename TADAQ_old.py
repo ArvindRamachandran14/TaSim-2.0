@@ -19,7 +19,7 @@ encoding = 'utf-8' # covers straight ascii 8 bit char codes
 loop = None #variable timeer uses
 recCount = 21 #how many records are in the shared memory 
 
-#ser = serial.Serial(g.tty, g.baud_rate, timeout=g.time_out)
+ser = serial.Serial('/dev/ttyUSB0', 9600, timeout=1)
 
 class TAData(Structure) :
     _pack_ = 4
@@ -154,11 +154,12 @@ class producer() :
 
 def main():
 
-    print('main program running')
+    #print('main program running')
 
-    '''
-    prod = producer(Manua5)
+    prod = producer(5)
     loop = asyncio.get_event_loop()
     loop.run_until_complete(prod.produce())
     loop.close()
-    '''
+
+
+main()

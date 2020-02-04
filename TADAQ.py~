@@ -170,7 +170,7 @@ class producer() :
 
 # main program
 async def main() :
-    prod = producer(2)      # Number of records and interval
+    prod = producer(5)      # Number of records and interval
     task1 = asyncio.create_task(prod.produce())
     #task2 = asyncio.create_task(prod.doCmd())
     await task1
