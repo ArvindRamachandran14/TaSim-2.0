@@ -80,6 +80,7 @@ class consumer() :
 		self.mmfd = open('taShare', 'r+b')
 
 async def main() :
+
 	cons = consumer(2)
 
 	print('Type \"Exit\" when ready to quit...')
@@ -97,11 +98,11 @@ class Data_coord():
 
 		print('Connect')
 
-		#os.system('python TADAQ.py')
+		#if connection is succesfull:
 
-		#asyncio.run(main())
+		#return True
 
-		return True
+		#os.system('python TADAQ.py') #Talk to Krik about how to implement that
 
 	def Disconnect(self):
 
@@ -110,3 +111,5 @@ class Data_coord():
 		self.ser_PC.close()
 
 		return False
+
+	#def submit():
