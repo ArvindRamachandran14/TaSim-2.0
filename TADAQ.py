@@ -15,14 +15,12 @@ import time
 
 import globals as g
 
+import sys
 
-#ser = serial.Serial(g.tty, g.baud_rate, timeout=g.time_out)
 
 encoding = 'utf-8' # covers straight ascii 8 bit char codes 
 loop = None #variable timeer uses
 recCount = 21 #how many records are in the shared memory 
-
-#ser = serial.Serial(g.tty, g.baud_rate, timeout=g.time_out)
 
 class TAData(Structure) :
     _pack_ = 4
@@ -50,7 +48,8 @@ class TAShare(Structure) :
             ('data', TAData * recCount)]
 
 class producer() :
-    def __init__(self, interval) :
+    def __init__(self, ser) :
+        self.ser = ser
         self.startTime = None
         self.bDone = False
         self.interval = interval
@@ -62,7 +61,7 @@ class producer() :
         self.mmfd = None
         self.startTime = None
         self.initialize()
-        self.ser = serial.Serial('/dev/ttyUSB0', 9600, timeout=1)
+       
 
     async def produce(self) :
             temp1 = temp2 = temp3 = pH2O = pCO2 = 0.0
@@ -103,8 +102,6 @@ class producer() :
                         tash.data[recIdx].SC_T1, tash.data[recIdx].SC_T2, tash.data[recIdx].CC_T1, tash.data[recIdx].DPG_T1, \
                         tash.data[recIdx].pH2O, tash.data[recIdx].pCO2, tash.data[recIdx].Dew_point_temp, \
                         tash.data[recIdx].Sample_weight, tash.data[recIdx].Status))
-              
-
             
                 await asyncio.sleep(self.interval)
             return 0
@@ -170,7 +167,15 @@ class producer() :
 
 # main program
 async def main() :
-    prod = producer(2)      # Number of records and interval
+
+    port = sys.argv[1]
+    baud_rate = sys.argv[2]
+    time_out = sys.argv[3]
+
+
+    ser = serial.Serial(port, baud_rate, timeout=time_out)
+
+    prod = producer(ser)      # Number of records and interval
     task1 = asyncio.create_task(prod.produce())
     #task2 = asyncio.create_task(prod.doCmd())
     await task1

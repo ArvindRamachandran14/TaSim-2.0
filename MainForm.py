@@ -149,11 +149,11 @@ class MainForm(Tk) :
 
     def connect(self):
 
-        TAD_rec_count = 21
+        time_out = 3
 
         if str(self.btn_text.get()) == "Connect":
 
-            bok = self.coord.Connect(self.tty_variable.get(), self.baud_rate_variable.get(), str(TAD_rec_count)) #TAD_rec_count is the total number of records
+            bok = self.coord.Connect(self.tty_variable.get(), self.baud_rate_variable.get(), str(time_out)) #TAD_rec_count is the total number of records
 
             if bok:
 

@@ -95,10 +95,9 @@ class Data_coord():
 
 		pass
 
-	def Connect(self, serial_port, baud_rate, TAD_rec_count):
+	def Connect(self, serial_port, baud_rate, time_out):
 
-		Popen(['python3.7', 'Connect_check.py',serial_port, baud_rate, TAD_rec_count])
-
+		Popen(['python3.7', 'TADAQ.py', serial_port, baud_rate, time_out])
 
 	def Disconnect(self):
 
