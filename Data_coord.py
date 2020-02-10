@@ -9,6 +9,7 @@ import mmap
 import os
 from datetime import datetime
 import asyncio
+from subprocess import Popen
 #import pykbhit as pykb
 
 
@@ -96,13 +97,8 @@ class Data_coord():
 
 	def Connect(self, serial_port, baud_rate, TAD_rec_count):
 
-		print('Connect')
+		Popen(['python3.7', 'Connect_check.py',serial_port, baud_rate, TAD_rec_count])
 
-		#if connection is succesfull:
-
-		#return True
-
-		#os.system('python TADAQ.py') #Talk to Krik about how to implement that
 
 	def Disconnect(self):
 
