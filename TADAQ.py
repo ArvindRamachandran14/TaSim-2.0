@@ -1,4 +1,5 @@
 #! /usr/local/bin/python3 
+# -*- coding: utf-8 -*-
 
 from ctypes import c_int, c_double, c_byte, c_bool, Structure, sizeof #creates c type structures
 from random import random #random numbers
@@ -182,13 +183,23 @@ async def main() :
     time_out = int(sys.argv[3])
     ser = serial.Serial(port, baud_rate, timeout=time_out)
 
-    ser.write('c-check'.encode())
+    ser.write('c-check\n'.encode())
 
     reply = ser.readline().decode()
 
-    if reply == "OK":
+    print(reply)
+
+    if reply == "Ok":
 
         gf.gf.bconnected = True
+
+    time.sleep(1)
+
+    print(gf.gf.bconnected)
+
+    ser.reset_input_buffer()
+
+    ser.reset_output_buffer()
 
     prod = producer(ser)      # Number of records and interval
     task1 = asyncio.create_task(prod.produce())

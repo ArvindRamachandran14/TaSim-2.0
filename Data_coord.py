@@ -1,4 +1,5 @@
 #! /usr/local/bin/python3 
+# -*- coding: utf-8 -*-
 
 # This is a conumer example.
 
@@ -99,10 +100,11 @@ class Data_coord():
 
 		Popen(['python3.7', 'TADAQ.py', serial_port, baud_rate, time_out])
 
+
 	def Disconnect(self):
 
 		print('Disconnect')
 
-		self.ser_PC.close()
+		#self.ser_PC.close()
 
 	#def submit():

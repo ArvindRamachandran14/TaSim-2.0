@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Mainform.py
 # Build the main form.
 # This is the topleel of the GUI tree.
@@ -16,7 +17,7 @@ import serial
 #import TADAQ
 import Data_coord
 import globals as g
-
+import global_flags as gf
 class MainForm(Tk) :
     def __init__(self, *args, **kwargs) :
 
@@ -154,25 +155,20 @@ class MainForm(Tk) :
 
            self.coord.Connect(self.tty_variable.get(), self.baud_rate_variable.get(), str(time_out)) #TAD_rec_count is the total number of records
 
-            if gf.gf.bconnected == True:
+        if gf.gf.bconnected == True:
 
-                self.btn_text.set("Disconnect")
-
-            else:
-
-                self.coord.Disconnect() #closes serial port
-
-                #self.coord.exit() # exit command to the TADAQ
-
-                gf.gf.bconnected = False
-
-                self.btn_text.set("Connect")
+            self.btn_text.set("Disconnect")
 
         else:
 
-            self.coord.Disconnect()
+            self.coord.Disconnect() #closes serial port
+
+            #self.coord.exit() # exit command to the TADAQ
+
+            gf.gf.bconnected = False
 
             self.btn_text.set("Connect")
+
 
     def onFileNew(self) :
         popupmsg("Not Implemented")

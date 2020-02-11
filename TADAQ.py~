@@ -1,4 +1,5 @@
 #! /usr/local/bin/python3 
+# -*- coding: utf-8 -*-
 
 from ctypes import c_int, c_double, c_byte, c_bool, Structure, sizeof #creates c type structures
 from random import random #random numbers
@@ -14,6 +15,8 @@ import xml.etree.ElementTree as ET
 import time
 
 import globals as g
+
+import global_flags as gf
 
 import sys
 import json
@@ -97,12 +100,18 @@ class producer() :
                 tash.data[recIdx].Status = data_list[8]
                 tash.recIdx = recIdx
 
+                '''
+
                 print('P: {0:4d} {1:10.3f} {2:10.3f} {3:10.3f} {4:10.3f} {5:10.3f} {6:10.3f} {7:10.3f} {8:10.3f} {9:10.3f} {10:d}'.format( \
                         tash.data[recIdx].recNum, tash.data[recIdx].recTime, \
                         tash.data[recIdx].SC_T1, tash.data[recIdx].SC_T2, tash.data[recIdx].CC_T1, tash.data[recIdx].DPG_T1, \
                         tash.data[recIdx].pH2O, tash.data[recIdx].pCO2, tash.data[recIdx].Dew_point_temp, \
                         tash.data[recIdx].Sample_weight, tash.data[recIdx].Status))
                 await asyncio.sleep(float(g.time_interval))
+
+                '''
+
+
             return 0
 
     
@@ -148,8 +157,6 @@ class producer() :
 
         Split_strings_list  = Output_string.split(',')
 
-        print(Split_strings_list)
-
         data_list = []
 
         for i in range(9):
@@ -175,6 +182,22 @@ async def main() :
     baud_rate = sys.argv[2]
     time_out = int(sys.argv[3])
     ser = serial.Serial(port, baud_rate, timeout=time_out)
+
+    ser.write('c-check\n'.encode())
+
+    reply = ser.readline().decode()
+
+    print(reply)
+
+    if reply == "Ok":
+
+        gf.gf.bconnected = True
+
+    time.sleep(1)
+
+    ser.reset_input_buffer()
+
+    ser.reset_output_buffer()
 
     prod = producer(ser)      # Number of records and interval
     task1 = asyncio.create_task(prod.produce())
