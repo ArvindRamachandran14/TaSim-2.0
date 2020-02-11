@@ -27,7 +27,7 @@ class CtrlCfg(Frame) :
 
         self.entry.grid(row=0, column=1)
 
-        self.entry.bind("<Enter>", update_json_file)
+        self.entry.bind("<Enter>", self.update_json_file)
 
 
     def update_json_file(self, event):
