@@ -9,8 +9,12 @@ import json
 
 cfgFile = 'taui.json'
 mainForm = None
+
 cfg = {}                        # Config object
 tty = None                      # TTY or COM port to use for TA comms
+
+
+
 
 # initialize
 # Initialize globals from the cfg object
