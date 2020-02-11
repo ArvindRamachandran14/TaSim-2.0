@@ -104,6 +104,8 @@ class Data_coord():
 
 	def Disconnect(self):
 
+		tash = TAShare.from_buffer(self.mmShare)
+
 		cmdBuf = bytearray('@{EXIT}', encoding)
 
 		tash.command[0:len(cmdBuf)] = cmdBuf
