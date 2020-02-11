@@ -11,6 +11,7 @@ import os
 from datetime import datetime
 import asyncio
 from subprocess import Popen
+import globals as g
 #import pykbhit as pykb
 
 
