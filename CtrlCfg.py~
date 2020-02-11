@@ -40,6 +40,8 @@ class CtrlCfg(Frame) :
 
     def update_json_file(self, event):
 
+        print('Interval Changed')
+
         g.time_interval = self.interval.get()
 
         g.update()
