@@ -21,9 +21,9 @@ class CtrlCfg(Frame) :
 
         self.label.grid(row=0,column=0) 
 
-        interval = StringVar()
+        self.interval = StringVar()
 
-        self.entry = Entry(self, textvariable=interval)
+        self.entry = Entry(self, textvariable=self.interval)
 
         self.entry.grid(row=0, column=1)
 
