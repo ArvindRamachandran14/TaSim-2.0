@@ -80,6 +80,7 @@ class consumer() :
 
 	def initialize(self) :
 		self.mmfd = open('taShare', 'r+b')
+		self.mmShare = mmap.mmap(self.mmfd.fileno(), sizeof(TAShare))
 
 async def main() :
 
@@ -96,9 +97,11 @@ class Data_coord():
 
 	def __init__(self):
 
+		self.mmfd = None
+
 		self.mmShare = None
 
-		pass
+		self.initialize()
 
 	def Connect(self, serial_port, baud_rate, time_out):
 
@@ -106,13 +109,13 @@ class Data_coord():
 
 	def Disconnect(self):
 
+		print('Disconnect')
+
 		tash = TAShare.from_buffer(self.mmShare)
 
 		cmdBuf = bytearray('@{EXIT}', encoding)
 
 		tash.command[0:len(cmdBuf)] = cmdBuf
-
-		print('Disconnect')
 
 		g.bconnected = "False"
 
