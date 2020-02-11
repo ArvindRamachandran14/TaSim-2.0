@@ -199,7 +199,7 @@ async def main() :
 
     ser.reset_output_buffer()
 
-    if gf.gf.bconnected == True
+    if gf.gf.bconnected == True:
 
         self.write('\n')
 
