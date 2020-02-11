@@ -106,15 +106,13 @@ class Data_coord():
 
 		cmdBuf = bytearray('@{EXIT}', encoding)
 
+		tash.command[0:len(cmdBuf)] = cmdBuf
+
 		print('Disconnect')
 
 		g.bconnected = "False"
 
 		g.update()
-
-		cmdBuf = bytearray('@{EXIT}', encoding)
-
-		tash.command[0:len(cmdBuf)] = cmdBuf
 
 		#self.ser_PC.close()
 

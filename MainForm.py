@@ -156,26 +156,20 @@ class MainForm(Tk) :
 
         if str(self.btn_text.get()) == "Connect":
 
-
            self.coord.Connect(self.tty_variable.get(), self.baud_rate_variable.get(), str(time_out)) #TAD_rec_count is the total number of records
+
+        else:
+
+            self.coord.Disconnect()
+
+            self.btn_text.set("Connect")
 
         time.sleep(4)
 
         if g.bconnected == "True":
 
             self.btn_text.set("Disconnect")
-
-        else:
-
-            self.coord.Disconnect() #closes serial port
-
-            #self.coord.exit() # exit command to the TADAQ
-
-            g.bconnected = "False"
-
-            g.update()
-
-            self.btn_text.set("Connect")
+           
 
     def onFileNew(self) :
         popupmsg("Not Implemented")
