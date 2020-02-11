@@ -22,6 +22,12 @@ encoding = 'utf-8' # covers straight ascii 8 bit char codes
 loop = None #variable timeer uses
 recCount = 21 #how many records are in the shared memory 
 
+
+with open(g.cfgFile, 'r') as fCfg :
+    config = json.loads(fCfg.read())        # Read config file
+    g.initialize(config)              # Initialize the globals
+
+
 class TAData(Structure) :
     _pack_ = 4
     _fields_ = [ \
