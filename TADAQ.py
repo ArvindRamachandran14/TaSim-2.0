@@ -16,11 +16,12 @@ import time
 import globals as g
 
 import sys
-
+import json
 
 encoding = 'utf-8' # covers straight ascii 8 bit char codes 
 loop = None #variable timeer uses
 recCount = 21 #how many records are in the shared memory 
+
 
 class TAData(Structure) :
     _pack_ = 4
@@ -102,7 +103,7 @@ class producer() :
                         tash.data[recIdx].pH2O, tash.data[recIdx].pCO2, tash.data[recIdx].Dew_point_temp, \
                         tash.data[recIdx].Sample_weight, tash.data[recIdx].Status))
             
-                await asyncio.sleep(g.time_interval)
+                await asyncio.sleep(float(g.time_interval))
             return 0
 
     
@@ -168,6 +169,10 @@ class producer() :
 
 # main program
 async def main() :
+
+    with open(g.cfgFile, 'r') as fCfg :
+        config = json.loads(fCfg.read())        # Read config file
+        g.initialize(config)              # Initialize the globals
 
     port = sys.argv[1]
     baud_rate = sys.argv[2]
