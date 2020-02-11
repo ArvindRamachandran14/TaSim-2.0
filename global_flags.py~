@@ -1,3 +1,5 @@
 class gf():
 
-	bconnnected = False
+    global bconnected
+
+    bconnected = False

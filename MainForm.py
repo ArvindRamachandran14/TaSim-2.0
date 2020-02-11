@@ -8,18 +8,21 @@
 import tkinter as tk
 from tkinter import Tk, ttk, Frame, Menu, Menubutton, Button, Label, StringVar, OptionMenu
 import sys
-import datetime
+from datetime import datetime
 import CtrlSetup
 import CtrlMon
 import CtrlTerm
 import CtrlCfg
 import serial
+import time
 #import TADAQ
 import Data_coord
 import globals as g
 import global_flags as gf
+import json
 class MainForm(Tk) :
     def __init__(self, *args, **kwargs) :
+	
 
         # self.bconnected = False
 
@@ -153,11 +156,12 @@ class MainForm(Tk) :
 
         if str(self.btn_text.get()) == "Connect":
 
+
            self.coord.Connect(self.tty_variable.get(), self.baud_rate_variable.get(), str(time_out)) #TAD_rec_count is the total number of records
 
-        time.sleep(5)
+        time.sleep(4)
 
-        if gf.gf.bconnected == True:
+        if g.bconnected == "True":
 
             self.btn_text.set("Disconnect")
 
@@ -167,10 +171,11 @@ class MainForm(Tk) :
 
             #self.coord.exit() # exit command to the TADAQ
 
-            gf.gf.bconnected = False
+            g.bconnected = "False"
+
+            g.update()
 
             self.btn_text.set("Connect")
-
 
     def onFileNew(self) :
         popupmsg("Not Implemented")
