@@ -103,13 +103,17 @@ class Data_coord():
 
 		self.initialize()
 
+	def initialize(self) :
+		self.mmfd = open('taShare', 'r+b')
+		self.mmShare = mmap.mmap(self.mmfd.fileno(), sizeof(TAShare))
+
 	def Connect(self, serial_port, baud_rate, time_out):
 
 		Popen(['python3.7', 'TADAQ.py', serial_port, baud_rate, time_out])
 
 	def Disconnect(self):
 
-		print('Disconnect')
+		print('Disconnecting')
 
 		tash = TAShare.from_buffer(self.mmShare)
 
@@ -120,6 +124,8 @@ class Data_coord():
 		g.bconnected = "False"
 
 		g.update()
+
+		print('Disconnected')
 
 		#self.ser_PC.close()
 
