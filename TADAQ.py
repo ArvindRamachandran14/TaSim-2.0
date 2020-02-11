@@ -52,7 +52,6 @@ class producer() :
         self.ser = ser
         self.startTime = None
         self.bDone = False
-        self.interval = g.time_interval
         #self.bForked = False
         self.recNum = 0
         self.taShare = None
