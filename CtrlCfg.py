@@ -19,15 +19,19 @@ class CtrlCfg(Frame) :
 
         self.label = Label(self, text="Enter interval")
 
-        self.label.grid(row=0,column=0)
+        self.label.grid(row=0,column=0) 
 
-        self.entry = Entry(self, command=self.update_json_file)
+        interval = StringVar()
+
+        self.entry = Entry(self, textvariable=interval)
 
         self.entry.grid(row=0, column=1)
+
+        self.entry.bind("<Enter>", update_json_file)
 
 
     def update_json_file(self, event):
 
-        g.time_interval = self.entry.get()
+        g.time_interval = self.interval.get()
 
         g.update()

@@ -221,5 +221,3 @@ def popupmsg(msg):
     B1 = ttk.Button(popup, text="Okay", command = popup.destroy)
     #B1.pack()
     popup.mainloop()
-
-        
