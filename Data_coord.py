@@ -96,6 +96,8 @@ class Data_coord():
 
 	def __init__(self):
 
+		self.mmShare = None
+
 		pass
 
 	def Connect(self, serial_port, baud_rate, time_out):
