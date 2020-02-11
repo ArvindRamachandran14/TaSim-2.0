@@ -52,7 +52,7 @@ class producer() :
         self.ser = ser
         self.startTime = None
         self.bDone = False
-        self.interval = interval
+        self.interval = 5
         #self.bForked = False
         self.recNum = 0
         self.taShare = None
@@ -145,11 +145,13 @@ class producer() :
 
         Output_string = ser.readline().decode()
 
-        #print(Output_string)
+        print(Output_string)
 
         #print(dt.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S'))
 
         Split_strings_list  = Output_string.split(',')
+
+        print(Split_strings_list)
 
         data_list = []
 
@@ -170,7 +172,7 @@ async def main() :
 
     port = sys.argv[1]
     baud_rate = sys.argv[2]
-    time_out = sys.argv[3]
+    time_out = int(sys.argv[3])
 
 
     ser = serial.Serial(port, baud_rate, timeout=time_out)
