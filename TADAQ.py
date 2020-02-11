@@ -23,11 +23,6 @@ loop = None #variable timeer uses
 recCount = 21 #how many records are in the shared memory 
 
 
-with open(g.cfgFile, 'r') as fCfg :
-    config = json.loads(fCfg.read())        # Read config file
-    g.initialize(config)              # Initialize the globals
-
-
 class TAData(Structure) :
     _pack_ = 4
     _fields_ = [ \
@@ -174,6 +169,10 @@ class producer() :
 
 # main program
 async def main() :
+
+    with open(g.cfgFile, 'r') as fCfg :
+        config = json.loads(fCfg.read())        # Read config file
+        g.initialize(config)              # Initialize the globals
 
     port = sys.argv[1]
     baud_rate = sys.argv[2]
