@@ -155,6 +155,8 @@ class MainForm(Tk) :
 
            self.coord.Connect(self.tty_variable.get(), self.baud_rate_variable.get(), str(time_out)) #TAD_rec_count is the total number of records
 
+        time.sleep(5)
+
         if gf.gf.bconnected == True:
 
             self.btn_text.set("Disconnect")
