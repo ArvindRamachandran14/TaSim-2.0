@@ -204,9 +204,9 @@ async def main() :
 
         prod = producer(ser)      # Number of records and interval
         task1 = asyncio.create_task(prod.produce())
-        #task2 = asyncio.create_task(prod.doCmd())
+        task2 = asyncio.create_task(prod.doCmd())
         await task1
-        #await task2
+        await task2
         print('Done')
 
 asyncio.run(main())

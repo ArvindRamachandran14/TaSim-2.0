@@ -87,7 +87,9 @@ async def main() :
 
 	print('Type \"Exit\" when ready to quit...')
 	task1 = asyncio.create_task(cons.consume())
+	#task2 = asyncio.create_task(cons.getCmd())
 	await task1
+	#await task2
 
 
 class Data_coord():
@@ -100,10 +102,19 @@ class Data_coord():
 
 		Popen(['python3.7', 'TADAQ.py', serial_port, baud_rate, time_out])
 
-
 	def Disconnect(self):
 
+		cmdBuf = bytearray('@{EXIT}', encoding)
+
 		print('Disconnect')
+
+		g.bconnected = "False"
+
+		g.update()
+
+		cmdBuf = bytearray('@{EXIT}', encoding)
+
+		tash.command[0:len(cmdBuf)] = cmdBuf
 
 		#self.ser_PC.close()
 
