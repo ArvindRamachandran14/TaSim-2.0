@@ -102,7 +102,7 @@ class producer() :
                         tash.data[recIdx].pH2O, tash.data[recIdx].pCO2, tash.data[recIdx].Dew_point_temp, \
                         tash.data[recIdx].Sample_weight, tash.data[recIdx].Status))
             
-                await asyncio.sleep(self.interval)
+                await asyncio.sleep(g.time_interval)
             return 0
 
     
