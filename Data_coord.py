@@ -105,6 +105,4 @@ class Data_coord():
 
 		self.ser_PC.close()
 
-		return False
-
 	#def submit():
