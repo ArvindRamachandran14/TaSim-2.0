@@ -20,6 +20,8 @@ class CtrlCfg(Frame) :
             config = json.loads(fCfg.read())        # Read config file
             g.initialize(config)              # Initialize the globals
 
+        print("Baud rate display in CtrlCfg", g.baud_rate)
+
     def buildContent(self) :
 
         self.label = Label(self, text="Enter interval")
