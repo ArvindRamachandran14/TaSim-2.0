@@ -146,7 +146,6 @@ class MainForm(Tk) :
 
         g.update()
 
-
     def connect(self):
 
         time_out = 3
@@ -171,14 +170,11 @@ class MainForm(Tk) :
 
                 self.btn_text.set("Connect")
 
-
         else:
 
             self.coord.Disconnect()
 
             self.btn_text.set("Connect")
-
-
 
     def onFileNew(self) :
         popupmsg("Not Implemented")
@@ -192,7 +188,6 @@ class MainForm(Tk) :
 
     def onClosing(self) :
         self.onFileExit()
-
 
     def machineloop():
 

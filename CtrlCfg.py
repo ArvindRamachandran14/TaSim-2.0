@@ -6,6 +6,8 @@
 
 from tkinter import Frame, LabelFrame, Label, Spinbox, StringVar, Button, Entry
 
+import globals as g
+
 class CtrlCfg(Frame) :
     def __init__(self, name, *args, **kwargs) :
         Frame.__init__(self, *args, **kwargs)
@@ -19,7 +21,13 @@ class CtrlCfg(Frame) :
 
         self.label.grid(row=0,column=0)
 
-        self.entry = Entry(self)
+        self.entry = Entry(self, command=self.update_json_file)
 
         self.entry.grid(row=0, column=1)
-    
+
+
+    def update_json_file(self, event):
+
+        g.time_interval = self.entry.get()
+
+        g.update()
