@@ -1,4 +1,4 @@
-# globals.py
+# globals.pyxw
 # Globals as needed
 # Change history:
 #   20191112:KDT - Original issue
