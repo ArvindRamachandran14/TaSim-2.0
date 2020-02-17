@@ -126,6 +126,8 @@ class Data_coord():
 
 		g.update()
 
+		print(g.cfg)
+
 		print('Disconnected')
 
 		#self.ser_PC.close()
