@@ -211,7 +211,7 @@ async def main() :
     #print(reply)
 
     if reply == "Ok":
-	
+    
         g.bconnected = "True"
 
         g.update()
