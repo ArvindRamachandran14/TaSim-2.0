@@ -16,6 +16,8 @@ import time
 
 import globals as g
 
+import global_var as gv
+
 import global_flags as gf
 
 import sys
@@ -51,8 +53,11 @@ class TAShare(Structure) :
             ('recIdx', c_int),
             ('data', TAData * recCount)]
 
-class producer() :
+class producer(gv) :
+
     def __init__(self, ser) :
+        self.gv = gv
+
         self.ser = ser
         self.startTime = None
         self.bDone = False
@@ -63,6 +68,14 @@ class producer() :
         self.mmShare = None
         self.mmfd = None
         self.startTime = None
+
+        self.gv.Temperatures_SC = [0]*recCount
+        self.gv.Temperatures_CC = [0]*recCount
+        self.gv.Temperatures_DPG = [0]*recCount
+        self.gv.pCO2= [0]*recCount
+        self.gv.pH2O = [0]*recCount
+        self.gv.sample_weight = [0]*recCount
+
         self.initialize()
        
 
@@ -90,22 +103,33 @@ class producer() :
                 self.recNum += 1
                 tash.data[recIdx].recTime = seconds
                 tash.data[recIdx].SC_T1 = data_list[0]
+                self.gv.Temperatures_SC[recIdx] = data_list[0]
                 tash.data[recIdx].SC_T2 = data_list[1]
                 tash.data[recIdx].CC_T1 = data_list[2]
+                self.gv.Temperatures_CC[recIdx] = data_list[2]
                 tash.data[recIdx].DPG_T1 = data_list[3]
+                self.gv.Temperatures_DPG[recIdx] = data_list[3]
                 tash.data[recIdx].pH2O = data_list[4]
+                self.gv.pH2O[recIdx] = data_list[4]
                 tash.data[recIdx].pCO2 = data_list[5]
+                self.gv.pCO2 = data_list[5]
                 tash.data[recIdx].Dew_point_temp = data_list[6]
                 tash.data[recIdx].Sample_weight = data_list[7]
+                self.gv.sample_weight[recIdx] = data_list[7]
                 tash.data[recIdx].Status = data_list[8]
                 tash.recIdx = recIdx
 
-                
+                print(self.gv.Temperatures_SC[recIdx], self.gv.Temperatures_CC[recIdx], self.gv.Temperatures_DPG[recIdx], self.gv.pH2O[recIdx], self.gv.pCO2[recIdx], self.sample_weight[recIdx])
+
+                '''
+
                 print('P: {0:4d} {1:10.3f} {2:10.3f} {3:10.3f} {4:10.3f} {5:10.3f} {6:10.3f} {7:10.3f} {8:10.3f} {9:10.3f} {10:d}'.format( \
                         tash.data[recIdx].recNum, tash.data[recIdx].recTime, \
                         tash.data[recIdx].SC_T1, tash.data[recIdx].SC_T2, tash.data[recIdx].CC_T1, tash.data[recIdx].DPG_T1, \
                         tash.data[recIdx].pH2O, tash.data[recIdx].pCO2, tash.data[recIdx].Dew_point_temp, \
                         tash.data[recIdx].Sample_weight, tash.data[recIdx].Status))
+
+                '''
                 await asyncio.sleep(float(g.time_interval))
 
 
@@ -192,8 +216,6 @@ async def main() :
 
         g.update()
 
-        print(datetime.now(), g.bconnected)
-
     time.sleep(1)
 
     ser.reset_input_buffer()
@@ -204,11 +226,13 @@ async def main() :
 
         ser.write('\n'.encode())
 
-        prod = producer(ser)      # Number of records and interval
+	gv = gv.globals()
+
+        prod = producer(ser, gv)      # Number of records and interval
         task1 = asyncio.create_task(prod.produce())
-        #task2 = asyncio.create_task(prod.doCmd())
+        task2 = asyncio.create_task(prod.doCmd())
         await task1
-        #await task2
+        await task2
         print('Done')
 
 asyncio.run(main())
