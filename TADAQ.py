@@ -53,9 +53,9 @@ class TAShare(Structure) :
             ('recIdx', c_int),
             ('data', TAData * recCount)]
 
-class producer(gv) :
+class producer() :
 
-    def __init__(self, ser) :
+    def __init__(self, ser, gv) :
         self.gv = gv
 
         self.ser = ser
@@ -119,7 +119,7 @@ class producer(gv) :
                 tash.data[recIdx].Status = data_list[8]
                 tash.recIdx = recIdx
 
-                print(self.gv.Temperatures_SC[recIdx], self.gv.Temperatures_CC[recIdx], self.gv.Temperatures_DPG[recIdx], self.gv.pH2O[recIdx] self.gv.pCO2[recIdx], self.sample_weight[recIdx])
+                print(self.gv.Temperatures_SC[recIdx], self.gv.Temperatures_CC[recIdx], self.gv.Temperatures_DPG[recIdx], self.gv.pH2O[recIdx], self.gv.pCO2[recIdx], self.sample_weight[recIdx])
 
                 '''
 
@@ -226,7 +226,9 @@ async def main() :
 
         ser.write('\n'.encode())
 
-        prod = producer(ser)      # Number of records and interval
+	gv = gv.globals()
+
+        prod = producer(ser, gv)      # Number of records and interval
         task1 = asyncio.create_task(prod.produce())
         task2 = asyncio.create_task(prod.doCmd())
         await task1
