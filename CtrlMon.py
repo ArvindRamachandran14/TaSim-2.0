@@ -61,7 +61,7 @@ class CtrlMon(Frame) :
         self.ax1.set_xlabel('Time (min)')
         self.ax1.set_ylabel('Temperature ($^\circ$C)')
         self.ax1.set_autoscalex_on(True)
-        self.ax1.set_ybound(0, 50)
+        #self.ax1.set_ybound(0, 50)
         self.ax1.set_autoscaley_on(False)
         self.ax1.grid(True, 'major', 'both')
         self.fig1.tight_layout()
@@ -99,8 +99,11 @@ class CtrlMon(Frame) :
         self.cnvs3 = FigureCanvasTkAgg(self.fig3, self.grpSWgt)
         self.cnvs3.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=True)
 
-    def animate_SC(i):
+    def animate_SC(self, i):
 
-        self.ax1.clear()
+        print('Time', self.gvi.time)
+        print('Temperature', self.gvi.Temperatures_SC)
 
-        self.ax1.plot(gvi.time, gvi.Temperatures_SC)
+        #self.ax1.clear()
+
+        self.ax1.plot(self.gvi.time, self.gvi.Temperatures_SC)

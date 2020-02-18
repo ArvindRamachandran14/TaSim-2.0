@@ -95,7 +95,7 @@ class producer() :
                 self.recNum += 1
                 tash.data[recIdx].recTime = seconds
                 tash.data[recIdx].SC_T1 = data_list[0]
-		self.gvi.Temperatures_SC[recIdx] = data_list[0]
+                #self.gvi.Temperatures_SC[recIdx] = data_list[0]
                 self.gvi.Temperatures_SC.append(data_list[0])
                 tash.data[recIdx].SC_T2 = data_list[1]
                 tash.data[recIdx].CC_T1 = data_list[2]
@@ -113,7 +113,7 @@ class producer() :
                 tash.data[recIdx].Status = data_list[8]
                 tash.recIdx = recIdx
 
-                print(self.gvi.Temperatures_SC[-1], self.gvi.Temperatures_CC[-1], self.gvi.Temperatures_DPG[-1], self.gvi.pH2O[-1], self.gvi.pCO2[-1], self.gvi.sample_weight[-1])
+                #print(self.gvi.Temperatures_SC[-1], self.gvi.Temperatures_CC[-1], self.gvi.Temperatures_DPG[-1], self.gvi.pH2O[-1], self.gvi.pCO2[-1], self.gvi.sample_weight[-1])
 
                 '''
 
@@ -222,7 +222,7 @@ async def main() :
 
         gvi = gv.globals()
 
-        prod = producer(ser, gv)      # Number of records and interval
+        prod = producer(ser, gvi)      # Number of records and interval
         task1 = asyncio.create_task(prod.produce())
         task2 = asyncio.create_task(prod.doCmd())
         await task1

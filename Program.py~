@@ -31,6 +31,8 @@ def main(argv) :
     # Start the mainform
     g.mainForm = MainForm()
 	
+    ani_SC = animation.FuncAnimation(g.MainForm.tabMon.fig1, g.MainForm.tabMon.animate_SC, interval=1000)
+
     g.mainForm.mainloop()
 
 # Actual main program

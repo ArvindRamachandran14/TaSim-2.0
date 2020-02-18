@@ -21,6 +21,7 @@ import globals as g
 import global_flags as gf
 import json
 class MainForm(Tk) :
+    
     def __init__(self, *args, **kwargs) :
 	
 
@@ -172,7 +173,7 @@ class MainForm(Tk) :
 
             self.btn_text.set("Disconnect")
 		
-            self.tabMon.animate(self.tabMon.fig1, self.tabMon.animate_SC, interval=1000)
+            self.tabMon.animate_SC(self.tabMon.fig1, self.tabMon.animate_SC, interval=1000)
            
     def onFileNew(self) :
         popupmsg("Not Implemented")
