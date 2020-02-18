@@ -14,6 +14,7 @@ import matplotlib.animation as animation
 from matplotlib import style
 from matplotlib import pyplot as plt
 import global_var as gv
+import Data_coord
 
 class CtrlMon(Frame) :
     def __init__(self, name, *args, **kwargs) :
