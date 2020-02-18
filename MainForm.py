@@ -52,8 +52,6 @@ class MainForm(Tk) :
 
         self.coord = Data_coord.Data_coord()
 
-        self.consume = Data_coord.trigger_consumer()
-
         self.dat_buf = []
 
         #self.dcoord = DCoord(Rec_num) # This is renaming the consumer class 
@@ -160,7 +158,9 @@ class MainForm(Tk) :
         if str(self.btn_text.get()) == "Connect":
 
            self.coord.Connect(self.tty_variable.get(), self.baud_rate_variable.get(), str(time_out)) #TAD_rec_count is the total number of records
-
+	
+           Data_coord.trigger_consumer()
+		
         else:
 
             self.coord.Disconnect()

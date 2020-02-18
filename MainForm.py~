@@ -23,12 +23,12 @@ import json
 class MainForm(Tk) :
     
     def __init__(self, *args, **kwargs) :
-	
-
+	    
         # self.bconnected = False
 
         tk.Tk.__init__(self, *args, **kwargs) 
         tk.Tk.wm_title(self, 'Main Window') #window title
+
 
         self.grid_rowconfigure(0, weight=1)  #Let the window fill out when resizing
         self.grid_columnconfigure(0, weight=1)  #Let the window fill out when resizing
@@ -158,7 +158,9 @@ class MainForm(Tk) :
         if str(self.btn_text.get()) == "Connect":
 
            self.coord.Connect(self.tty_variable.get(), self.baud_rate_variable.get(), str(time_out)) #TAD_rec_count is the total number of records
-
+	
+           Data_coord.trigger_consumer()
+		
         else:
 
             self.coord.Disconnect()
@@ -172,8 +174,6 @@ class MainForm(Tk) :
             #print('Connected')
 
             self.btn_text.set("Disconnect")
-		
-            self.tabMon.animate_SC(self.tabMon.fig1, self.tabMon.animate_SC, interval=1000)
            
     def onFileNew(self) :
         popupmsg("Not Implemented")
