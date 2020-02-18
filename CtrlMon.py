@@ -54,13 +54,8 @@ class CtrlMon(Frame) :
         self.grpTemps = LabelFrame(self, text = ' Temperatures and Humidity ')
         self.grpTemps.grid(row=1,column=0, padx=5, pady=5)
 
-
-<<<<<<< HEAD
-
         #self.grpTemps.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
-=======
-        self.grpTemps.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
->>>>>>> da597f353be82d33ad2c9f076db3b86b6240a5d7
+
         self.fig1 = Figure(figsize=(3.8, 3.8))
         self.ax1 = self.fig1.add_subplot(111)
         self.ax1.set_xlabel('Time (min)')
