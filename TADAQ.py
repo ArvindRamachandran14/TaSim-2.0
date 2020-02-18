@@ -102,13 +102,13 @@ class producer() :
                 tash.data[recIdx].DPG_T1 = data_list[3]
                 gv.Temperatures_DPG.append(data_list[3])
                 tash.data[recIdx].pH2O = data_list[4]
-                gv.pH2O.append(data_list[4])
+                gv.pH2O_list.append(data_list[4])
                 tash.data[recIdx].pCO2 = data_list[5]
-                gv.pCO2.append(data_list[5])
+                gv.pCO2_list.append(data_list[5])
                 tash.data[recIdx].Dew_point_temp = data_list[6]
                 tash.data[recIdx].Sample_weight = data_list[7]
                 gv.sample_weight.append(data_list[7])
-                gv.time.append(seconds/60.0)
+                gv.time_list.append(seconds/60.0)
                 tash.data[recIdx].Status = data_list[8]
                 tash.recIdx = recIdx
 

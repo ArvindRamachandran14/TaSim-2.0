@@ -100,9 +100,9 @@ class CtrlMon(Frame) :
 
     def animate_SC(self, i):
 
-        #print('Time', gv.time)
-        #print('Temperature', gv.Temperatures_SC)
+        print('Time', gv.time_list)
+        print('Temperature', gv.Temperatures_SC)
 
         #self.ax1.clear()
 
-        self.ax1.plot(gv.time, gv.Temperatures_SC)
+        self.ax1.plot(gv.time_list, gv.Temperatures_SC)

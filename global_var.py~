@@ -1,21 +1,13 @@
-class globals():
+Temperatures_SC = []
 
-	def __init__(self):
+Temperatures_CC = []
 
-		self.Temperatures_SC = []
+Temperatures_DPG = []
 
-		self.Temperatures_CC = []
+pCO2_list = []
 
-		self.Temperatures_DPG = []
+pH2O_list = []
 
-		self.pCO2 = []
+sample_weight = []
 
-		self.pH2O = []
-
-		self.sample_weight = []
-
-		self.time = []
-
-		self.figure = Figure(figsize=(3.8, 3.8))
-
-		self.ax = self.figure.add_subplot(111)
+time = []
