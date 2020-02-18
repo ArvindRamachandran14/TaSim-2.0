@@ -113,6 +113,9 @@ class Data_coord():
 	def Connect(self, serial_port, baud_rate, time_out):
 
 		Popen(['python3.7', 'TADAQ.py', serial_port, baud_rate, time_out])
+		
+	
+
 
 	def Disconnect(self):
 

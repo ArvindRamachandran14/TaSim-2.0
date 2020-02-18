@@ -4,10 +4,10 @@ Temperatures_CC = []
 
 Temperatures_DPG = []
 
-pCO2 = []
+pCO2_list = []
 
-pH2O = []
+pH2O_list = []
 
 sample_weight = []
 
-time = []
+time_list = []

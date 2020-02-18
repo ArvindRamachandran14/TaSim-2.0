@@ -14,12 +14,12 @@ import matplotlib.animation as animation
 from matplotlib import style
 from matplotlib import pyplot as plt
 import global_var as gv
+import TADAQ
 
 class CtrlMon(Frame) :
     def __init__(self, name, *args, **kwargs) :
         Frame.__init__(self, *args, **kwargs)
         self.name = name
-        self.gvi = gv.globals()
         self.buildContent()
 
     def buildContent(self) :
@@ -101,9 +101,9 @@ class CtrlMon(Frame) :
 
     def animate_SC(self, i):
 
-        print('Time', self.gvi.time)
-        print('Temperature', self.gvi.Temperatures_SC)
+        print('Time', gv.time_list)
+        print('Temperature', gv.Temperatures_SC)
 
-        self.ax1.clear()
+        #self.ax1.clear()
 
-        self.ax1.plot(self.gvi.time, self.gvi.Temperatures_SC)
+        self.ax1.plot(gv.time_list, gv.Temperatures_SC)

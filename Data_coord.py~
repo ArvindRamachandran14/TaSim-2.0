@@ -12,6 +12,7 @@ from datetime import datetime
 import asyncio
 from subprocess import Popen
 import globals as g
+import global_var as gv
 #import pykbhit as pykb
 
 
