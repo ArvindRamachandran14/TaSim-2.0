@@ -28,12 +28,10 @@ def main(argv) :
         config = json.loads(fCfg.read())        # Read config file
         g.initialize(config)              # Initialize the globals
 
-    CtrlMon_object = CtrlMon.CtrlMon()
-
     # Start the mainform
     g.mainForm = MainForm()
 
-    CtrlMon_object.animate(CtrlMon_object.fig1, CtrlMon_object.animate_SC, interval=1000)
+    ani_SC = animation.FuncAnimation(g.MainForm.tabMon.fig1, g.MainForm.tabMon.animate_SC, interval=1000)
 
     g.mainForm.mainloop()
 

@@ -21,6 +21,7 @@ import globals as g
 import global_flags as gf
 import json
 class MainForm(Tk) :
+    
     def __init__(self, *args, **kwargs) :
 	
 

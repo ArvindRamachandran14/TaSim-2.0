@@ -55,7 +55,6 @@ class CtrlMon(Frame) :
         self.grpTemps.grid(row=1,column=0, padx=5, pady=5)
 
 
-
         self.grpTemps.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
         self.fig1 = Figure(figsize=(3.8, 3.8))
         self.ax1 = self.fig1.add_subplot(111)
