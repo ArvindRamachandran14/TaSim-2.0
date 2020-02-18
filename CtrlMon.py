@@ -16,10 +16,9 @@ from matplotlib import pyplot as plt
 import global_var as gv
 
 class CtrlMon(Frame) :
-    def __init__(self, name, gvi, *args, **kwargs) :
+    def __init__(self, name, *args, **kwargs) :
         Frame.__init__(self, *args, **kwargs)
         self.name = name
-        self.gvi = gvi
         self.buildContent()
 
     def buildContent(self) :
@@ -101,9 +100,9 @@ class CtrlMon(Frame) :
 
     def animate_SC(self, i):
 
-        print('Time', self.gvi.time)
-        print('Temperature', self.gvi.Temperatures_SC)
+        #print('Time', gv.time)
+        #print('Temperature', gv.Temperatures_SC)
 
         #self.ax1.clear()
 
-        self.ax1.plot(self.gvi.time, self.gvi.Temperatures_SC)
+        self.ax1.plot(gv.time, gv.Temperatures_SC)

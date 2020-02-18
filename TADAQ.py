@@ -55,8 +55,7 @@ class TAShare(Structure) :
 
 class producer() :
 
-    def __init__(self, ser, gvi) :
-        self.gvi = gvi
+    def __init__(self, ser) :
         self.ser = ser
         self.startTime = None
         self.bDone = False
@@ -95,25 +94,25 @@ class producer() :
                 self.recNum += 1
                 tash.data[recIdx].recTime = seconds
                 tash.data[recIdx].SC_T1 = data_list[0]
-                #self.gvi.Temperatures_SC[recIdx] = data_list[0]
-                self.gvi.Temperatures_SC.append(data_list[0])
+                #self.gv.Temperatures_SC[recIdx] = data_list[0]
+                gv.Temperatures_SC.append(data_list[0])
                 tash.data[recIdx].SC_T2 = data_list[1]
                 tash.data[recIdx].CC_T1 = data_list[2]
-                self.gvi.Temperatures_CC.append(data_list[2])
+                gv.Temperatures_CC.append(data_list[2])
                 tash.data[recIdx].DPG_T1 = data_list[3]
-                self.gvi.Temperatures_DPG.append(data_list[3])
+                gv.Temperatures_DPG.append(data_list[3])
                 tash.data[recIdx].pH2O = data_list[4]
-                self.gvi.pH2O.append(data_list[4])
+                gv.pH2O.append(data_list[4])
                 tash.data[recIdx].pCO2 = data_list[5]
-                self.gvi.pCO2.append(data_list[5])
+                gv.pCO2.append(data_list[5])
                 tash.data[recIdx].Dew_point_temp = data_list[6]
                 tash.data[recIdx].Sample_weight = data_list[7]
-                self.gvi.sample_weight.append(data_list[7])
-                self.gvi.time.append(seconds/60.0)
+                gv.sample_weight.append(data_list[7])
+                gv.time.append(seconds/60.0)
                 tash.data[recIdx].Status = data_list[8]
                 tash.recIdx = recIdx
 
-                #print(self.gvi.Temperatures_SC[-1], self.gvi.Temperatures_CC[-1], self.gvi.Temperatures_DPG[-1], self.gvi.pH2O[-1], self.gvi.pCO2[-1], self.gvi.sample_weight[-1])
+                #print(gv.Temperatures_SC[-1], gv.Temperatures_CC[-1], gv.Temperatures_DPG[-1], gv.pH2O[-1], gv.pCO2[-1], gv.sample_weight[-1])
 
                 '''
 
@@ -193,10 +192,9 @@ async def main() :
         config = json.loads(fCfg.read())        # Read config file
         g.initialize(config)              # Initialize the globals
 
-    gvi =  sys.argv[1]   
-    port = sys.argv[2]
-    baud_rate = sys.argv[3]
-    time_out = int(sys.argv[4])
+    port = sys.argv[1]
+    baud_rate = sys.argv[2]
+    time_out = int(sys.argv[3])
     ser = serial.Serial(port, baud_rate, timeout=time_out)
 
     ser.write('c-check\n'.encode())
@@ -221,7 +219,7 @@ async def main() :
 
         ser.write('\n'.encode())
 
-        prod = producer(ser, gvi)      # Number of records and interval
+        prod = producer(ser)      # Number of records and interval
         task1 = asyncio.create_task(prod.produce())
         task2 = asyncio.create_task(prod.doCmd())
         await task1

@@ -32,9 +32,7 @@ def main(argv) :
 
     # Start the mainform
 
-    gvi = gv.globals()
-
-    g.mainForm = MainForm(gvi)
+    g.mainForm = MainForm()
 	
     ani_SC = animation.FuncAnimation(g.mainForm.tabMon.fig1, g.mainForm.tabMon.animate_SC, interval=1000)
 
