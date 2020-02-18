@@ -168,9 +168,11 @@ class MainForm(Tk) :
 
         if g.bconnected == "True":
 
-            print('Connected')
+            #print('Connected')
 
             self.btn_text.set("Disconnect")
+		
+            self.tabMon.animate(self.tabMon.fig1, self.tabMon.animate_SC, interval=1000)
            
     def onFileNew(self) :
         popupmsg("Not Implemented")

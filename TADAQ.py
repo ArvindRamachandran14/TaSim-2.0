@@ -95,6 +95,7 @@ class producer() :
                 self.recNum += 1
                 tash.data[recIdx].recTime = seconds
                 tash.data[recIdx].SC_T1 = data_list[0]
+		self.gvi.Temperatures_SC[recIdx] = data_list[0]
                 self.gvi.Temperatures_SC.append(data_list[0])
                 tash.data[recIdx].SC_T2 = data_list[1]
                 tash.data[recIdx].CC_T1 = data_list[2]
