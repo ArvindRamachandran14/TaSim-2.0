@@ -13,3 +13,9 @@ class globals():
 		self.pH2O = []
 
 		self.sample_weight = []
+
+		self.time = []
+
+		self.figure = Figure(figsize=(3.8, 3.8))
+
+		self.ax = self.figure.add_subplot(111)

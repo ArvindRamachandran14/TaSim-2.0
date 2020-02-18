@@ -13,11 +13,13 @@ from matplotlib.figure import Figure
 import matplotlib.animation as animation
 from matplotlib import style
 from matplotlib import pyplot as plt
+import global_var as gv
 
 class CtrlMon(Frame) :
     def __init__(self, name, *args, **kwargs) :
         Frame.__init__(self, *args, **kwargs)
         self.name = name
+        self.gvi = gv.gv()
         self.buildContent()
 
     def buildContent(self) :
@@ -51,7 +53,10 @@ class CtrlMon(Frame) :
         # Temperatures and humidity
         self.grpTemps = LabelFrame(self, text = ' Temperatures and Humidity ')
         self.grpTemps.grid(row=1,column=0, padx=5, pady=5)
-        # self.grpTemps.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+
+
+
+        self.grpTemps.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
         self.fig1 = Figure(figsize=(3.8, 3.8))
         self.ax1 = self.fig1.add_subplot(111)
         self.ax1.set_xlabel('Time (min)')
@@ -95,3 +100,8 @@ class CtrlMon(Frame) :
         self.cnvs3 = FigureCanvasTkAgg(self.fig3, self.grpSWgt)
         self.cnvs3.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=True)
 
+    def animate_SC(i):
+
+        self.ax1.clear()
+
+        self.ax1.plot(gvi.time, gvi.Temperatures_SC)

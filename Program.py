@@ -6,6 +6,8 @@ import tkinter as tk
 import sys
 import json
 import globals as g
+import matplotlib.animation as animation
+import CtrlMon
 
 from MainForm import MainForm
 
@@ -26,8 +28,13 @@ def main(argv) :
         config = json.loads(fCfg.read())        # Read config file
         g.initialize(config)              # Initialize the globals
 
+    CtrlMon_object = CtrlMon.CtrlMon()
+
     # Start the mainform
     g.mainForm = MainForm()
+
+    CtrlMon_object.animate(CtrlMon_object.fig1, CtrlMon_object.animate_SC, interval=1000)
+
     g.mainForm.mainloop()
 
 # Actual main program
