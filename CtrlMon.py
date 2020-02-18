@@ -16,10 +16,10 @@ from matplotlib import pyplot as plt
 import global_var as gv
 
 class CtrlMon(Frame) :
-    def __init__(self, name, *args, **kwargs) :
+    def __init__(self, name, gvi, *args, **kwargs) :
         Frame.__init__(self, *args, **kwargs)
         self.name = name
-        self.gvi = gv.globals()
+        self.gvi = gvi
         self.buildContent()
 
     def buildContent(self) :

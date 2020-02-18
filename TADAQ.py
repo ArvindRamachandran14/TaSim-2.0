@@ -193,9 +193,10 @@ async def main() :
         config = json.loads(fCfg.read())        # Read config file
         g.initialize(config)              # Initialize the globals
 
-    port = sys.argv[1]
-    baud_rate = sys.argv[2]
-    time_out = int(sys.argv[3])
+    gvi =  sys.argv[1]   
+    port = sys.argv[2]
+    baud_rate = sys.argv[3]
+    time_out = int(sys.argv[4])
     ser = serial.Serial(port, baud_rate, timeout=time_out)
 
     ser.write('c-check\n'.encode())
@@ -219,8 +220,6 @@ async def main() :
     if g.bconnected == "True":
 
         ser.write('\n'.encode())
-
-        gvi = gv.globals()
 
         prod = producer(ser, gvi)      # Number of records and interval
         task1 = asyncio.create_task(prod.produce())

@@ -8,6 +8,8 @@ import json
 import globals as g
 import matplotlib.animation as animation
 import CtrlMon
+import global_var as gv
+
 
 from MainForm import MainForm
 
@@ -29,7 +31,10 @@ def main(argv) :
         g.initialize(config)              # Initialize the globals
 
     # Start the mainform
-    g.mainForm = MainForm()
+
+    gvi = gv.globals()
+
+    g.mainForm = MainForm(gvi)
 	
     ani_SC = animation.FuncAnimation(g.mainForm.tabMon.fig1, g.mainForm.tabMon.animate_SC, interval=1000)
 

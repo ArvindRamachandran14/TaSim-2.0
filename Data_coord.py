@@ -96,7 +96,9 @@ async def main() :
 
 class Data_coord():
 
-	def __init__(self):
+	def __init__(self, gvi):
+
+		self.gvi = gvi
 
 		self.mmfd = None
 
@@ -110,7 +112,7 @@ class Data_coord():
 
 	def Connect(self, serial_port, baud_rate, time_out):
 
-		Popen(['python3.7', 'TADAQ.py', serial_port, baud_rate, time_out])
+		Popen(['python3.7', 'TADAQ.py', self.gvi, serial_port, baud_rate, time_out])
 
 	def Disconnect(self):
 

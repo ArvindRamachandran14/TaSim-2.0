@@ -22,13 +22,18 @@ import global_flags as gf
 import json
 class MainForm(Tk) :
     
-    def __init__(self, *args, **kwargs) :
+    def __init__(self, gvi, *args, **kwargs) :
 	
 
+        
         # self.bconnected = False
+
+        self.gvi = gvi
 
         tk.Tk.__init__(self, *args, **kwargs) 
         tk.Tk.wm_title(self, 'Main Window') #window title
+
+
 
         self.grid_rowconfigure(0, weight=1)  #Let the window fill out when resizing
         self.grid_columnconfigure(0, weight=1)  #Let the window fill out when resizing
@@ -50,7 +55,7 @@ class MainForm(Tk) :
         self.buildStatusBar(container)
         self.ctrlTab.select(self.tabSetup)
 
-        self.coord = Data_coord.Data_coord()
+        self.coord = Data_coord.Data_coord(self.gvi)
 
         self.dat_buf = []
 
@@ -135,7 +140,7 @@ class MainForm(Tk) :
         self.ctrlTab = ttk.Notebook(container)
         self.tabSetup = CtrlSetup.CtrlSetup(self.ctrlTab)
         self.ctrlTab.add(self.tabSetup, text = 'Setup')
-        self.tabMon = CtrlMon.CtrlMon(self.ctrlTab)
+        self.tabMon = CtrlMon.CtrlMon(self.ctrlTab, self.gvi)
         self.ctrlTab.add(self.tabMon, text = 'Monitor')
         self.tabTerm = CtrlTerm.CtrlTerm(self.ctrlTab)
         self.ctrlTab.add(self.tabTerm, text = 'Terminal')
