@@ -182,7 +182,10 @@ async def main() :
         config = json.loads(fCfg.read())        # Read config file
         g.initialize(config)              # Initialize the globals
 
-d_rate, timeout=time_out)
+    port = sys.argv[1]
+    baud_rate = sys.argv[2]
+    time_out = int(sys.argv[3])
+    ser = serial.Serial(port, baud_rate, timeout=time_out)
 
     ser.write('c-check\n'.encode())
 
