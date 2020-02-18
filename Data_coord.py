@@ -25,12 +25,16 @@ class TAData(Structure) :
     _fields_ = [ \
         ('recNum', c_int),
         ('recTime', c_double),
-        ('status', c_int),
-        ('temp1', c_double),
-        ('temp2', c_double),
-        ('temp3', c_double),
+        ('SC_T1', c_double),
+        ('SC_T2', c_double),
+        ('CC_T1', c_double),
+        ('DPG_T1', c_double),
         ('pH2O', c_double),
-        ('pCO2', c_double)]
+        ('pCO2', c_double),
+        ('Dew_point_temp', c_double),
+        ('Sample_weight', c_double),
+        ('Status', c_int)
+        ]
 
 class TAShare(Structure) :
     _pack_ = 4
@@ -83,7 +87,7 @@ class consumer() :
 
                 gv.time_list.append(tad.recTime)
 
-                # The only thing done with the data is to print it here.
+                # The only thing done with the data is to print its here.
                 '''
                 print('P: {0:4d} {1:10.3f} {2:10.3f} {3:10.3f} {4:10.3f} {5:10.3f} {6:10.3f} {7:10.3f} {8:10.3f} {9:10.3f} {10:d}'.format( \
                     tad.recNum, tad.recTime, \
