@@ -69,6 +69,7 @@ class consumer() :
 				tad = TAData.from_buffer(tash.data[self.lastIdx])
 				
 
+
 				# The only thing done with the data is to print it here.
 				print('P: {0:4d} {1:10.3f} {2:10.3f} {3:10.3f} {4:10.3f} {5:10.3f} {6:10.3f} {7:10.3f} {8:10.3f} {9:10.3f} {10:d}'.format( \
                     tad.recNum, tad.recTime, \
@@ -95,6 +96,9 @@ async def main() :
 	await task1
 	#await task2
 
+def trigger_consumer():
+
+	asyncio.run(main(sys.argv))
 
 class Data_coord():
 
@@ -114,8 +118,6 @@ class Data_coord():
 
 		Popen(['python3.7', 'TADAQ.py', serial_port, baud_rate, time_out])
 		
-	
-
 
 	def Disconnect(self):
 

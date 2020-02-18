@@ -52,6 +52,8 @@ class MainForm(Tk) :
 
         self.coord = Data_coord.Data_coord()
 
+        self.consume = Data_coord.trigger_consumer()
+
         self.dat_buf = []
 
         #self.dcoord = DCoord(Rec_num) # This is renaming the consumer class 

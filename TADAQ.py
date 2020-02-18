@@ -94,25 +94,15 @@ class producer() :
                 self.recNum += 1
                 tash.data[recIdx].recTime = seconds
                 tash.data[recIdx].SC_T1 = data_list[0]
-                #self.gv.Temperatures_SC[recIdx] = data_list[0]
-                gv.Temperatures_SC.append(data_list[0])
                 tash.data[recIdx].SC_T2 = data_list[1]
                 tash.data[recIdx].CC_T1 = data_list[2]
-                gv.Temperatures_CC.append(data_list[2])
                 tash.data[recIdx].DPG_T1 = data_list[3]
-                gv.Temperatures_DPG.append(data_list[3])
                 tash.data[recIdx].pH2O = data_list[4]
-                gv.pH2O_list.append(data_list[4])
                 tash.data[recIdx].pCO2 = data_list[5]
-                gv.pCO2_list.append(data_list[5])
                 tash.data[recIdx].Dew_point_temp = data_list[6]
                 tash.data[recIdx].Sample_weight = data_list[7]
-                gv.sample_weight.append(data_list[7])
-                gv.time_list.append(seconds/60.0)
                 tash.data[recIdx].Status = data_list[8]
                 tash.recIdx = recIdx
-
-                #print(gv.Temperatures_SC[-1], gv.Temperatures_CC[-1], gv.Temperatures_DPG[-1], gv.pH2O[-1], gv.pCO2[-1], gv.sample_weight[-1])
 
                 '''
 
@@ -192,10 +182,7 @@ async def main() :
         config = json.loads(fCfg.read())        # Read config file
         g.initialize(config)              # Initialize the globals
 
-    port = sys.argv[1]
-    baud_rate = sys.argv[2]
-    time_out = int(sys.argv[3])
-    ser = serial.Serial(port, baud_rate, timeout=time_out)
+d_rate, timeout=time_out)
 
     ser.write('c-check\n'.encode())
 
