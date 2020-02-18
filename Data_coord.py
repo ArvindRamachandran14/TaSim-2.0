@@ -67,6 +67,7 @@ class consumer() :
 				if self.lastIdx == recCount :
 					self.lastIdx = 0
 				tad = TAData.from_buffer(tash.data[self.lastIdx])
+				
 
 				# The only thing done with the data is to print it here.
 				print('P: {0:4d} {1:10.3f} {2:10.3f} {3:10.3f} {4:10.3f} {5:10.3f} {6:10.3f} {7:10.3f} {8:10.3f} {9:10.3f} {10:d}'.format( \
