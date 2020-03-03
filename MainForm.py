@@ -118,6 +118,8 @@ class MainForm(Tk) :
         
         self.btn_text.set("Connect")
 
+        print( self.btn_text.get())
+
         self.button.grid(row=0, column=4)
 
     def buildStatusBar(self, container) :
