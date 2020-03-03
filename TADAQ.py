@@ -129,6 +129,7 @@ class producer() :
                     tash.command[idx] = 0
                 if command == '@{EXIT}' :
                     self.bDone = True
+                    
                 print(f'Command: {command}')
                 sReply = 'OK'
                 repBuf = bytearray(sReply, encoding)

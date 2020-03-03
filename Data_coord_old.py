@@ -13,7 +13,6 @@ import asyncio
 from subprocess import Popen
 import globals as g
 import global_var as gv
-import tkinter as tk
 #import pykbhit as pykb
 
 
@@ -64,8 +63,7 @@ class consumer() :
     # consume
     # This function gets unread data from the shared memory circular
     # buffer at the specified interval.
-   def consume(self) :
-
+    async def consume(self) :
         while not self.bDone :
             tash = TAShare.from_buffer(self.mmShare)
             while not self.lastIdx == tash.recIdx :
@@ -99,26 +97,30 @@ class consumer() :
                 '''
                 self.recsGot += 1
 
-            tksself.interval
+            await asyncio.sleep(self.interval)
         return 0
 
     def initialize(self) :
         self.mmfd = open('taShare', 'r+b')
         self.mmShare = mmap.mmap(self.mmfd.fileno(), sizeof(TAShare))
 
-def main() :
+async def main() :
 
     cons = consumer(2)
 
-    #print('Type \"Exit\" when ready to quit...')
+    print('Type \"Exit\" when ready to quit...')
+    task1 = asyncio.create_task(cons.consume())
+    #task2 = asyncio.create_task(cons.getCmd())
+    await task1
+    #await task2
 
-    cons.consume()
+def trigger_consumer():
+
+    asyncio.run(main(sys.argv))
 
 class Data_coord():
 
-    def __init__(self, container):
-
-        self.container = container
+    def __init__(self):
 
         self.mmfd = None
 
@@ -132,10 +134,9 @@ class Data_coord():
 
     def Connect(self, serial_port, baud_rate, time_out):
 
-        self.mmShare = None # attempt to resolve the old data bug
-
         Popen(['python3.7', 'TADAQ.py', serial_port, baud_rate, time_out])
         
+
     def Disconnect(self):
 
         print('Disconnecting')

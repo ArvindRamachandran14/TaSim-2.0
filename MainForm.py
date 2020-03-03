@@ -50,7 +50,7 @@ class MainForm(Tk) :
         self.buildStatusBar(container)
         self.ctrlTab.select(self.tabSetup)
 
-        self.coord = Data_coord.Data_coord()
+        self.coord = Data_coord.Data_coord(container)
 
         self.dat_buf = []
 
@@ -159,7 +159,7 @@ class MainForm(Tk) :
 
            self.coord.Connect(self.tty_variable.get(), self.baud_rate_variable.get(), str(time_out)) #TAD_rec_count is the total number of records
 	
-           Data_coord.trigger_consumer()
+           Data_coord.main()
 		
         else:
 
