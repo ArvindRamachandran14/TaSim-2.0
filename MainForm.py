@@ -151,7 +151,7 @@ class MainForm(Tk) :
 
         g.update()
 
-    def connect(self):
+    def connect(self, container):
 
         time_out = 3
 
@@ -159,7 +159,7 @@ class MainForm(Tk) :
 
            self.coord.Connect(self.tty_variable.get(), self.baud_rate_variable.get(), str(time_out)) #TAD_rec_count is the total number of records
 	
-           Data_coord.main()
+           Data_coord.main(container)
 		
         else:
 

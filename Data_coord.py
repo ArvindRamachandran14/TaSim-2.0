@@ -64,7 +64,7 @@ class consumer() :
     # consume
     # This function gets unread data from the shared memory circular
     # buffer at the specified interval.
-   def consume(self) :
+   def consume(self, container) :
 
         while not self.bDone :
             tash = TAShare.from_buffer(self.mmShare)
@@ -99,20 +99,21 @@ class consumer() :
                 '''
                 self.recsGot += 1
 
-            tksself.interval
+            tk.after(container, self.interval)
+            
         return 0
 
     def initialize(self) :
         self.mmfd = open('taShare', 'r+b')
         self.mmShare = mmap.mmap(self.mmfd.fileno(), sizeof(TAShare))
 
-def main() :
+def main(container) :
 
     cons = consumer(2)
 
     #print('Type \"Exit\" when ready to quit...')
 
-    cons.consume()
+    cons.consume(container)
 
 class Data_coord():
 
