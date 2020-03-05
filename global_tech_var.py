@@ -13,14 +13,6 @@ class globals_:
 
         with open('taui.json', 'r') as fCfg :
             self.config = json.loads(fCfg.read())
-        
-        self.tty = None
-
-        self.cfg = {}
-
-        self.initialize()
-
-    def initialize(self):
 
         self.cfg = self.config  # Set the cfg
         self.tty = self.cfg["tty"]
