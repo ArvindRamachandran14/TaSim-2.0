@@ -39,6 +39,8 @@ def main(argv) :
 
     ani_SC = animation.FuncAnimation(mainForm.tabMon.fig1, mainForm.tabMon.animate_SC, interval=1000)
 
+    ani_pCO2 = animation.FuncAnimation(mainForm.tabMon.fig2, mainForm.tabMon.animate_pCO2, interval=1000)
+
     def apploop():
 
         with open('taui.json', 'r') as fCfg :
