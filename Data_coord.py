@@ -76,7 +76,7 @@ class consumer() :
 
             tad = TAData.from_buffer(tash.data[self.lastIdx])
                 
-            self.g_sys_instance_instance.Temperatures_SC.append(tad.SC_T1)
+            self.g_sys_instance.Temperatures_SC.append(tad.SC_T1)
 
             self.g_sys_instance.Temperatures_CC.append(tad.CC_T1)
 
