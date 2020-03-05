@@ -191,8 +191,6 @@ async def main() :
     #print(reply)
 
     if reply == "Ok":
-
-        print(reply)
    
         g.bconnected = "True"
 
