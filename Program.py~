@@ -45,16 +45,16 @@ def main(argv) :
             
             config = json.loads(fCfg.read())
 
-            print(config["bconnected"])
+            bconnected = config["bconnected"]
         
     
-        if g_tech_instance.bconnected == "True":
+        if bconnected == "True":
     
-            print('Consumption in progress')
+            #print('Consumption in progress')
 
             cons.consume()
 
-        mainForm.after(2000, apploop)
+        mainForm.after(5000, apploop)
 
     apploop()
 

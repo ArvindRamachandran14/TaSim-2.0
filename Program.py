@@ -54,7 +54,7 @@ def main(argv) :
 
             cons.consume()
 
-        mainForm.after(2000, apploop)
+        mainForm.after(5000, apploop)
 
     apploop()
 
