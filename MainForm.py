@@ -21,7 +21,7 @@ import json
 
 class MainForm(Tk) :
     
-    def __init__(self, g_instance, gv_instance, cons, *args, **kwargs) :
+    def __init__(self, g_tech_instance, g_sys_instance, cons, *args, **kwargs) :
 	    
         # self.bconnected = False
 
@@ -40,8 +40,8 @@ class MainForm(Tk) :
         container.grid_rowconfigure(1, weight=1) # Notebook sits in row 1 and it should occupy any empty space left
         container.grid_columnconfigure(0, weight=1) # Makes sure there is no empty space in the horizontal direction
 
-        self.g_instance = g_instance
-        self.gv_instance = gv_instance
+        self.g_tech_instance = g_tech_instance
+        self.g_sysinstance = g_sys_instance
         self.cons = cons
 
         self.minsize(height = 700, width = 1024) # setting window size
@@ -95,7 +95,7 @@ class MainForm(Tk) :
 
         self.tty_variable = StringVar()
 
-        self.tty_variable.set(self.g_instance.tty)
+        self.tty_variable.set(self.g_tech_instance.tty)
 
         self.serial_port_list = OptionMenu(self.serialBar, self.tty_variable, *tty_list, command=self.update_json_file)
 
@@ -109,7 +109,7 @@ class MainForm(Tk) :
 
         self.baud_rate_variable = StringVar()
 
-        self.baud_rate_variable.set(g_instance.baud_rate)
+        self.baud_rate_variable.set(g_tech_instance.baud_rate)
 
         self.baud_rate_list = OptionMenu(self.serialBar, self.baud_rate_variable, *baud_rate_list, command=self.update_json_file)
 
@@ -137,7 +137,7 @@ class MainForm(Tk) :
         self.ctrlTab = ttk.Notebook(container)
         self.tabSetup = CtrlSetup.CtrlSetup(self.ctrlTab)
         self.ctrlTab.add(self.tabSetup, text = 'Setup')
-        self.tabMon = CtrlMon.CtrlMon(self.ctrlTab, self.gv_instance)
+        self.tabMon = CtrlMon.CtrlMon(self.ctrlTab, self.g_sys_instance)
         self.ctrlTab.add(self.tabMon, text = 'Monitor')
         self.tabTerm = CtrlTerm.CtrlTerm(self.ctrlTab)
         self.ctrlTab.add(self.tabTerm, text = 'Terminal')
@@ -147,11 +147,11 @@ class MainForm(Tk) :
 
     def update_json_file(self, event):
 
-        g_instance.baud_rate = self.baud_rate_variable.get()
+        g_tech_instance.baud_rate = self.baud_rate_variable.get()
 
-        g_instance.tty = self.tty_variable.get()
+        g_tech_instance.tty = self.tty_variable.get()
 
-        g_instance.update()
+        g_tech_instance.update()
 
     def connect(self):
 
