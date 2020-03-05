@@ -21,7 +21,7 @@ class globals():
         self.time_interval = self.cfg["time_interval"]
         self.bconnected = "False"
 
-    def update():
+    def update(self):
 
         self.cfg["tty"] = self.tty
 
