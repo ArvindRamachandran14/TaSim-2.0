@@ -40,6 +40,8 @@ def main(argv) :
     ani_SC = animation.FuncAnimation(mainForm.tabMon.fig1, mainForm.tabMon.animate_SC, interval=1000)
 
     def apploop():
+
+        print(g_tech_instance.bconnected)
     
         if g_tech_instance.bconnected == "True":
     
