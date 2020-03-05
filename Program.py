@@ -41,7 +41,8 @@ def main(argv) :
 
     def apploop():
 
-         with open('taui.json', 'r') as fCfg :
+        with open('taui.json', 'r') as fCfg :
+            
             config = json.loads(fCfg.read())
 
         print(config["bconnected"])
