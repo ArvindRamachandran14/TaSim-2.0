@@ -58,7 +58,6 @@ class consumer() :
         self.mmfd = None
         self.lastIdx = -1
         self.recsGot = 0
-        self.initialize()
         #self.kb = pykb.KBHit()
 
     # consume
@@ -114,6 +113,8 @@ class consumer() :
             os.remove('taShare')
 
         Popen(['python3.7', 'TADAQ.py', serial_port, baud_rate, time_out])
+
+        self.initialize()
         
     def Disconnect(self):
 
