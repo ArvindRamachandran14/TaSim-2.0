@@ -59,7 +59,7 @@ class CtrlMon(Frame) :
 
         self.fig1 = Figure(figsize=(3.8, 3.8))
         self.ax1 = self.fig1.add_subplot(111)
-        self.ax1.set_xlabel('Time (min)')
+        self.ax1.set_xlabel('Time (sec)')
         self.ax1.set_ylabel('Temperature ($^\circ$C)')
         self.ax1.set_autoscalex_on(True)
         #self.ax1.set_ybound(0, 50)
@@ -102,8 +102,8 @@ class CtrlMon(Frame) :
 
     def animate_SC(self, i):
 
-        print('Time', self.g_sys_instance.time_list)
-        print('Temperature', self.g_sys_instance.Temperatures_SC)
+        #print('Time', self.g_sys_instance.time_list)
+        #print('Temperature', self.g_sys_instance.Temperatures_SC)
 
         #self.ax1.clear()
 
