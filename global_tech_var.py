@@ -8,8 +8,8 @@
 import json
 
 cfgFile = 'taui.json'
-mainForm = None
 
+baud_rate = None
 cfg = {}                        # Config object
 tty = None                      # TTY or COM port to use for TA comms
 
