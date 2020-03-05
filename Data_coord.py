@@ -76,7 +76,7 @@ class consumer() :
 
             tad = TAData.from_buffer(tash.data[self.lastIdx])
 
-            if tad.SC_T1 > 0.0
+            if tad.SC_T1 > 0.0:
                 
                 self.g_sys_instance.Temperatures_SC.append(tad.SC_T1)
 
