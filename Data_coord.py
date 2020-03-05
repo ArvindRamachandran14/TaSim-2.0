@@ -75,20 +75,22 @@ class consumer() :
                 self.lastIdx = 0
 
             tad = TAData.from_buffer(tash.data[self.lastIdx])
+
+            if tad.SC_T1 > 0.0
                 
-            self.g_sys_instance.Temperatures_SC.append(tad.SC_T1)
+                self.g_sys_instance.Temperatures_SC.append(tad.SC_T1)
 
-            self.g_sys_instance.Temperatures_CC.append(tad.CC_T1)
+                self.g_sys_instance.Temperatures_CC.append(tad.CC_T1)
 
-            self.g_sys_instance.Temperatures_DPG.append(tad.DPG_T1)
+                self.g_sys_instance.Temperatures_DPG.append(tad.DPG_T1)
 
-            self.g_sys_instance.pH2O_list.append(tad.pH2O)
+                self.g_sys_instance.pH2O_list.append(tad.pH2O)
 
-            self.g_sys_instance.pCO2_list.append(tad.pCO2)
+                self.g_sys_instance.pCO2_list.append(tad.pCO2)
 
-            self.g_sys_instance.sample_weight.append(tad.Sample_weight)
+                self.g_sys_instance.sample_weight.append(tad.Sample_weight)
 
-            self.g_sys_instance.time_list.append(tad.recTime)
+                self.g_sys_instance.time_list.append(tad.recTime)
 
             # The only thing done with the data is to print its here.
             '''
