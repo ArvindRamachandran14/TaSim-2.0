@@ -7,8 +7,6 @@
 
 from tkinter import Frame, LabelFrame, Label, Spinbox, StringVar, Button, Entry
 
-import globals as g
-
 import json
 
 class CtrlCfg(Frame) :
@@ -17,9 +15,6 @@ class CtrlCfg(Frame) :
         self.name = name
         self.btn_text = StringVar()
         self.buildContent()
-        with open(g.cfgFile, 'r') as fCfg :
-            config = json.loads(fCfg.read())        # Read config file
-            g.initialize(config)              # Initialize the globals
 
     def buildContent(self) :
 
