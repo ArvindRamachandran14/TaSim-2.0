@@ -40,7 +40,6 @@ class MainForm(Tk) :
         container.grid_rowconfigure(1, weight=1) # Notebook sits in row 1 and it should occupy any empty space left
         container.grid_columnconfigure(0, weight=1) # Makes sure there is no empty space in the horizontal direction
 
-        self.g_tech_instance = g_tech_instance
         self.g_sysinstance = g_sys_instance
         self.cons = cons
 
@@ -95,7 +94,7 @@ class MainForm(Tk) :
 
         self.tty_variable = StringVar()
 
-        self.tty_variable.set(self.g_tech_instance.tty)
+        self.tty_variable.set(g_tech_instance.tty)
 
         self.serial_port_list = OptionMenu(self.serialBar, self.tty_variable, *tty_list, command=self.update_json_file)
 

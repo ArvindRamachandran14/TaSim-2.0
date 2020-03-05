@@ -13,7 +13,7 @@ from subprocess import Popen
 from pathlib import Path
 import tkinter as tk
 #import pykbhit as pykb
-
+import global_tech_var as g_tech_instance
 
 encoding = 'utf-8'
 loop = None
@@ -45,9 +45,9 @@ class TAShare(Structure) :
             ('data', TAData * recCount)]
 
 class consumer() :
-    def __init__(self, interval, g_tech_instance, g_sys_instance) :
+    def __init__(self, interval, g_sys_instance) :
 
-        self.g_tech_instance= g_tech_instance
+        #self.g_tech_instance= g_tech_instance
         self.g_sys_instance = g_sys_instance
         self.startTime = None
         self.bDone = False
@@ -127,11 +127,11 @@ class consumer() :
 
         tash.command[0:len(cmdBuf)] = cmdBuf
 
-        self.g_tech_instance.bconnected = "False"
+        g_tech_instance.bconnected = "False"
 
-        self.g_tech_instance.update()
+        g_tech_instance.update()
 
-        print(self.g_tech_instance.cfg)
+        print(g_tech_instance.cfg)
 
         print('Disconnected')
 
