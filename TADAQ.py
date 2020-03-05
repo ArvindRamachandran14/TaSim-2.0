@@ -16,10 +16,6 @@ import time
 
 import globals as g
 
-import global_var as gv
-
-import global_flags as gf
-
 import sys
 import json
 
@@ -111,7 +107,7 @@ class producer() :
                         tash.data[recIdx].SC_T1, tash.data[recIdx].SC_T2, tash.data[recIdx].CC_T1, tash.data[recIdx].DPG_T1, \
                         tash.data[recIdx].pH2O, tash.data[recIdx].pCO2, tash.data[recIdx].Dew_point_temp, \
                         tash.data[recIdx].Sample_weight, tash.data[recIdx].Status))
-		'''
+        '''
                 
                 await asyncio.sleep(float(g.time_interval))
 

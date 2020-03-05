@@ -20,15 +20,17 @@ import Data_coord
 import globals as g
 import global_flags as gf
 import json
+
 class MainForm(Tk) :
     
-    def __init__(self, *args, **kwargs) :
+    def __init__(self, gv_instance, *args, **kwargs) :
 	    
         # self.bconnected = False
 
         tk.Tk.__init__(self, *args, **kwargs) 
-        tk.Tk.wm_title(self, 'Main Window') #window title
 
+
+        tk.Tk.wm_title(self, 'Main Window') #window title
 
         self.grid_rowconfigure(0, weight=1)  #Let the window fill out when resizing
         self.grid_columnconfigure(0, weight=1)  #Let the window fill out when resizing
@@ -37,9 +39,10 @@ class MainForm(Tk) :
         
         container.grid(row=0, column=0, sticky=tk.E+tk.W+tk.S+tk.N) # Let the main frame fill out the entire window
 
-
         container.grid_rowconfigure(1, weight=1) # Notebook sits in row 1 and it should occupy any empty space left
         container.grid_columnconfigure(0, weight=1) # Makes sure there is no empty space in the horizontal direction
+
+        self.gv_instance = gv_instance
 
         self.minsize(height = 700, width = 1024) # setting window size
         self.protocol("WM_DELETE_WINDOW", self.onClosing) 
@@ -50,7 +53,7 @@ class MainForm(Tk) :
         self.buildStatusBar(container)
         self.ctrlTab.select(self.tabSetup)
 
-        self.coord = Data_coord.Data_coord(container)
+        self.coord = Data_coord.Data_coord()
 
         self.dat_buf = []
 
@@ -118,7 +121,7 @@ class MainForm(Tk) :
         
         self.btn_text.set("Connect")
 
-        print( self.btn_text.get())
+        print(self.btn_text.get())
 
         self.button.grid(row=0, column=4)
 
@@ -130,14 +133,13 @@ class MainForm(Tk) :
         tk.Label(statusBar, text='Idle').pack(side=tk.LEFT)
 
         tk.Label(statusBar, text='Time').pack(side=tk.RIGHT)
-
-    
+  
     def buildCtrlTab(self, container) :
         
         self.ctrlTab = ttk.Notebook(container)
         self.tabSetup = CtrlSetup.CtrlSetup(self.ctrlTab)
         self.ctrlTab.add(self.tabSetup, text = 'Setup')
-        self.tabMon = CtrlMon.CtrlMon(self.ctrlTab)
+        self.tabMon = CtrlMon.CtrlMon(self.ctrlTab, self.gv_instance)
         self.ctrlTab.add(self.tabMon, text = 'Monitor')
         self.tabTerm = CtrlTerm.CtrlTerm(self.ctrlTab)
         self.ctrlTab.add(self.tabTerm, text = 'Terminal')
@@ -159,9 +161,7 @@ class MainForm(Tk) :
 
         if str(self.btn_text.get()) == "Connect":
 
-           self.coord.Connect(self.tty_variable.get(), self.baud_rate_variable.get(), str(time_out)) #TAD_rec_count is the total number of records
-	
-           Data_coord.main(container)
+           self.coord.Connect(self.tty_variable.get(), self.baud_rate_variable.get(), str(time_out)) #TAD_rec_count is the total number of record
 		
         else:
 

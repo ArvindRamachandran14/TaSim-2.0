@@ -17,9 +17,10 @@ import global_var as gv
 import Data_coord
 
 class CtrlMon(Frame) :
-    def __init__(self, name, *args, **kwargs) :
+    def __init__(self, name, gv_instance, *args, **kwargs) :
         Frame.__init__(self, *args, **kwargs)
         self.name = name
+        self.gv_instance = gv_instance
         self.buildContent()
 
     def buildContent(self) :
@@ -101,9 +102,9 @@ class CtrlMon(Frame) :
 
     def animate_SC(self, i):
 
-        print('Time', gv.time_list)
-        print('Temperature', gv.Temperatures_SC)
+        print('Time', self.gv_instance.time_list)
+        print('Temperature', self.gv_instance.Temperatures_SC)
 
         #self.ax1.clear()
 
-        self.ax1.plot(gv.time_list, gv.Temperatures_SC)
+        self.ax1.plot(self.gv_instance.time_list, self.gv_instance.Temperatures_SC)

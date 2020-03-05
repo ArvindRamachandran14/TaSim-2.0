@@ -9,6 +9,7 @@ import globals as g
 import matplotlib.animation as animation
 import CtrlMon
 import global_var as gv
+import Data_coord
 
 
 from MainForm import MainForm
@@ -30,11 +31,23 @@ def main(argv) :
         config = json.loads(fCfg.read())        # Read config file
         g.initialize(config)              # Initialize the globals
 
-    # Start the mainform
+    
 
-    g.mainForm = MainForm()
-	
+    gv_instance = gv.globals()
+
+    g.mainForm = MainForm(gv_instance)
+
+    cons = Data_coord.consumer(2, gv_instance)
+    
     ani_SC = animation.FuncAnimation(g.mainForm.tabMon.fig1, g.mainForm.tabMon.animate_SC, interval=1000)
+
+    def apploop():
+
+
+
+
+        after(5000, apploop)
+
 
     g.mainForm.mainloop()
 

@@ -1,13 +1,18 @@
-Temperatures_SC = []
 
-Temperatures_CC = []
+class globals:
 
-Temperatures_DPG = []
+    def __init__(self):
 
-pCO2_list = []
+        self.Temperatures_SC = []
 
-pH2O_list = []
+        self.Temperatures_CC = []
 
-sample_weight = []
+        self.Temperatures_DPG = []
 
-time_list = []
+        self.pCO2_list = []
+
+        self.pH2O_list = []
+
+        self.sample_weight = []
+
+        self.time_list = []

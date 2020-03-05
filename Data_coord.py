@@ -9,10 +9,8 @@ from random import random
 import mmap
 import os
 from datetime import datetime
-import asyncio
 from subprocess import Popen
 import globals as g
-import global_var as gv
 import tkinter as tk
 #import pykbhit as pykb
 
@@ -47,7 +45,8 @@ class TAShare(Structure) :
             ('data', TAData * recCount)]
 
 class consumer() :
-    def __init__(self, interval) :
+    def __init__(self, interval, gv_instance_instance) :
+        self.gv_instance_instance = gv_instance_instance
         self.startTime = None
         self.bDone = False
         self.interval = interval
@@ -59,67 +58,56 @@ class consumer() :
         self.lastIdx = -1
         self.recsGot = 0
         self.initialize()
-        self.kb = pykb.KBHit()
+        #self.kb = pykb.KBHit()
 
     # consume
     # This function gets unread data from the shared memory circular
     # buffer at the specified interval.
-   def consume(self, container) :
+   def consume(self) :
 
-        while not self.bDone :
-            tash = TAShare.from_buffer(self.mmShare)
-            while not self.lastIdx == tash.recIdx :
-                self.lastIdx += 1
-                if self.lastIdx == recCount :
-                    self.lastIdx = 0
+        tash = TAShare.from_buffer(self.mmShare)
 
-                tad = TAData.from_buffer(tash.data[self.lastIdx])
+        while not self.lastIdx == tash.recIdx :
+            self.lastIdx += 1
+            if self.lastIdx == recCount :
                 
-                gv.Temperatures_SC.append(tad.SC_T1)
+                self.lastIdx = 0
 
-                gv.Temperatures_CC.append(tad.CC_T1)
+            tad = TAData.from_buffer(tash.data[self.lastIdx])
+                
+            self.gv_instance_instance.Temperatures_SC.append(tad.SC_T1)
 
-                gv.Temperatures_DPG.append(tad.DPG_T1)
+            self.gv_instance.Temperatures_CC.append(tad.CC_T1)
 
-                gv.pH2O_list.append(tad.pH2O)
+            self.gv_instance.Temperatures_DPG.append(tad.DPG_T1)
 
-                gv.pCO2_list.append(tad.pCO2)
+            self.gv_instance.pH2O_list.append(tad.pH2O)
 
-                gv.sample_weight.append(tad.Sample_weight)
+            self.gv_instance.pCO2_list.append(tad.pCO2)
 
-                gv.time_list.append(tad.recTime)
+            self.gv_instance.sample_weight.append(tad.Sample_weight)
 
-                # The only thing done with the data is to print its here.
-                '''
-                print('P: {0:4d} {1:10.3f} {2:10.3f} {3:10.3f} {4:10.3f} {5:10.3f} {6:10.3f} {7:10.3f} {8:10.3f} {9:10.3f} {10:d}'.format( \
-                    tad.recNum, tad.recTime, \
-                    tad.SC_T1, tad.SC_T2, tad.CC_T1, tad.DPG_T1, \
-                    tad.pH2O, tad.pCO2, tad.Dew_point_temp, \
-                    tad.Sample_weight, tad.Status))
-                '''
-                self.recsGot += 1
+            self.gv_instance.time_list.append(tad.recTime)
 
-            tk.after(container, self.interval)
-            
+            # The only thing done with the data is to print its here.
+            '''
+            print('P: {0:4d} {1:10.3f} {2:10.3f} {3:10.3f} {4:10.3f} {5:10.3f} {6:10.3f} {7:10.3f} {8:10.3f} {9:10.3f} {10:d}'.format( \
+                tad.recNum, tad.recTime, \
+                tad.SC_T1, tad.SC_T2, tad.CC_T1, tad.DPG_T1, \
+                tad.pH2O, tad.pCO2, tad.Dew_point_temp, \
+                tad.Sample_weight, tad.Status))
+            '''
+            self.recsGot += 1
+
         return 0
 
     def initialize(self) :
         self.mmfd = open('taShare', 'r+b')
         self.mmShare = mmap.mmap(self.mmfd.fileno(), sizeof(TAShare))
 
-def main(container) :
-
-    cons = consumer(2)
-
-    #print('Type \"Exit\" when ready to quit...')
-
-    cons.consume(container)
-
 class Data_coord():
 
-    def __init__(self, container):
-
-        self.container = container
+    def __init__(self):
 
         self.mmfd = None
 
@@ -133,7 +121,9 @@ class Data_coord():
 
     def Connect(self, serial_port, baud_rate, time_out):
 
-        self.mmShare = None # attempt to resolve the old data bug
+        shFile = Path('taShare')
+        if shFile.is_file() :
+            os.remove('taShare')
 
         Popen(['python3.7', 'TADAQ.py', serial_port, baud_rate, time_out])
         

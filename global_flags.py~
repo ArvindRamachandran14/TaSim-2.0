@@ -1,5 +1,0 @@
-class gf():
-
-    global bconnected
-
-    bconnected = False
