@@ -17,7 +17,6 @@ import serial
 import time
 #import TADAQ
 import Data_coord
-import globals as g
 import json
 
 class MainForm(Tk) :
@@ -95,7 +94,7 @@ class MainForm(Tk) :
 
         self.tty_variable = StringVar()
 
-        self.tty_variable.set(g.tty)
+        self.tty_variable.set(self.g_instance.tty)
 
         self.serial_port_list = OptionMenu(self.serialBar, self.tty_variable, *tty_list, command=self.update_json_file)
 

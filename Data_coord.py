@@ -11,7 +11,6 @@ import os
 from datetime import datetime
 from subprocess import Popen
 from pathlib import Path
-import globals as g
 import tkinter as tk
 #import pykbhit as pykb
 

@@ -7,41 +7,34 @@
 
 import json
 
-cfgFile = 'taui.json'
-mainForm = None
+class globals():
 
-cfg = {}                        # Config object
-tty = None                      # TTY or COM port to use for TA comms
+    def __init_(self, config) :
+        self.mainForm = None
+        self.cfgFile = 'taui.json'
+        with open(self.cfgFile, 'r') as fCfg :
+            self.config = json.loads(fCfg.read())
+        self.cfg = self.config                            # Set the cfg
+        self.tty = self.cfg["tty"]
+        self.baud_rate = self.cfg["baud_rate"]
+        self.time_out = self.cfg["time_out"]
+        self.time_interval = self.cfg["time_interval"]
+        self.bconnected = "False"
 
+    def update(self):
 
+        #self.cfg["tty"] = self.tty
 
+        self.cfg["baud_rate"] = self.baud_rate
 
-# initialize
-# Initialize globals from the cfg object
-def initialize(config) :
-    global cfg, tty, baud_rate, time_out, time_interval, ser
-    cfg = config                            # Set the cfg
-    tty = cfg["tty"]
-    baud_rate = cfg["baud_rate"]
-    time_out = cfg["time_out"]
-    time_interval = cfg["time_interval"]
-    bconnected = cfg["bconnected"]
+        self.cfg["time_out"] = self.time_out
 
+        self.cfg["time_interval"] = self.time_interval
 
-def update():
+        self.cfg["bconnected"] = self.bconnected
 
-    cfg["tty"] = tty
+        print(self.cfg)
 
-    cfg["baud_rate"] = baud_rate
+        with open(self.cfgFile, 'w') as fCfg:
 
-    cfg["time_out"] = time_out
-
-    cfg["time_interval"] = time_interval
-
-    cfg["bconnected"] = bconnected
-
-    print(cfg)
-
-    with open(cfgFile, 'w') as fCfg:
-
-        json.dump(cfg, fCfg)
+            json.dump(self.cfg, fCfg)

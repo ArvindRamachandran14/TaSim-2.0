@@ -31,7 +31,7 @@ def main(argv) :
     
     g_instance = g.globals()              # Initialize the globals
 
-    g_instance.update()
+    #g_instance.update()
 
     gv_instance = gv.globals()
 
