@@ -169,7 +169,7 @@ class MainForm(Tk) :
 
         time.sleep(4)
 
-        if self.g_sys_instance.bconnected == "True":
+        if g_tech_instance.bconnected == "True":
 
             #print('Connected')
 

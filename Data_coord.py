@@ -127,7 +127,7 @@ class consumer() :
 
         tash.command[0:len(cmdBuf)] = cmdBuf
 
-        g_sys_instance.bconnected = "False"
+        g_tech_instance.bconnected = "False"
 
         print(g_tech_instance.cfg)
 

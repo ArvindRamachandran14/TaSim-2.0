@@ -14,7 +14,7 @@ import serial
 import xml.etree.ElementTree as ET
 import time
 
-import globals as g
+import global_tech_var as g
 
 import sys
 import json
