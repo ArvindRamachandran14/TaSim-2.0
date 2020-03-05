@@ -31,6 +31,10 @@ def main(argv) :
         config = json.loads(fCfg.read())        # Read config file
         g.initialize(config)              # Initialize the globals
 
+    g.bconnected  = "False"
+
+    g.update()
+
     gv_instance = gv.globals()
 
     cons = Data_coord.consumer(2, gv_instance)
