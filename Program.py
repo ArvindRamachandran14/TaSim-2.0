@@ -37,7 +37,7 @@ def main(argv) :
 
     mainForm = MainForm(g_sys_instance, cons)
 
-    ani_SC = animation.FuncAnimation(mainForm.tabMon.fig1, mainForm.tabMon.animate_SC, interval=1000)
+    ani_SC = animation.FuncAnimation(mainForm.tabMon.fig1, mainForm.tabMon.animate_SC, interval=10000)
 
     def apploop():
 
