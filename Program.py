@@ -29,7 +29,8 @@ def main(argv) :
 
     with open(g.cfgFile, 'r') as fCfg :
         config = json.loads(fCfg.read())        # Read config file
-        g_instance = g.globals(config)              # Initialize the globals
+    
+    g_instance = g.globals(config)              # Initialize the globals
 
     g_instance.update()
 
@@ -46,7 +47,7 @@ def main(argv) :
         if g_instance.bconnected == "True":
 	
             print('Consumption in progress')
-	
+
             cons.consume()
 
         g_instance.mainForm.after(2000, apploop)
@@ -56,4 +57,6 @@ def main(argv) :
     g_instance.mainForm.mainloop()
 
 # Actual main program
+
+
 main(sys.argv)
