@@ -11,6 +11,7 @@ import sys
 from datetime import datetime
 import CtrlSetup
 import CtrlMon
+import global_tech_var as g_tech_instance
 import CtrlTerm
 import CtrlCfg
 import serial
