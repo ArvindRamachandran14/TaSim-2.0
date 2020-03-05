@@ -5,7 +5,7 @@
 import tkinter as tk 
 import sys
 import json
-import global_tech_var as g_tech
+import global_tech_var as g_tech_instance
 import matplotlib.animation as animation
 import CtrlMon
 import global_sys_var as g_sys
@@ -29,13 +29,13 @@ def main(argv) :
 
         # Read config file
     
-    g_tech_instance = g_tech.globals_()              # Initialize the globals
+    #g_tech_instance = g_tech.globals_()              # Initialize the globals
 
     g_sys_instance = g_sys.globals_()
 
-    cons = Data_coord.consumer(2, g_tech_instance, g_sys_instance)
+    cons = Data_coord.consumer(2, g_sys_instance)
 
-    mainForm = MainForm(g_tech_instance, g_sys_instance, cons)
+    mainForm = MainForm(g_sys_instance, cons)
 
     ani_SC = animation.FuncAnimation(mainForm.tabMon.fig1, mainForm.tabMon.animate_SC, interval=1000)
 
