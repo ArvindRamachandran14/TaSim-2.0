@@ -16,7 +16,7 @@ class globals():
         
         self.tty = None
 
-        self.cfg{}
+        self.cfg = {}
 
         self.initialize()
 
