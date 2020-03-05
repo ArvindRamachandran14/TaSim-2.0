@@ -59,7 +59,7 @@ class CtrlMon(Frame) :
 
         self.fig1 = Figure(figsize=(3.8, 3.8))
         self.ax1 = self.fig1.add_subplot(111)
-        self.ax1.set_xlabel('Time (min)')
+        self.ax1.set_xlabel('Time (sec)')
         self.ax1.set_ylabel('Temperature ($^\circ$C)')
         self.ax1.set_autoscalex_on(True)
         #self.ax1.set_ybound(0, 50)
