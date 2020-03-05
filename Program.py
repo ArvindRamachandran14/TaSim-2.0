@@ -41,7 +41,7 @@ def main(argv) :
 
     def apploop():
     
-        if g_sys_instance.bconnected == "True":
+        if g_tech_instance.bconnected == "True":
     
             print('Consumption in progress')
 
