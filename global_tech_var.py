@@ -9,9 +9,9 @@ import json
 
 cfgFile = 'taui.json'
 
-baud_rate = 0
+baud_rate = 9600
 cfg = {}                        # Config object
-tty = None                      # TTY or COM port to use for TA comms
+tty = "/dev/ttyUSB0"                      # TTY or COM port to use for TA comms
 bconnected = "False"
 
 # initialize
