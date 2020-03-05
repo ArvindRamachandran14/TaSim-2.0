@@ -41,13 +41,14 @@ def main(argv) :
 
     def apploop():
 
-         with open('taui.json', 'r') as fCfg :
+        with open('taui.json', 'r') as fCfg :
+            
             config = json.loads(fCfg.read())
 
-         print(config["bconnected"])
+            print(config["bconnected"])
         
     
-         if g_tech_instance.bconnected == "True":
+        if g_tech_instance.bconnected == "True":
     
             print('Consumption in progress')
 
