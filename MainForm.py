@@ -21,7 +21,7 @@ import json
 
 class MainForm(Tk) :
     
-    def __init__(self, g_tech_instance, g_sys_instance, cons, *args, **kwargs) :
+    def __init__(self, g_sys_instance, cons, *args, **kwargs) :
 	    
         # self.bconnected = False
 
