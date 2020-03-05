@@ -18,12 +18,11 @@ import time
 #import TADAQ
 import Data_coord
 import globals as g
-import global_flags as gf
 import json
 
 class MainForm(Tk) :
     
-    def __init__(self, gv_instance, *args, **kwargs) :
+    def __init__(self, gv_instance, cons, *args, **kwargs) :
 	    
         # self.bconnected = False
 
@@ -43,6 +42,7 @@ class MainForm(Tk) :
         container.grid_columnconfigure(0, weight=1) # Makes sure there is no empty space in the horizontal direction
 
         self.gv_instance = gv_instance
+        self.cons = cons
 
         self.minsize(height = 700, width = 1024) # setting window size
         self.protocol("WM_DELETE_WINDOW", self.onClosing) 
@@ -52,8 +52,6 @@ class MainForm(Tk) :
         self.buildCtrlTab(container)
         self.buildStatusBar(container)
         self.ctrlTab.select(self.tabSetup)
-
-        self.coord = Data_coord.Data_coord()
 
         self.dat_buf = []
 
@@ -155,17 +153,17 @@ class MainForm(Tk) :
 
         g.update()
 
-    def connect(self, container):
+    def connect(self):
 
         time_out = 3
 
         if str(self.btn_text.get()) == "Connect":
 
-           self.coord.Connect(self.tty_variable.get(), self.baud_rate_variable.get(), str(time_out)) #TAD_rec_count is the total number of record
+           self.cons.Connect(self.tty_variable.get(), self.baud_rate_variable.get(), str(time_out)) #TAD_rec_count is the total number of record
 		
         else:
 
-            self.coord.Disconnect()
+            self.cons.Disconnect()
 
             self.btn_text.set("Connect")
 
@@ -200,7 +198,7 @@ class MainForm(Tk) :
 
                 self.parm = 'ALL_DATA'
 
-            bok, dat_buf = self.coord.submit(self.cmd, self.parm)
+            bok, dat_buf = self.conns.submit(self.cmd, self.parm)
 
             self.cmd = ''
 

@@ -10,6 +10,7 @@ import mmap
 import os
 from datetime import datetime
 from subprocess import Popen
+from pathlib import Path
 import globals as g
 import tkinter as tk
 #import pykbhit as pykb
@@ -63,7 +64,7 @@ class consumer() :
     # consume
     # This function gets unread data from the shared memory circular
     # buffer at the specified interval.
-   def consume(self) :
+    def consume(self) :
 
         tash = TAShare.from_buffer(self.mmShare)
 
@@ -102,28 +103,14 @@ class consumer() :
         return 0
 
     def initialize(self) :
-        self.mmfd = open('taShare', 'r+b')
-        self.mmShare = mmap.mmap(self.mmfd.fileno(), sizeof(TAShare))
+        shFile = Path('taShare')
+        if shFile.is_file() :
+            os.remove('taShare')
 
-class Data_coord():
-
-    def __init__(self):
-
-        self.mmfd = None
-
-        self.mmShare = None
-
-        self.initialize()
-
-    def initialize(self) :
         self.mmfd = open('taShare', 'r+b')
         self.mmShare = mmap.mmap(self.mmfd.fileno(), sizeof(TAShare))
 
     def Connect(self, serial_port, baud_rate, time_out):
-
-        shFile = Path('taShare')
-        if shFile.is_file() :
-            os.remove('taShare')
 
         Popen(['python3.7', 'TADAQ.py', serial_port, baud_rate, time_out])
         
@@ -147,4 +134,3 @@ class Data_coord():
 
         #self.ser_PC.close()
 
-    #def submit():

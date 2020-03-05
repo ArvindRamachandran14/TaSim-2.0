@@ -31,23 +31,27 @@ def main(argv) :
         config = json.loads(fCfg.read())        # Read config file
         g.initialize(config)              # Initialize the globals
 
-    
-
     gv_instance = gv.globals()
 
-    g.mainForm = MainForm(gv_instance)
-
     cons = Data_coord.consumer(2, gv_instance)
+
+    g.mainForm = MainForm(gv_instance, cons)
+
     
-    ani_SC = animation.FuncAnimation(g.mainForm.tabMon.fig1, g.mainForm.tabMon.animate_SC, interval=1000)
+    
+    #ani_SC = animation.FuncAnimation(g.mainForm.tabMon.fig1, g.mainForm.tabMon.animate_SC, interval=1000)
 
     def apploop():
+	
+        if g.bconnected == "True":
+	
+            print('Consumption in progress')
+	
+            cons.consume()
 
+        g.mainForm.after(2000, apploop)
 
-
-
-        after(5000, apploop)
-
+    apploop()
 
     g.mainForm.mainloop()
 
