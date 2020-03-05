@@ -10,16 +10,25 @@ import json
 class globals():
 
     def __init_(self) :
-        #self.mainForm = None
-        self.cfgFile = 'taui.json'
-        with open(self.cfgFile, 'r') as fCfg :
+
+        with open('taui.json', 'r') as fCfg :
             self.config = json.loads(fCfg.read())
+        
+        self.tty = None
+
+        self.cfg{}
+
+        self.initialize()
+
+    def initialize(self):
+
         self.cfg = self.config  # Set the cfg
         self.tty = self.cfg["tty"]
         self.baud_rate = self.cfg["baud_rate"]
         self.time_out = self.cfg["time_out"]
         self.time_interval = self.cfg["time_interval"]
         self.bconnected = "False"
+
 
     def update(self):
 
