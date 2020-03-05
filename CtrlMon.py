@@ -107,4 +107,4 @@ class CtrlMon(Frame) :
 
         #self.ax1.clear()
 
-        self.ax1.plot(self.g_sys_instance.time_list, self.g_sys_instance.Temperatures_SC)
+        self.ax1.plot(self.g_sys_instance.time_list, self.g_sys_instance.Temperatures_CC)
