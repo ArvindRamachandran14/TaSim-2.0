@@ -7,7 +7,7 @@
 
 import json
 
-class globals():
+class globals_:
 
     def __init_(self) :
 
@@ -16,7 +16,7 @@ class globals():
         
         self.tty = None
 
-        self.cfg{}
+        self.cfg = {}
 
         self.initialize()
 
