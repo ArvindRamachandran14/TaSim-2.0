@@ -27,14 +27,18 @@ def main(argv) :
     if not option == None :
         print(option)
 
-    with open(g.cfgFile, 'r') as fCfg :
-        config = json.loads(fCfg.read())        # Read config file
+
     
     g_instance = g.globals(config)              # Initialize the globals
+
+    with open(g_instance.cfgFile, 'r') as fCfg :
+        config = json.loads(fCfg.read())        # Read config file
 
     g_instance.update()
 
     gv_instance = gv.globals()
+
+
 
     cons = Data_coord.consumer(2, g_instance, gv_instance)
 
