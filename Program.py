@@ -35,7 +35,7 @@ def main(argv) :
 
     gv_instance = gv.globals()
 
-    cons = Data_coord.consumer(2, gv_instance)
+    cons = Data_coord.consumer(2, g_instance, gv_instance)
 
     g.mainForm = MainForm(gv_instance, cons)
 

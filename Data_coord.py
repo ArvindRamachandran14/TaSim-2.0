@@ -46,7 +46,9 @@ class TAShare(Structure) :
             ('data', TAData * recCount)]
 
 class consumer() :
-    def __init__(self, interval, gv_instance_instance) :
+    def __init__(self, interval, g_instance, gv_instance_instance) :
+
+        self.g_instance = g_instance
         self.gv_instance_instance = gv_instance_instance
         self.startTime = None
         self.bDone = False
@@ -126,11 +128,11 @@ class consumer() :
 
         tash.command[0:len(cmdBuf)] = cmdBuf
 
-        g.bconnected = "False"
+        self.g_instance.bconnected = "False"
 
-        g.update()
+        self.g_instance.update()
 
-        print(g.cfg)
+        print(self.g_instance.cfg)
 
         print('Disconnected')
 
