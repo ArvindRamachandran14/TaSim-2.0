@@ -7,7 +7,7 @@
 
 import json
 
-class globals():
+class globals_:
 
     def __init_(self) :
 

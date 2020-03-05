@@ -29,11 +29,11 @@ def main(argv) :
 
         # Read config file
     
-    g_instance = g.globals()              # Initialize the globals
+    g_instance = g.globals_()              # Initialize the globals
 
     #g_instance.update()
 
-    gv_instance = gv.globals()
+    gv_instance = gv.globals_()
 
     cons = Data_coord.consumer(2, g_instance, gv_instance)
 

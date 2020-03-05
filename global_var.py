@@ -1,5 +1,5 @@
 
-class globals:
+class globals_:
 
     def __init__(self):
 
