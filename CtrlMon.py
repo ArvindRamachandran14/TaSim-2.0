@@ -13,14 +13,14 @@ from matplotlib.figure import Figure
 import matplotlib.animation as animation
 from matplotlib import style
 from matplotlib import pyplot as plt
-import global_var as gv
+import global_sys_var as g_sys
 import Data_coord
 
 class CtrlMon(Frame) :
-    def __init__(self, name, gv_instance, *args, **kwargs) :
+    def __init__(self, name, g_sys_instance, *args, **kwargs) :
         Frame.__init__(self, *args, **kwargs)
         self.name = name
-        self.gv_instance = gv_instance
+        self.g_sys_instance = g_sys_instance
         self.buildContent()
 
     def buildContent(self) :
@@ -102,9 +102,9 @@ class CtrlMon(Frame) :
 
     def animate_SC(self, i):
 
-        print('Time', self.gv_instance.time_list)
-        print('Temperature', self.gv_instance.Temperatures_SC)
+        print('Time', self.g_sys_instance.time_list)
+        print('Temperature', self.g_sys_instance.Temperatures_SC)
 
         #self.ax1.clear()
 
-        self.ax1.plot(self.gv_instance.time_list, self.gv_instance.Temperatures_SC)
+        self.ax1.plot(self.g_sys_instance.time_list, self.g_sys_instance.Temperatures_SC)
