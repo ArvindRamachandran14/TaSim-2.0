@@ -40,6 +40,7 @@ class MainForm(Tk) :
         container.grid_rowconfigure(1, weight=1) # Notebook sits in row 1 and it should occupy any empty space left
         container.grid_columnconfigure(0, weight=1) # Makes sure there is no empty space in the horizontal direction
 
+        self.g_instance = g_instance
         self.gv_instance = gv_instance
         self.cons = cons
 
