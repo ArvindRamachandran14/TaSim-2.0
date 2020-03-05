@@ -27,18 +27,13 @@ def main(argv) :
     if not option == None :
         print(option)
 
-
+        # Read config file
     
-    g_instance = g.globals(config)              # Initialize the globals
-
-    with open(g_instance.cfgFile, 'r') as fCfg :
-        config = json.loads(fCfg.read())        # Read config file
+    g_instance = g.globals()              # Initialize the globals
 
     g_instance.update()
 
     gv_instance = gv.globals()
-
-
 
     cons = Data_coord.consumer(2, g_instance, gv_instance)
 
@@ -47,9 +42,9 @@ def main(argv) :
     ani_SC = animation.FuncAnimation(g_instance.mainForm.tabMon.fig1, g_instance.mainForm.tabMon.animate_SC, interval=1000)
 
     def apploop():
-	
+    
         if g_instance.bconnected == "True":
-	
+    
             print('Consumption in progress')
 
             cons.consume()
