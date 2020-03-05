@@ -21,7 +21,7 @@ import json
 
 class MainForm(Tk) :
     
-    def __init__(self, gv_instance, cons, *args, **kwargs) :
+    def __init__(self, g_instance, gv_instance, cons, *args, **kwargs) :
 	    
         # self.bconnected = False
 
@@ -108,7 +108,7 @@ class MainForm(Tk) :
 
         self.baud_rate_variable = StringVar()
 
-        self.baud_rate_variable.set(g.baud_rate)
+        self.baud_rate_variable.set(g_instance.baud_rate)
 
         self.baud_rate_list = OptionMenu(self.serialBar, self.baud_rate_variable, *baud_rate_list, command=self.update_json_file)
 
@@ -146,11 +146,11 @@ class MainForm(Tk) :
 
     def update_json_file(self, event):
 
-        g.baud_rate = self.baud_rate_variable.get()
+        g_instance.baud_rate = self.baud_rate_variable.get()
 
-        g.tty = self.tty_variable.get()
+        g_instance.tty = self.tty_variable.get()
 
-        g.update()
+        g_instance.update()
 
     def connect(self):
 

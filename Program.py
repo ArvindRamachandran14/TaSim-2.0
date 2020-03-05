@@ -37,7 +37,7 @@ def main(argv) :
 
     cons = Data_coord.consumer(2, g_instance, gv_instance)
 
-    g.mainForm = MainForm(gv_instance, cons)
+    mainForm = MainForm(g_instance, gv_instance, cons)
 
     ani_SC = animation.FuncAnimation(g_instance.mainForm.tabMon.fig1, g_instance.mainForm.tabMon.animate_SC, interval=1000)
 
@@ -49,11 +49,11 @@ def main(argv) :
 
             cons.consume()
 
-        g_instance.mainForm.after(2000, apploop)
+        mainForm.after(2000, apploop)
 
     apploop()
 
-    g_instance.mainForm.mainloop()
+    mainForm.mainloop()
 
 # Actual main program
 
