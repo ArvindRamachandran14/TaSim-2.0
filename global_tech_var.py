@@ -23,7 +23,6 @@ def initialize(config) :
     baud_rate = cfg["baud_rate"]
     time_out = cfg["time_out"]
     time_interval = cfg["time_interval"]
-    bconnected = cfg["bconnected"]
 
 
 def update():
@@ -35,8 +34,6 @@ def update():
     cfg["time_out"] = time_out
 
     cfg["time_interval"] = time_interval
-
-    cfg["bconnected"] = bconnected
 
     print(cfg)
 

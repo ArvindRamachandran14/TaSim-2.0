@@ -3,6 +3,8 @@ class globals_:
 
     def __init__(self):
 
+    	self.bconnected = False
+
         self.Temperatures_SC = []
 
         self.Temperatures_CC = []
