@@ -5,10 +5,10 @@
 import tkinter as tk 
 import sys
 import json
-import globals as g
+import global_tech_var as g_tech
 import matplotlib.animation as animation
 import CtrlMon
-import global_var as gv
+import global_sys_var as g_sys
 import Data_coord
 
 
@@ -29,21 +29,19 @@ def main(argv) :
 
         # Read config file
     
-    g_instance = g.globals_()              # Initialize the globals
+    g_tech_instance = g_tech.globals_()              # Initialize the globals
 
-    #g_instance.update()
+    g_sys_instance = g_sys.globals_()
 
-    gv_instance = gv.globals_()
+    cons = Data_coord.consumer(2, g_tech_instance, g_sys_instance)
 
-    cons = Data_coord.consumer(2, g_instance, gv_instance)
+    mainForm = MainForm(g_tech_instance, g_sys_instance, cons)
 
-    mainForm = MainForm(g_instance, gv_instance, cons)
-
-    ani_SC = animation.FuncAnimation(g_instance.mainForm.tabMon.fig1, g_instance.mainForm.tabMon.animate_SC, interval=1000)
+    ani_SC = animation.FuncAnimation(mainForm.tabMon.fig1, mainForm.tabMon.animate_SC, interval=1000)
 
     def apploop():
     
-        if g_instance.bconnected == "True":
+        if g_tech_instance.bconnected == "True":
     
             print('Consumption in progress')
 

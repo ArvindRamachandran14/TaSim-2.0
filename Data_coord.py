@@ -45,10 +45,10 @@ class TAShare(Structure) :
             ('data', TAData * recCount)]
 
 class consumer() :
-    def __init__(self, interval, g_instance, gv_instance_instance) :
+    def __init__(self, interval, g_tech_instance, g_sys_instance) :
 
-        self.g_instance = g_instance
-        self.gv_instance_instance = gv_instance_instance
+        self.g_tech_instance= g_tech_instance
+        self.g_sys_instance = g_sys_instance
         self.startTime = None
         self.bDone = False
         self.interval = interval
@@ -76,19 +76,19 @@ class consumer() :
 
             tad = TAData.from_buffer(tash.data[self.lastIdx])
                 
-            self.gv_instance_instance.Temperatures_SC.append(tad.SC_T1)
+            self.g_sys_instance_instance.Temperatures_SC.append(tad.SC_T1)
 
-            self.gv_instance.Temperatures_CC.append(tad.CC_T1)
+            self.g_sys_instance.Temperatures_CC.append(tad.CC_T1)
 
-            self.gv_instance.Temperatures_DPG.append(tad.DPG_T1)
+            self.g_sys_instance.Temperatures_DPG.append(tad.DPG_T1)
 
-            self.gv_instance.pH2O_list.append(tad.pH2O)
+            self.g_sys_instance.pH2O_list.append(tad.pH2O)
 
-            self.gv_instance.pCO2_list.append(tad.pCO2)
+            self.g_sys_instance.pCO2_list.append(tad.pCO2)
 
-            self.gv_instance.sample_weight.append(tad.Sample_weight)
+            self.g_sys_instance.sample_weight.append(tad.Sample_weight)
 
-            self.gv_instance.time_list.append(tad.recTime)
+            self.g_sys_instance.time_list.append(tad.recTime)
 
             # The only thing done with the data is to print its here.
             '''
@@ -127,11 +127,11 @@ class consumer() :
 
         tash.command[0:len(cmdBuf)] = cmdBuf
 
-        self.g_instance.bconnected = "False"
+        self.g_tech_instance.bconnected = "False"
 
-        self.g_instance.update()
+        self.g_tech_instance.update()
 
-        print(self.g_instance.cfg)
+        print(self.g_tech_instance.cfg)
 
         print('Disconnected')
 
