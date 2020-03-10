@@ -120,6 +120,9 @@ class producer() :
                 for idx in range(0,80) :
                     tash.reply[idx] = 0
                     tash.command[idx] = 0
+
+                print(command)
+
                 if command == '@{EXIT}' :
                     self.bDone = True
                     sReply = 'OK'
@@ -130,10 +133,12 @@ class producer() :
 
                     self.bDoingCmd = True
                     sReply = 'OK'
+                    print(sReply)
 
                 elif command == '@{PAUSEDATAOFF}':
                     self.bDoingCmd = False
                     sReply = 'OK'
+                    print(sReply)
 
                 elif command[0] == 'g' or 's':
 
