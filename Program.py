@@ -15,21 +15,7 @@ import Data_coord
 
 from MainForm import MainForm
 
-def apploop():
 
-        with open('taui.json', 'r') as fCfg :
-            
-            config = json.loads(fCfg.read())
-
-            bconnected = config["bconnected"]
-        
-        if bconnected == "True":
-    
-            #print('Consumption in progress')
-
-            cons.consume()
-
-        mainForm.after(2000, apploop)
 
 def reset_bconnected():
 
@@ -62,6 +48,22 @@ def main(argv) :
     reset_bconnected()
 
     mainForm = MainForm(g_sys_instance, cons)
+
+    def apploop():
+
+        with open('taui.json', 'r') as fCfg :
+            
+            config = json.loads(fCfg.read())
+
+            bconnected = config["bconnected"]
+        
+        if bconnected == "True":
+    
+            #print('Consumption in progress')
+
+            cons.consume()
+
+        mainForm.after(2000, apploop)
 
     ani_SC = animation.FuncAnimation(mainForm.tabMon.fig1, mainForm.tabMon.animate_SC, interval=1000)
 
