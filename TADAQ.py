@@ -62,7 +62,8 @@ class producer() :
         self.mmShare = None
         self.mmfd = None
         self.startTime = None
-        self.flag = False
+        self.bDoingCmd = False
+        self.bGettingData = False
 
         self.initialize()
        
@@ -124,11 +125,14 @@ class producer() :
                     sReply = 'OK'
 
                 elif command == '@{PAUSEDATAON}':
-                    self.flag = True
+                    while self.bGettingData :
+                        pass
+
+                    self.bDoingCmd = True
                     sReply = 'OK'
 
                 elif command == '@{PAUSEDATAOFF}':
-                    self.flag = True
+                    self.bDoingCmd = False
                     sReply = 'OK'
 
                 elif command[0] == 'g' or 's':
@@ -160,7 +164,8 @@ class producer() :
 
         #print(dt.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S'))
 
-        if not self.flag: 
+        if not self.bDoingCmd: 
+            self.bGettingData = True
 
             ser.write('g-all\n'.encode())
 
@@ -181,6 +186,7 @@ class producer() :
             else:
                 
                 data_list.append(int(Split_strings_list[i]))
+            self.bGettingData = False
 
         return(data_list)
 
