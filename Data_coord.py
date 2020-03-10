@@ -117,6 +117,8 @@ class consumer() :
         if shFile.is_file() :
             os.remove('taShare')
 
+        self.initialize()
+
         Popen(['python3.7', 'TADAQ.py', serial_port, baud_rate, time_out])
 
         time.sleep(2)
@@ -129,9 +131,11 @@ class consumer() :
 
         if bconnected == "True":
 
-            self.initialize()
+            #self.initialize()
 
-            mainform_object.btn_text.set("Disconnect")      
+            mainform_object.btn_text.set("Disconnect") 
+
+            #self.consume()     
 
     def send_command_to_PC(self, command):
 
