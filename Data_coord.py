@@ -147,6 +147,10 @@ class consumer() :
 
         reply = tash.reply.decode()
 
+        print(reply)
+
+        print(type(reply))
+
         cmdBuf = bytearray('@{PAUSEDATAOFF}', encoding)
 
         tash.command[0:len(cmdBuf)] = cmdBuf
