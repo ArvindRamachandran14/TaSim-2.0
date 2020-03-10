@@ -112,11 +112,11 @@ class consumer() :
         self.mmShare = mmap.mmap(self.mmfd.fileno(), sizeof(TAShare))
 
     def Connect(self, mainform_object, serial_port, baud_rate, time_out):
-        '''
+        
         shFile = Path('taShare')
         if shFile.is_file() :
             os.remove('taShare')
-        '''
+
         Popen(['python3.7', 'TADAQ.py', serial_port, baud_rate, time_out])
 
         time.sleep(2)
