@@ -142,7 +142,7 @@ class MainForm(Tk) :
 
         self.ctrlTab.add(self.tabMon, text = 'Monitor 1')
 
-        self.ctrlTab.add(self.tabMon2, tetx = 'Monitor 2')
+        self.ctrlTab.add(self.tabMon2, text = 'Monitor 2')
 
         self.tabTerm = CtrlTerm.CtrlTerm(self.ctrlTab)
         self.ctrlTab.add(self.tabTerm, text = 'Terminal')
