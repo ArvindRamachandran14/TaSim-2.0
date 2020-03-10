@@ -174,7 +174,6 @@ async def main() :
 
     with open(g.cfgFile, 'r') as fCfg :
         config = json.loads(fCfg.read())        # Read config file
-        g.
         g.initialize(config)              # Initialize the globals
 
     port = sys.argv[1]
