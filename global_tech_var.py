@@ -14,6 +14,7 @@ cfg = {}                        # Config object
 tty = "/dev/ttyUSB0"                      # TTY or COM port to use for TA comms
 bconnected = "False"
 time_out = 5
+time_interval = 5
 
 # initialize
 # Initialize globals from the cfg object
