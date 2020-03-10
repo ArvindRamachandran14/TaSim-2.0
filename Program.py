@@ -8,6 +8,7 @@ import json
 import global_tech_var as g_tech_instance
 import matplotlib.animation as animation
 import CtrlMon
+import CtrlMon2
 import global_sys_var as g_sys
 import Data_coord
 
@@ -36,6 +37,9 @@ def main(argv) :
     cons = Data_coord.consumer(2, g_sys_instance)
 
     mainForm = MainForm(g_sys_instance, cons)
+
+    ani_SC = animation.FuncAnimation(mainForm.tabMon.fig1, mainForm.tabMon.animate_SC, interval=1000)
+
 
     ani_SC = animation.FuncAnimation(mainForm.tabMon.fig1, mainForm.tabMon.animate_SC, interval=1000)
 

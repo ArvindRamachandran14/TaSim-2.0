@@ -52,7 +52,6 @@ class MainForm(Tk) :
         self.buildCtrlTab(container)
         self.buildStatusBar(container)
         self.ctrlTab.select(self.tabSetup)
-
         self.dat_buf = []
 
         #self.dcoord = DCoord(Rec_num) # This is renaming the consumer class 
@@ -138,7 +137,12 @@ class MainForm(Tk) :
         self.tabSetup = CtrlSetup.CtrlSetup(self.ctrlTab)
         self.ctrlTab.add(self.tabSetup, text = 'Setup')
         self.tabMon = CtrlMon.CtrlMon(self.ctrlTab, self.g_sys_instance)
-        self.ctrlTab.add(self.tabMon, text = 'Monitor')
+        self.tabMon2 = CtrlMon2.CtrlMon2(self.ctrlTab, self.g_sys_instance)
+
+        self.ctrlTab.add(self.tabMon, text = 'Monitor 1')
+
+        self.ctrlTab.add(self.tabMon2, tetx = 'Monitor 2')
+
         self.tabTerm = CtrlTerm.CtrlTerm(self.ctrlTab)
         self.ctrlTab.add(self.tabTerm, text = 'Terminal')
         self.tabCfg = CtrlCfg.CtrlCfg(self.ctrlTab)
