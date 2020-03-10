@@ -137,13 +137,21 @@ class consumer() :
 
         tash = TAShare.from_buffer(self.mmShare)
 
+        cmdBuf = bytearray('@{PAUSEDATAON}', encoding)
+
+        tash.command[0:len(cmdBuf)] = cmdBuf
+
         cmdBuf = bytearray(command, encoding)
 
         tash.command[0:len(cmdBuf)] = cmdBuf
 
-        time.sleep(1)
+        reply = tash.reply.decode()
 
-        return(tash.reply.decode())
+        cmdBuf = bytearray('@{PAUSEDATAOFF}', encoding)
+
+        tash.command[0:len(cmdBuf)] = cmdBuf
+
+        return(reply)
         
     def Disconnect(self):
 

@@ -123,17 +123,19 @@ class producer() :
                     self.bDone = True
                     sReply = 'OK'
 
+                elif command == '@{PAUSEDATAON}':
+                    self.flag = True
+                    sReply = 'OK'
+
+                elif command == '@{PAUSEDATAOFF}'
+                    self.flag = True
+                    sReply = 'OK'
+
                 elif command[0] == 'g' or 's':
-
-                    if not self.flag:
-
-                        self.flag = True
 
                         self.ser.write(command.encode())
 
                         sReply = self.ser.readline().decode()
-
-                        self.flag = False
                     
                 print(f'Command: {command}')
                 #sReply = 'OK'
@@ -160,13 +162,9 @@ class producer() :
 
         if not self.flag: 
 
-            self.flag = True
-
             ser.write('g-all\n'.encode())
 
             Output_string = ser.readline().decode()
-
-            self.flag = False
 
         #print(dt.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S'))
 
