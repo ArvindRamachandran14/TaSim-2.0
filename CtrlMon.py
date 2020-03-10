@@ -32,13 +32,13 @@ class CtrlMon(Frame) :
         variable_pressure = StringVar(self)
         variable_pressure.set("pCO2")
 
-        self.label1 = Label(self.temp_select, text = 'Sample Chamber Temperature')
+        self.label1 = Label(self, text = 'Sample Chamber Temperature')
         self.label1.grid(row = 0, column = 0, padx = 2, pady = 2, sticky='e')
   
-        self.label2 = Label(self.pressure_select, text = 'Conditioning Chamber Temperature')
+        self.label2 = Label(self, text = 'Conditioning Chamber Temperature')
         self.label2.grid(row = 0, column = 1, padx = 2, pady = 2, sticky='e')
   
-        self.label3 = Label(self.scale, text = 'Dew Point Generator Temperatures')
+        self.label3 = Label(self, text = 'Dew Point Generator Temperatures')
         self.label3.grid(row = 0, column = 2, padx = 3, pady = 3, sticky='e')
 
         self.fig1 = Figure(figsize=(3.8, 3.8))
