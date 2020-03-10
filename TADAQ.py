@@ -191,11 +191,11 @@ async def main() :
 
     reply = ser.readline().decode()
 
-    #print('TADAQ reply was', reply)
+    print('TADAQ reply was', reply)
 
     if reply == "Ok\n":
 
-        #print('TADAQ reply was', reply)
+        print('TADAQ reply was', reply)
    
         g.bconnected = "True"
 
