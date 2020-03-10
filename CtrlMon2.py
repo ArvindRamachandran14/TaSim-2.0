@@ -79,7 +79,7 @@ class CtrlMon2(Frame) :
 
     def animate_pH2O(self, i):
 
-        self.ax2.plot(self.g_sys_instance.time_list, self.g_sys_instance.pCO2_list)
+        self.ax2.plot(self.g_sys_instance.time_list, self.g_sys_instance.pH2O_list)
 
 
     def animate_sw(self, i):

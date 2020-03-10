@@ -90,7 +90,7 @@ class CtrlMon(Frame) :
 
     def animate_CC(self, i):
 
-        self.ax2.plot(self.g_sys_instance.time_list, self.g_sys_instance.Temperatures_SC)
+        self.ax2.plot(self.g_sys_instance.time_list, self.g_sys_instance.Temperatures_CC)
 
     def animate_DPG(self, i):
 
