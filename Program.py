@@ -51,7 +51,6 @@ def main(argv) :
     animate_sw= animation.FuncAnimation(mainForm.tabMon2.fig3, mainForm.tabMon2.animate_sw, interval=1000)
 
 
-
     def apploop():
 
         with open('taui.json', 'r') as fCfg :

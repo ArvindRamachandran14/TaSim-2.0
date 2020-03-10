@@ -24,6 +24,7 @@ def initialize(config) :
     time_out = cfg["time_out"]
     time_interval = cfg["time_interval"]
     bconnected = "False"
+    update()
 
 
 def update():
