@@ -113,7 +113,7 @@ class producer() :
     
     async def doCmd(self) :
         while not self.bDone :
-            tash = TAShare.from_buffer(self.mmShare)`   ! 
+            tash = TAShare.from_buffer(self.mmShare)
             command = bytearray(tash.command).decode(encoding).rstrip('\x00')
             if not command == '' :
                 for idx in range(0,80) :
