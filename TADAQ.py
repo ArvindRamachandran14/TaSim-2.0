@@ -149,7 +149,6 @@ class producer() :
         print('Mapped size: ', L)
         self.mmShare = mmap.mmap(self.mmfd.fileno(), sizeof(tempTASH))   
 
-
     def getDataFromTA(self, ser) :
 
         #print(dt.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S'))
