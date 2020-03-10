@@ -15,7 +15,7 @@ import Data_coord
 
 from MainForm import MainForm
 
- def apploop():
+def apploop():
 
         with open('taui.json', 'r') as fCfg :
             
