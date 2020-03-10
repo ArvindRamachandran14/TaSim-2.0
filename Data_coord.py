@@ -145,7 +145,7 @@ class consumer() :
 
         tash.command[0:len(cmdBuf)] = cmdBuf
 
-        reply = tash.reply.decode()
+        reply = byteattay(tash.reply).decode(encoding).rstrip('\x00')
 
         print(reply)
 
