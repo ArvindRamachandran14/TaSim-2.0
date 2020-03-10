@@ -62,7 +62,7 @@ class CtrlMon(Frame) :
         self.ax2.set_ylabel('Temperature ($^\circ$C)')
         self.ax2.set_autoscalex_on(True)
         self.ax2.set_ybound(10, 40)
-        self.ax2.set_autoscaley_on(True)
+        self.ax2.set_autoscaley_on(False)
         self.ax2.grid(True, 'major', 'both')
         self.fig2.tight_layout()
         self.cnvs2 = FigureCanvasTkAgg(self.fig2, self)

@@ -32,7 +32,7 @@ class CtrlMon2(Frame) :
         self.ax1.set_xlabel('Time (sec)')
         self.ax1.set_ylabel('pCO2 (ppm)')
         self.ax1.set_autoscalex_on(True)
-        #self.ax1.set_ybound(0, 10000)
+        self.ax1.set_ybound(0, 10000)
         self.ax1.set_autoscaley_on(False)
         self.ax1.grid(True, 'major', 'both')
         #plt.subplots_adjust(left=0.1, right=0.9, top=0.9, bottom=0.1)
