@@ -62,6 +62,7 @@ class producer() :
         self.mmShare = None
         self.mmfd = None
         self.startTime = None
+        self.flag = False
 
         self.initialize()
        
@@ -112,7 +113,7 @@ class producer() :
     
     async def doCmd(self) :
         while not self.bDone :
-            tash = TAShare.from_buffer(self.mmShare)
+            tash = TAShare.from_buffer(self.mmShare)`   ! 
             command = bytearray(tash.command).decode(encoding).rstrip('\x00')
             if not command == '' :
                 for idx in range(0,80) :
@@ -124,9 +125,15 @@ class producer() :
 
                 elif command[0] == 'g' or 's':
 
-                    self.ser.write(command.encode())
+                    if not self.flag:
 
-                    sReply = self.ser.readline().decode()
+                        self.flag = True
+
+                        self.ser.write(command.encode())
+
+                        sReply = self.ser.readline().decode()
+
+                        self.flag = False
                     
                 print(f'Command: {command}')
                 #sReply = 'OK'
@@ -151,9 +158,15 @@ class producer() :
 
         #print(dt.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S'))
 
-        ser.write('g-all\n'.encode())
+        if not self.flag: 
 
-        Output_string = ser.readline().decode()
+            self.flag = True
+
+            ser.write('g-all\n'.encode())
+
+            Output_string = ser.readline().decode()
+
+            self.flag = False
 
         #print(dt.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S'))
 
