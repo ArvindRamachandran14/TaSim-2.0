@@ -122,9 +122,16 @@ class producer() :
                     tash.command[idx] = 0
                 if command == '@{EXIT}' :
                     self.bDone = True
+                    sReply = 'OK'
+
+                elif command[0] == 'g' or 's':
+
+                    self.ser.write(command.encode())
+
+                    sReply = self.ser.readline().decode()
                     
                 print(f'Command: {command}')
-                sReply = 'OK'
+                #sReply = 'OK'
                 repBuf = bytearray(sReply, encoding)
                 tash.reply[0:len(repBuf)] = repBuf
             await asyncio.sleep(0.050)
@@ -207,9 +214,9 @@ async def main() :
 
         prod = producer(ser)      # Number of records and interval
         task1 = asyncio.create_task(prod.produce())
-        #task2 = asyncio.create_task(prod.doCmd())
+        task2 = asyncio.create_task(prod.doCmd())
         await task1
-        #await task2
+        await task2
         print('Done')
 
 asyncio.run(main())

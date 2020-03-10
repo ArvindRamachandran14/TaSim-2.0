@@ -132,6 +132,18 @@ class consumer() :
             mainform_object.btn_text.set("Disconnect")
 
         self.initialize()
+
+    def send_command_to_PC(self, command):
+
+        tash = TAShare.from_buffer(self.mmShare)
+
+        cmdBuf = bytearray(command, encoding)
+
+        tash.command[0:len(cmdBuf)] = cmdBuf
+
+        time.sleep(1)
+
+        return(tash.reply.decode())
         
     def Disconnect(self):
 

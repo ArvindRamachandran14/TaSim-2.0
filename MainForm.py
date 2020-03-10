@@ -144,7 +144,7 @@ class MainForm(Tk) :
 
         self.ctrlTab.add(self.tabMon2, text = 'Monitor 2')
 
-        self.tabTerm = CtrlTerm.CtrlTerm(self.ctrlTab)
+        self.tabTerm = CtrlTerm.CtrlTerm(self.ctrlTab, self.g_sys_instance, self.cons)
         self.ctrlTab.add(self.tabTerm, text = 'Terminal')
         self.tabCfg = CtrlCfg.CtrlCfg(self.ctrlTab)
         self.ctrlTab.add(self.tabCfg, text = 'Config')

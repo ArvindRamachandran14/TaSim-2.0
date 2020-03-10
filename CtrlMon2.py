@@ -66,8 +66,8 @@ class CtrlMon2(Frame) :
         self.ax3.set_xlabel('Time (sec)')
         self.ax3.set_ylabel('Weight (g)')
         self.ax3.set_autoscalex_on(True)
-        self.ax3.set_ybound(0, 10)
-        self.ax3.set_autoscaley_on(False)
+        #self.ax3.set_ybound(0, 10)
+        self.ax3.set_autoscaley_on(True)
         self.ax3.grid(True, 'major', 'both')
         self.fig3.tight_layout()
         self.cnvs3 = FigureCanvasTkAgg(self.fig3, self)
@@ -79,17 +79,11 @@ class CtrlMon2(Frame) :
 
         self.ax1.plot(self.g_sys_instance.time_list, self.g_sys_instance.pCO2_list)
 
-
     def animate_pH2O(self, i):
 
         self.ax2.plot(self.g_sys_instance.time_list, self.g_sys_instance.pH2O_list)
 
-
     def animate_sw(self, i):
 
         self.ax3.plot(self.g_sys_instance.time_list, self.g_sys_instance.sample_weight)
-
-
-
-
 
