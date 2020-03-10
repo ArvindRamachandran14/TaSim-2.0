@@ -119,7 +119,7 @@ class consumer() :
 
         time.sleep(2)
 
-        if g_tech_instance.bconnected = "True":
+        if g_tech_instance.bconnected == "True":
 
             mainform_object.btn_text.set("Disconnect")
 
