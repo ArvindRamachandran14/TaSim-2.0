@@ -23,7 +23,7 @@ import json
 class MainForm(Tk) :
     
     def __init__(self, g_sys_instance, cons, *args, **kwargs) :
-	    
+        
         # self.bconnected = False
 
         tk.Tk.__init__(self, *args, **kwargs) 
@@ -164,7 +164,7 @@ class MainForm(Tk) :
         if str(self.btn_text.get()) == "Connect":
 
            self.cons.Connect(self.tty_variable.get(), self.baud_rate_variable.get(), str(time_out)) #TAD_rec_count is the total number of record
-		
+        
         else:
 
             self.cons.Disconnect()

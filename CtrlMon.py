@@ -51,7 +51,8 @@ class CtrlMon(Frame) :
         self.ax1.grid(True, 'major', 'both')
         self.fig1.tight_layout()
         self.cnvs1 = FigureCanvasTkAgg(self.fig1, self)
-        self.cnvs1.get_tk_widget().pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+        self.cnvs1.get_tk_widget().grid(row=1, column=0)
+        #self.cnvs1.get_tk_widget().pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
       
         # Conditioning Chamber temperature
 
@@ -65,7 +66,8 @@ class CtrlMon(Frame) :
         self.ax2.grid(True, 'major', 'both')
         self.fig2.tight_layout()
         self.cnvs2 = FigureCanvasTkAgg(self.fig2, self)
-        self.cnvs2.get_tk_widget().pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+        self.cnvs2.get_tk_widget().grid(row=1, column=1)
+        #self.cnvs2.get_tk_widget().pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
 
         # Sample weight
         self.fig3 = Figure(figsize=(3.8, 3.8))
@@ -78,7 +80,8 @@ class CtrlMon(Frame) :
         self.ax3.grid(True, 'major', 'both')
         self.fig3.tight_layout()
         self.cnvs3 = FigureCanvasTkAgg(self.fig3, self)
-        self.cnvs3.get_tk_widget().pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+        self.cnvs3.get_tk_widget().grid(row=1, column=2)
+        #self.cnvs3.get_tk_widget().pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
 
 
     def animate_SC(self, i):

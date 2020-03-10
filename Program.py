@@ -40,10 +40,17 @@ def main(argv) :
 
     ani_SC = animation.FuncAnimation(mainForm.tabMon.fig1, mainForm.tabMon.animate_SC, interval=1000)
 
+    ani_CC = animation.FuncAnimation(mainForm.tabMon.fig2, mainForm.tabMon.animate_CC, interval=1000)
 
-    ani_SC = animation.FuncAnimation(mainForm.tabMon.fig1, mainForm.tabMon.animate_SC, interval=1000)
+    ani_DPG = animation.FuncAnimation(mainForm.tabMon.fig3, mainForm.tabMon.animate_DPG, interval=1000)
 
-    ani_pCO2 = animation.FuncAnimation(mainForm.tabMon.fig2, mainForm.tabMon.animate_pCO2, interval=1000)
+    ani_pCO2 = animation.FuncAnimation(mainForm.tabMon2.fig1, mainForm.tabMon2.animate_pCO2, interval=1000)
+
+    ani_CC = animation.FuncAnimation(mainForm.tabMon2.fig2, mainForm.tabMon2.animate_pH2O, interval=1000)
+
+    ani_DPG = animation.FuncAnimation(mainForm.tabMon2.fig3, mainForm.tabMon2.animate_sw, interval=1000)
+
+
 
     def apploop():
 
