@@ -94,4 +94,4 @@ class CtrlMon(Frame) :
 
     def animate_DPG(self, i):
 
-        self.ax3.plot(self.g_sys_instance.time_list, self.g_sys_instanceTemperatures_DPG)
+        self.ax3.plot(self.g_sys_instance.time_list, self.g_sys_instance.Temperatures_DPG)

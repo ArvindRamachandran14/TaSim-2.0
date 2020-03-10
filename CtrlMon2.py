@@ -38,7 +38,8 @@ class CtrlMon2(Frame) :
         #plt.subplots_adjust(left=0.1, right=0.9, top=0.9, bottom=0.1)
         self.fig1.tight_layout()
         self.cnvs1 = FigureCanvasTkAgg(self.fig1, self.grp1)
-        self.cnvs1.get_tk_widget().pack(side=tk.RIGHT, fill=tk.BOTH, expand=True)
+        self.cnvs1.get_tk_widget().grid(row=1, column=1)
+        #self.cnvs1.get_tk_widget().pack(side=tk.RIGHT, fill=tk.BOTH, expand=True)
 
         # Partial pressures
         self.grp2 = LabelFrame(self, text = 'Partial pressure of H2O')
@@ -54,7 +55,8 @@ class CtrlMon2(Frame) :
         #plt.subplots_adjust(left=0.1, right=0.9, top=0.9, bottom=0.1)
         self.fig2.tight_layout()
         self.cnvs2 = FigureCanvasTkAgg(self.fig2, self.grp2)
-        self.cnvs2.get_tk_widget().pack(side=tk.RIGHT, fill=tk.BOTH, expand=True)
+        self.cnvs2.get_tk_widget().grid(row=1, column=2)
+        #self.cnvs2.get_tk_widget().pack(side=tk.RIGHT, fill=tk.BOTH, expand=True)
 
         # Sample weight
         self.grp3 = LabelFrame(self, text = 'Sample Weight')
@@ -69,7 +71,8 @@ class CtrlMon2(Frame) :
         self.ax3.grid(True, 'major', 'both')
         self.fig3.tight_layout()
         self.cnvs3 = FigureCanvasTkAgg(self.fig3, self.grp3)
-        self.cnvs3.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=True)
+        #self.cnvs3.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=True)
+        self.cnvs3.get_tk_widget().grid(row=1, column=3)
 
 
     def animate_pCO2(self, i):
