@@ -95,13 +95,13 @@ class consumer() :
                 self.g_sys_instance.time_list.append(tad.recTime)
 
             # The only thing done with the data is to print its here.
-            
+            '''
             print('P: {0:4d} {1:10.3f} {2:10.3f} {3:10.3f} {4:10.3f} {5:10.3f} {6:10.3f} {7:10.3f} {8:10.3f} {9:10.3f} {10:d}'.format( \
                 tad.recNum, tad.recTime, \
                 tad.SC_T1, tad.SC_T2, tad.CC_T1, tad.DPG_T1, \
                 tad.pH2O, tad.pCO2, tad.Dew_point_temp, \
                 tad.Sample_weight, tad.Status))
-            
+            '''
             self.recsGot += 1
 
         return 0
