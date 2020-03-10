@@ -99,13 +99,13 @@ class producer() :
                 tash.data[recIdx].Sample_weight = data_list[7]
                 tash.data[recIdx].Status = data_list[8]
                 tash.recIdx = recIdx
-                
+                '''
                 print('P: {0:4d} {1:10.3f} {2:10.3f} {3:10.3f} {4:10.3f} {5:10.3f} {6:10.3f} {7:10.3f} {8:10.3f} {9:10.3f} {10:d}'.format( \
                         tash.data[recIdx].recNum, tash.data[recIdx].recTime, \
                         tash.data[recIdx].SC_T1, tash.data[recIdx].SC_T2, tash.data[recIdx].CC_T1, tash.data[recIdx].DPG_T1, \
                         tash.data[recIdx].pH2O, tash.data[recIdx].pCO2, tash.data[recIdx].Dew_point_temp, \
                         tash.data[recIdx].Sample_weight, tash.data[recIdx].Status))
-                
+                '''
                 await asyncio.sleep(float(g.time_interval))
 
             return 0
