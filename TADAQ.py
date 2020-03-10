@@ -108,9 +108,7 @@ class producer() :
                 
                 await asyncio.sleep(float(g.time_interval))
 
-
             return 0
-
     
     async def doCmd(self) :
         while not self.bDone :

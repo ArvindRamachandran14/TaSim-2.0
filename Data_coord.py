@@ -129,9 +129,9 @@ class consumer() :
 
         if bconnected == "True":
 
-            mainform_object.btn_text.set("Disconnect")
+            self.initialize()
 
-        #self.initialize()
+            mainform_object.btn_text.set("Disconnect")      
 
     def send_command_to_PC(self, command):
 
