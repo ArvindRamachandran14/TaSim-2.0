@@ -63,7 +63,7 @@ class CtrlMon2(Frame) :
         self.grp3.grid(row=1,column=2, padx=5, pady=5)
         self.fig3 = Figure(figsize=(3.8, 3.8))
         self.ax3 = self.fig3.add_subplot(111)
-        self.ax3.set_xlabel('Time (min)')
+        self.ax3.set_xlabel('Time (sec)')
         self.ax3.set_ylabel('Weight (g)')
         self.ax3.set_autoscalex_on(True)
         self.ax3.set_ybound(0, 10)
