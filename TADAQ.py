@@ -140,6 +140,8 @@ class producer() :
                         self.ser.write(command.encode())
 
                         sReply = self.ser.readline().decode()
+
+                print(sReply)
                     
                 print(f'Command: {command}')
                 #sReply = 'OK'
