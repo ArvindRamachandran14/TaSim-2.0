@@ -127,7 +127,7 @@ class producer() :
                     self.flag = True
                     sReply = 'OK'
 
-                elif command == '@{PAUSEDATAOFF}'
+                elif command == '@{PAUSEDATAOFF}':
                     self.flag = True
                     sReply = 'OK'
 
