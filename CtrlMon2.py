@@ -41,7 +41,7 @@ class CtrlMon2(Frame) :
         self.cnvs1.get_tk_widget().pack(side=tk.RIGHT, fill=tk.BOTH, expand=True)
 
         # Partial pressures
-        self.grp2 = LabelFrame(self, text = ' Partial pressure of H2O ')
+        self.grp2 = LabelFrame(self, text = 'Partial pressure of H2O')
         self.grp2.grid(row=1,column=1, padx=5, pady=5)
         self.fig2 = Figure(figsize=(3.8, 3.8))
         self.ax2 = self.fig2.add_subplot(111)
@@ -57,7 +57,7 @@ class CtrlMon2(Frame) :
         self.cnvs2.get_tk_widget().pack(side=tk.RIGHT, fill=tk.BOTH, expand=True)
 
         # Sample weight
-        self.grp3 = LabelFrame(self, text = ' Sample Weight ')
+        self.grp3 = LabelFrame(self, text = 'Sample Weight')
         self.grp3.grid(row=1,column=2, padx=5, pady=5)
         self.fig3 = Figure(figsize=(3.8, 3.8))
         self.ax3 = self.fig3.add_subplot(111)
@@ -84,7 +84,7 @@ class CtrlMon2(Frame) :
 
     def animate_sw(self, i):
 
-        self.ax3.plot(self.g_sys_instance.time_list, self.sample_weight)
+        self.ax3.plot(self.g_sys_instance.time_list, self.g_sys_instance.sample_weight)
 
 
 
