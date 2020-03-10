@@ -109,13 +109,19 @@ class consumer() :
         self.mmfd = open('taShare', 'r+b')
         self.mmShare = mmap.mmap(self.mmfd.fileno(), sizeof(TAShare))
 
-    def Connect(self, serial_port, baud_rate, time_out):
+    def Connect(self, mainform_object, serial_port, baud_rate, time_out):
         '''
         shFile = Path('taShare')
         if shFile.is_file() :
             os.remove('taShare')
         '''
         Popen(['python3.7', 'TADAQ.py', serial_port, baud_rate, time_out])
+
+        time.sleep(2)
+
+        if g_tech_instance.bconnected = "True":
+
+            mainform_object.btn_text.set("Disconnect")
 
         self.initialize()
         

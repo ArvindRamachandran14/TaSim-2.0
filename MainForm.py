@@ -164,9 +164,9 @@ class MainForm(Tk) :
 
         if str(self.btn_text.get()) == "Connect":
 
-           self.cons.Connect(self.tty_variable.get(), self.baud_rate_variable.get(), str(time_out)) #TAD_rec_count is the total number of record
+           self.cons.Connect(self, self.tty_variable.get(), self.baud_rate_variable.get(), str(time_out)) #TAD_rec_count is the total number of record
         
-        else:
+        elif str(self.btn_text.get()) == "Disconnect":
 
             self.cons.Disconnect()
 
