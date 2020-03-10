@@ -23,14 +23,6 @@ def reset_bconnected():
 
     g_tech_instance.update()
 
-    with open('taui.json', 'r') as fCfg :
-            
-        config = json.loads(fCfg.read())
-
-        bconnected = config["bconnected"]
-
-        print(bconnected)
-
 def main(argv) :
     idx = 1
     option = None

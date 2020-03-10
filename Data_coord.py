@@ -13,7 +13,6 @@ from datetime import datetime
 from subprocess import Popen
 from pathlib import Path
 import tkinter as tk
-import TADAQ
 #import pykbhit as pykb
 import global_tech_var as g_tech_instance
 
@@ -121,9 +120,13 @@ class consumer() :
 
         time.sleep(2)
 
-        print('bconnected status is', g_tech_instance.bconnected)
+        with open('taui.json', 'r') as fCfg :
+            
+            config = json.loads(fCfg.read())
 
-        if g_tech_instance.bconnected == "True":
+            bconnected = config["bconnected"]
+
+        if bconnected == "True":
 
             mainform_object.btn_text.set("Disconnect")
 
