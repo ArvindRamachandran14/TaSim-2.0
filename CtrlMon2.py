@@ -27,7 +27,7 @@ class CtrlMon2(Frame) :
 
         self.grp1 = LabelFrame(self, text = 'Partial pressure of CO2')
         self.grp1.grid(row=1,column=1, padx=5, pady=5)
-        self.fig2 = Figure(figsize=(3.8, 3.8))
+        self.fig1 = Figure(figsize=(3.8, 3.8))
         self.ax1 = self.fig2.add_subplot(111)
         self.ax1.set_xlabel('Time (min)')
         self.ax1.set_ylabel('pCO2 (Pa)')
