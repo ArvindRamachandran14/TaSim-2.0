@@ -28,7 +28,7 @@ class CtrlMon2(Frame) :
         self.grp1 = LabelFrame(self, text = 'Partial pressure of CO2')
         self.grp1.grid(row=1,column=1, padx=5, pady=5)
         self.fig1 = Figure(figsize=(3.8, 3.8))
-        self.ax1 = self.fig2.add_subplot(111)
+        self.ax1 = self.fig1.add_subplot(111)
         self.ax1.set_xlabel('Time (min)')
         self.ax1.set_ylabel('pCO2 (Pa)')
         self.ax1.set_autoscalex_on(True)
@@ -37,7 +37,7 @@ class CtrlMon2(Frame) :
         self.ax1.grid(True, 'major', 'both')
         #plt.subplots_adjust(left=0.1, right=0.9, top=0.9, bottom=0.1)
         self.fig1.tight_layout()
-        self.cnvs1 = FigureCanvasTkAgg(self.fig2, self.grp1)
+        self.cnvs1 = FigureCanvasTkAgg(self.fig1, self.grp1)
         self.cnvs1.get_tk_widget().pack(side=tk.RIGHT, fill=tk.BOTH, expand=True)
 
         # Partial pressures
