@@ -145,7 +145,9 @@ class producer() :
 
     def doReqCmd(self, command, ser): 
 
-        print('Sending Command')
+        print('Command sent is', Command)
+
+        print('Command type is', type(Command))
 
         ser.write(command.encode())
 
