@@ -147,13 +147,15 @@ class producer() :
 
         ser.write(command.encode())
 
-        time.sleep(1)
+        while True:
 
-        Output = ser.readline().decode()
+            Output = ser.readline().decode()
 
-        print(Output)
+            if len(Output) > 0:
 
-        return(Output)
+                return(Output) 
+
+
 
     def initialize(self) :
         tempTASH = TAShare()
