@@ -44,4 +44,6 @@ class CtrlTerm(Frame) :
 
         reply = self.cons.send_command_to_PC(command)
 
+        print('reply on the consumer end after decoding is', tash.reply)
+
         self.input_text.insert(tk.END,'\n'+reply)

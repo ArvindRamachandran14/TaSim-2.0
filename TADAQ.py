@@ -134,7 +134,7 @@ class producer() :
 
                         sReply = self.doReqCmd(command, self.ser)
 
-                        print('Reply', sReply)
+                        #print('Reply', sReply)
                     
                     #sReply = 'OK'
                     repBuf = bytearray(sReply, encoding)
@@ -158,8 +158,6 @@ class producer() :
             Output = ser.readline().decode()
 
             if len(Output) > 0:
-
-                print('Received Output', Output)
 
                 return(Output) 
 
