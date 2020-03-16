@@ -132,7 +132,7 @@ class producer() :
 
                     else:
 
-                        sReply = self.doReqCmd(command)
+                        sReply = self.doReqCmd(command, self.ser)
 
                         print('Reply', sReply)
                     
@@ -143,14 +143,15 @@ class producer() :
             await asyncio.sleep(0.050)
         self.mmfd.close()
 
-    def doReqCmd(self, command): 
+    def doReqCmd(self, command, ser): 
 
-        self.ser.write(command.encode())
+        ser.write(command.encode())
 
-        time.sleep(1)
+        Output = ser.readline().decode()
 
-        return(self.ser.readline().decode())
+        print(Output)
 
+        return(Output)
 
     def initialize(self) :
         tempTASH = TAShare()
