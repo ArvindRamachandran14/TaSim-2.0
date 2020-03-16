@@ -147,7 +147,7 @@ class producer() :
 
         self.ser.write(command.encode())
 
-        return(ser.readline().decode())
+        return(self.ser.readline().decode())
 
 
     def initialize(self) :
