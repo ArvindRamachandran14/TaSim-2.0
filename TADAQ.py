@@ -124,13 +124,13 @@ class producer() :
                         tash.reply[idx] = 0
                         tash.command[idx] = 0
 
-                    print(f'Command: {command}')
-
                     if command == '@{EXIT}' :
                         self.bDone = True
                         sReply = 'OK'
 
                     else:
+
+                        print(f'Sending command: {command}')
 
                         sReply = self.doReqCmd(command, self.ser)
 
@@ -145,9 +145,9 @@ class producer() :
 
     def doReqCmd(self, command, ser): 
 
-        print('Command sent is', Command)
+        print('Command sent is', command)
 
-        print('Command type is', type(Command))
+        print('Command type is', type(command))
 
         ser.write(command.encode())
 
