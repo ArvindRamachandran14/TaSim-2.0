@@ -62,8 +62,7 @@ class producer() :
         self.mmShare = None
         self.mmfd = None
         self.startTime = None
-        self.bDoingCmd = False
-        self.bGettingData = False
+        self.sem = None # Added semaphore instance here
 
         self.initialize()
        
@@ -73,87 +72,83 @@ class producer() :
             status = 0
             tash = TAShare.from_buffer(self.mmShare)
             while not self.bDone :
-                recIdx = tash.recIdx + 1
-                if recIdx >= tash.recCount :
-                    recIdx = 0
+                async with self.sem :       # async with added here
+                    recIdx = tash.recIdx + 1
+                    if recIdx >= tash.recCount :
+                        recIdx = 0
 
-                # Get some data
+                    # Get some data
 
-                data_list = self.getDataFromTA(self.ser)
+                    data_list = self.getDataFromTA(self.ser)
 
-                # Get the time
-                now = datetime.now()
-                seconds = now.hour * 3600 + now.minute * 60 + now.second + now.microsecond / 1000000
-                if self.startTime == None :
-                    self.startTime = seconds
-                seconds = seconds - self.startTime
+                    # Get the time
+                    now = datetime.now()
+                    seconds = now.hour * 3600 + now.minute * 60 + now.second + now.microsecond / 1000000
+                    if self.startTime == None :
+                        self.startTime = seconds
+                    seconds = seconds - self.startTime
 
-                tash.data[recIdx].recNum = self.recNum
-                self.recNum += 1
-                tash.data[recIdx].recTime = seconds
-                tash.data[recIdx].SC_T1 = data_list[0]
-                tash.data[recIdx].SC_T2 = data_list[1]
-                tash.data[recIdx].CC_T1 = data_list[2]
-                tash.data[recIdx].DPG_T1 = data_list[3]
-                tash.data[recIdx].pH2O = data_list[4]
-                tash.data[recIdx].pCO2 = data_list[5]
-                tash.data[recIdx].Dew_point_temp = data_list[6]
-                tash.data[recIdx].Sample_weight = data_list[7]
-                tash.data[recIdx].Status = data_list[8]
-                tash.recIdx = recIdx
-                '''
-                print('P: {0:4d} {1:10.3f} {2:10.3f} {3:10.3f} {4:10.3f} {5:10.3f} {6:10.3f} {7:10.3f} {8:10.3f} {9:10.3f} {10:d}'.format( \
-                        tash.data[recIdx].recNum, tash.data[recIdx].recTime, \
-                        tash.data[recIdx].SC_T1, tash.data[recIdx].SC_T2, tash.data[recIdx].CC_T1, tash.data[recIdx].DPG_T1, \
-                        tash.data[recIdx].pH2O, tash.data[recIdx].pCO2, tash.data[recIdx].Dew_point_temp, \
-                        tash.data[recIdx].Sample_weight, tash.data[recIdx].Status))
-                '''
+                    tash.data[recIdx].recNum = self.recNum
+                    self.recNum += 1
+                    tash.data[recIdx].recTime = seconds
+                    tash.data[recIdx].SC_T1 = data_list[0]
+                    tash.data[recIdx].SC_T2 = data_list[1]
+                    tash.data[recIdx].CC_T1 = data_list[2]
+                    tash.data[recIdx].DPG_T1 = data_list[3]
+                    tash.data[recIdx].pH2O = data_list[4]
+                    tash.data[recIdx].pCO2 = data_list[5]
+                    tash.data[recIdx].Dew_point_temp = data_list[6]
+                    tash.data[recIdx].Sample_weight = data_list[7]
+                    tash.data[recIdx].Status = data_list[8]
+                    tash.recIdx = recIdx
+                    '''
+                    print('P: {0:4d} {1:10.3f} {2:10.3f} {3:10.3f} {4:10.3f} {5:10.3f} {6:10.3f} {7:10.3f} {8:10.3f} {9:10.3f} {10:d}'.format( \
+                            tash.data[recIdx].recNum, tash.data[recIdx].recTime, \
+                            tash.data[recIdx].SC_T1, tash.data[recIdx].SC_T2, tash.data[recIdx].CC_T1, tash.data[recIdx].DPG_T1, \
+                            tash.data[recIdx].pH2O, tash.data[recIdx].pCO2, tash.data[recIdx].Dew_point_temp, \
+                            tash.data[recIdx].Sample_weight, tash.data[recIdx].Status))
+                    '''
+                # Semaphore is released here
                 await asyncio.sleep(float(g.time_interval))
 
             return 0
     
     async def doCmd(self) :
+
         while not self.bDone :
-            tash = TAShare.from_buffer(self.mmShare)
-            command = bytearray(tash.command).decode(encoding).rstrip('\x00')
-            if not command == '' :
-                for idx in range(0,80) :
-                    tash.reply[idx] = 0
-                    tash.command[idx] = 0
+            async with self.sem:            # async with added here to control access
+                tash = TAShare.from_buffer(self.mmShare)
+                command = bytearray(tash.command).decode(encoding).rstrip('\x00')
+                if not command == '' :
+                    for idx in range(0,80) :
+                        tash.reply[idx] = 0
+                        tash.command[idx] = 0
 
-                print(command)
+                    print(command)
 
-                if command == '@{EXIT}' :
-                    self.bDone = True
-                    sReply = 'OK'
+                    if command == '@{EXIT}' :
+                        self.bDone = True
+                        sReply = 'OK'
 
-                elif command == '@{PAUSEDATAON}':
-                    while self.bGettingData :
-                        pass
+                    else:
+                        sReply = doReqCmd(command)
 
-                    self.bDoingCmd = True
-                    sReply = 'OK'
                     print(sReply)
-
-                elif command == '@{PAUSEDATAOFF}':
-                    self.bDoingCmd = False
-                    sReply = 'OK'
-                    print(sReply)
-
-                elif command[0] == 'g' or 's':
-
-                        self.ser.write(command.encode())
-
-                        sReply = self.ser.readline().decode()
-
-                print(sReply)
-                    
-                print(f'Command: {command}')
-                #sReply = 'OK'
-                repBuf = bytearray(sReply, encoding)
-                tash.reply[0:len(repBuf)] = repBuf
+                        
+                    print(f'Command: {command}')
+                    #sReply = 'OK'
+                    repBuf = bytearray(sReply, encoding)
+                    tash.reply[0:len(repBuf)] = repBuf
+            # Semaphore is released here
             await asyncio.sleep(0.050)
         self.mmfd.close()
+
+    def doReqCmd(self, command): 
+
+        self.ser.write(command.encode())
+
+        return(ser.readline().decode())
+
 
     def initialize(self) :
         tempTASH = TAShare()
@@ -165,18 +160,17 @@ class producer() :
         L = self.mmfd.write(tempTASH)
         self.mmfd.flush()
         print('Mapped size: ', L)
-        self.mmShare = mmap.mmap(self.mmfd.fileno(), sizeof(tempTASH))   
+        self.mmShare = mmap.mmap(self.mmfd.fileno(), sizeof(tempTASH))  
+        self.sem = asyncio.Semaphore(1) # Added semaphore creation 
 
     def getDataFromTA(self, ser) :
 
         #print(dt.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S'))
 
-        if not self.bDoingCmd: 
-            self.bGettingData = True
 
-            ser.write('g-all\n'.encode())
+        ser.write('g-all\n'.encode())
 
-            Output_string = ser.readline().decode()
+        Output_string = ser.readline().decode()
 
         #print(dt.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S'))
 
@@ -193,7 +187,6 @@ class producer() :
             else:
                 
                 data_list.append(int(Split_strings_list[i]))
-            self.bGettingData = False
 
         return(data_list)
 
