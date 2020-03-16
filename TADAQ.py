@@ -124,18 +124,18 @@ class producer() :
                         tash.reply[idx] = 0
                         tash.command[idx] = 0
 
-                    print(command)
+                     #print(f'Command: {command}')
 
                     if command == '@{EXIT}' :
                         self.bDone = True
                         sReply = 'OK'
 
                     else:
-                        sReply = doReqCmd(command)
 
-                    print(sReply)
-                        
-                    print(f'Command: {command}')
+                        sReply = self.doReqCmd(command)
+
+                        print('Reply', sReply)
+                    
                     #sReply = 'OK'
                     repBuf = bytearray(sReply, encoding)
                     tash.reply[0:len(repBuf)] = repBuf
