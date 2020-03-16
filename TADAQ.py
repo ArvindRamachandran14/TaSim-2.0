@@ -145,6 +145,8 @@ class producer() :
 
     def doReqCmd(self, command, ser): 
 
+        print('Sending Command')
+
         ser.write(command.encode())
 
         while True:
@@ -152,6 +154,8 @@ class producer() :
             Output = ser.readline().decode()
 
             if len(Output) > 0:
+
+                print('Received Output', Output)
 
                 return(Output) 
 
