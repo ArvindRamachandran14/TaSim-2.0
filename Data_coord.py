@@ -143,8 +143,6 @@ class consumer() :
 
         reply = bytearray(tash.reply).decode(encoding).rstrip('\x00')
 
-        tash.command[0:len(cmdBuf)] = ""
-
         #print(reply)
 
         #print(type(reply))
