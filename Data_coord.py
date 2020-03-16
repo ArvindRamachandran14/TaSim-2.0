@@ -137,29 +137,15 @@ class consumer() :
 
         tash = TAShare.from_buffer(self.mmShare)
 
-        cmdBuf = bytearray('@{PAUSEDATAON}', encoding)
-
-        tash.command[0:len(cmdBuf)] = cmdBuf
-
-        reply = bytearray(tash.reply).decode(encoding).rstrip('\x00')
-
-        print(reply)
-
-        print(type(reply))
-
         cmdBuf = bytearray(command, encoding)
 
         tash.command[0:len(cmdBuf)] = cmdBuf
 
         reply = bytearray(tash.reply).decode(encoding).rstrip('\x00')
 
-        print(reply)
+        #print(reply)
 
-        print(type(reply))
-
-        cmdBuf = bytearray('@{PAUSEDATAOFF}', encoding)
-
-        tash.command[0:len(cmdBuf)] = cmdBuf
+        #print(type(reply))
 
         return(reply)
         
