@@ -45,5 +45,3 @@ class CtrlTerm(Frame) :
         reply = self.cons.send_command_to_PC(command)
 
         self.input_text.insert(tk.END,'\n'+reply)
-
-        
