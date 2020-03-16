@@ -141,8 +141,6 @@ class consumer() :
 
         tash.command[0:len(cmdBuf)] = cmdBuf
 
-        print('reply on the consumer end before decoding is', tash.reply)
-
         reply = bytearray(tash.reply).decode(encoding).rstrip('\x00')
 
         #print(reply)

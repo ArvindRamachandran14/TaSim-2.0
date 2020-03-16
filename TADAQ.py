@@ -139,6 +139,7 @@ class producer() :
                     #sReply = 'OK'
                     repBuf = bytearray(sReply, encoding)
                     tash.reply[0:len(repBuf)] = repBuf
+                    command = ''
             # Semaphore is released here
             await asyncio.sleep(0.050)
         self.mmfd.close()
