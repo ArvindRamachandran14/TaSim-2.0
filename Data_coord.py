@@ -166,4 +166,3 @@ class consumer() :
         print('Disconnected')
 
         #self.ser_PC.close()
-
