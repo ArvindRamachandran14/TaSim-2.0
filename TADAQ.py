@@ -124,7 +124,7 @@ class producer() :
                         tash.reply[idx] = 0
                         tash.command[idx] = 0
 
-                     #print(f'Command: {command}')
+                     print(f'Command: {command}')
 
                     if command == '@{EXIT}' :
                         self.bDone = True
@@ -166,7 +166,6 @@ class producer() :
     def getDataFromTA(self, ser) :
 
         #print(dt.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S'))
-
 
         ser.write('g-all\n'.encode())
 
