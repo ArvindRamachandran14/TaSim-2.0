@@ -147,6 +147,8 @@ class producer() :
 
         self.ser.write(command.encode())
 
+        time.sleep(1)
+
         return(self.ser.readline().decode())
 
 
