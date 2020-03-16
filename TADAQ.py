@@ -155,8 +155,6 @@ class producer() :
 
                 return(Output) 
 
-
-
     def initialize(self) :
         tempTASH = TAShare()
         tempTASH.command[0:80] = [0] * 80
