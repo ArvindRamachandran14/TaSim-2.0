@@ -143,11 +143,13 @@ class producer() :
             await asyncio.sleep(0.050)
         self.mmfd.close()
 
-    def doReqCmd(self, command, ser): 
+    def doReqCmd(self, command, ser):
 
-        print('Command sent is', command)
+        command+='\n' 
 
-        print('Command type is', type(command))
+        #print('Command sent is', command)
+
+        #print('Command type is', type(command))
 
         ser.write(command.encode())
 
