@@ -72,10 +72,8 @@ class MainForm(Tk) :
         menuBar.add_cascade(label='File', menu=fileMenu)
         tk.Tk.config(self, menu = menuBar)
 
-    # buildStatusBar
-    # Make the status bar on the bottom of the screen.  This has
-    # a text status message on the left and the experiment time on
-    # the right.  The time is not being updated in this prototype code.
+    #Build serial bar - lets the user choose the serial port, baud rate and establish connection through a "connect" button
+
 
     def buildserialBar(self, container):
 
@@ -123,6 +121,12 @@ class MainForm(Tk) :
 
         self.button.grid(row=0, column=4)
 
+
+    # buildStatusBar
+    # Make the status bar on the bottom of the screen.  This has
+    # a text status message on the left and the experiment time on
+    # the right.  The time is not being updated in this prototype code.
+
     def buildStatusBar(self, container) :
         statusBar = tk.Frame(container, relief=tk.SUNKEN, bd=2)
 
@@ -131,8 +135,11 @@ class MainForm(Tk) :
         tk.Label(statusBar, text='Idle').pack(side=tk.LEFT)
 
         tk.Label(statusBar, text='Time').pack(side=tk.RIGHT)
-  
+
+
     def buildCtrlTab(self, container) :
+        
+        ################# Hosts the different tabs such as SetUp, Monitor, Terminal, and Config #################
         
         self.ctrlTab = ttk.Notebook(container)
         self.tabSetup = CtrlSetup.CtrlSetup(self.ctrlTab)
@@ -151,6 +158,8 @@ class MainForm(Tk) :
         self.ctrlTab.grid(row=1, column=0,sticky=tk.E+tk.W+tk.S+tk.N)
 
     def update_json_file(self, event):
+
+        #### Gets the updated serial port and baud rate and alls the function to update the json file with the latest parameters ####
 
         g_tech_instance.baud_rate = self.baud_rate_variable.get()
 
@@ -174,11 +183,11 @@ class MainForm(Tk) :
 
         time.sleep(4)
 
-        if g_tech_instance.bconnected == "True":
+        if g_tech_instance.bconnected == "True":# Check for connection via global connection flag
 
             #print('Connected')
 
-            self.btn_text.set("Disconnect")
+            self.btn_text.set("Disconnect") #Update "connect" button to "disconnect" 
            
     def onFileNew(self) :
         popupmsg("Not Implemented")

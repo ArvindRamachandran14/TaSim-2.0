@@ -16,7 +16,6 @@ import Data_coord
 from MainForm import MainForm
 
 
-
 def reset_bconnected():
 
     g_tech_instance.bconnected = "False"
@@ -40,9 +39,9 @@ def main(argv) :
     
     #g_tech_instance = g_tech.globals_()              # Initialize the globals
 
-    g_sys_instance = g_sys.globals_()
+    g_sys_instance = g_sys.globals_() #Create an instance of the globals class in the lobal_sys_var module
 
-    cons = Data_coord.consumer(2, g_sys_instance)
+    cons = Data_coord.consumer(g_sys_instance) #consumer object created, global variable object is passed
 
     reset_bconnected()
 
@@ -65,6 +64,8 @@ def main(argv) :
         mainForm.after(2000, apploop)
 
     apploop()
+
+    ######################## To create real time plotting of system variables #######################
 
     ani_SC = animation.FuncAnimation(mainForm.tabMon.fig1, mainForm.tabMon.animate_SC, interval=1000)
 

@@ -31,6 +31,8 @@ def initialize(config) :
 
 def update():
 
+    #Updates json file with new parameters
+
     cfg["tty"] = tty
 
     cfg["baud_rate"] = baud_rate
