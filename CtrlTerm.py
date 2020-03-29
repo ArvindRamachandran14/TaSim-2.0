@@ -38,12 +38,13 @@ class CtrlTerm(Frame) :
 
     def send_command(self, event):
 
+
         #parsing the terminal command into a cmd and a parm needs to happen here 
 
         command = self.input_text.get(1.0,'end-1c') 
 
         reply = self.cons.send_command_to_PC(command)
 
-        print('reply on the consumer end after decoding is', reply)
+        #print('reply on the consumer end after decoding is', reply)
 
         self.input_text.insert(tk.END,'\n'+reply)

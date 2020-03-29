@@ -25,7 +25,6 @@ class MainForm(Tk) :
     
     def __init__(self, g_sys_instance, cons, *args, **kwargs) :
         
-        # self.bconnected = False
 
         tk.Tk.__init__(self, *args, **kwargs) 
 
@@ -47,7 +46,8 @@ class MainForm(Tk) :
 
         self.minsize(height = 700, width = 1024) # setting window size
         self.protocol("WM_DELETE_WINDOW", self.onClosing) 
-        self.btn_text = StringVar()
+        self.connect_btn_text = StringVar()
+        self.log_btn_text = StringVar()
         self.buildMenuBar(container)
         self.buildserialBar(container)
         self.buildCtrlTab(container)
@@ -113,14 +113,19 @@ class MainForm(Tk) :
 
         self.baud_rate_list.grid(row=0, column=3)        
 
-        self.button = Button(self.serialBar, textvariable=self.btn_text, command=self.connect)
+        self.button = Button(self.serialBar, textvariable=self.connect_btn_text, command=self.connect)
         
-        self.btn_text.set("Connect")
-
-        print(self.btn_text.get())
+        self.connect_btn_text.set("Connect")
 
         self.button.grid(row=0, column=4)
 
+        self.button = Button(self.serialBar, textvariable=self.log_btn_text, command=self.log_data)
+
+        self.log_btn_text.set("log data")
+
+        self.button.grid(row=0, column=5)
+
+        #print(self.connect_btn_text.get())
 
     # buildStatusBar
     # Make the status bar on the bottom of the screen.  This has
@@ -171,24 +176,30 @@ class MainForm(Tk) :
 
         time_out = 3
 
-        if str(self.btn_text.get()) == "Connect":
+        if str(self.connect_btn_text.get()) == "Connect":
 
            self.cons.Connect(self, str(time_out)) #TAD_rec_count is the total number of record
         
-        elif str(self.btn_text.get()) == "Disconnect":
+        elif str(self.connect_btn_text.get()) == "Disconnect":
 
             self.cons.Disconnect()
 
-            self.btn_text.set("Connect")
+            self.connect_btn_text.set("Connect")
 
         time.sleep(4)
 
-        if g_tech_instance.bconnected == "True":# Check for connection via global connection flag
+    def log_data(self):
 
-            #print('Connected')
+        if str(self.log_btn_text.get()) == "log data":
 
-            self.btn_text.set("Disconnect") #Update "connect" button to "disconnect" 
-           
+            self.cons.log_data(self)
+
+        elif str(self.log_btn_text.get()) == 'stop logging':
+
+            #self.cons.log_data()
+
+            self.log_btn_text.set('log data')
+
     def onFileNew(self) :
         popupmsg("Not Implemented")
 
@@ -201,30 +212,6 @@ class MainForm(Tk) :
 
     def onClosing(self) :
         self.onFileExit()
-
-    def machineloop():
-
-        if self.bconnected:
-
-            if self.cmd != '':
-
-                self.cmd = '$GET'
-
-                self.parm = 'ALL_DATA'
-
-            bok, dat_buf = self.conns.submit(self.cmd, self.parm)
-
-            self.cmd = ''
-
-            self.parm = ''
-
-            if bok:
-
-                pass
-
-                # To do: Do something dat_buf to update widgets
-
-                #: Update the forms - monitor, set up etc..
 
 def popupmsg(msg):
     popup = tk.Tk()

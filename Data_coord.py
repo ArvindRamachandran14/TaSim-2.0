@@ -57,6 +57,7 @@ class consumer() :
         self.mmfd = None
         self.lastIdx = -1
         self.recsGot = 0
+        self.f = open("data.txt", "w+")
         #self.kb = pykb.KBHit()
 
     # consume
@@ -89,6 +90,12 @@ class consumer() :
                 self.g_sys_instance.sample_weight.append(tad.Sample_weight)
 
                 self.g_sys_instance.time_list.append(tad.recTime)
+
+            if g_tech_instance.blogging == "True": 
+
+                print('Data logging\n')
+
+                self.f.write('Data logging\n')
 
             # The only thing done with the data is to print its here.
             '''
@@ -127,8 +134,27 @@ class consumer() :
 
             self.initialize()
 
-            mainform_object.btn_text.set("Disconnect")  #Is this necessary?
+            mainform_object.connect_btn_text.set("Disconnect")
 
+    def log_data(self, mainform_object):
+
+        with open('taui.json', 'r') as fCfg :
+            
+            config = json.loads(fCfg.read())
+
+            g_tech_instance.blogging = "True"
+
+        if g_tech_instance.blogging == "True":
+
+            mainform_object.log_btn_text.set("stop logging")
+
+    def stop_logging(self):
+
+        self.f.close()
+
+        g_tech_instance.blogging = "False"
+
+    
     def send_command_to_PC(self, command):
 
         tash = TAShare.from_buffer(self.mmShare)

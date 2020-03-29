@@ -55,7 +55,7 @@ def main(argv) :
 
             bconnected = config["bconnected"]
         
-        if mainForm.btn_text.get() == "Disconnect":
+        if mainForm.connect_btn_text.get() == "Disconnect":
     
             #print('Consumption in progress')
 

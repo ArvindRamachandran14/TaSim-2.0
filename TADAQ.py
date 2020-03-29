@@ -122,14 +122,14 @@ class producer() :
 
             
                 # Print the TADAQ output
-                
+                '''
                 print('P: {0:4d} {1:10.3f} {2:10.3f} {3:10.3f} {4:10.3f} {5:10.3f} {6:10.3f} {7:10.3f}{8:d}'.format( \
                     tash.data[recIdx].recNum, tash.data[recIdx].recTime, \
                     tash.data[recIdx].SC_T1, tash.data[recIdx].CC_T1, tash.data[recIdx].DPG_T1, \
                     tash.data[recIdx].pH2O, tash.data[recIdx].pCO2, \
                     tash.data[recIdx].Sample_weight, tash.data[recIdx].Status)) #SC_T2 and Dew Point Temp deleted from print statement
+                '''
                 
-            
                 yield from asyncio.sleep(self.interval)
         return 0
         
@@ -179,10 +179,13 @@ class producer() :
 
         #print(dt.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S'))
 
+        #print('sending command to tasim', cmd)
+
         cmdBytes = bytearray(cmd, 'utf-8')
         try :
             self.sock.send(cmdBytes)
             rData = self.sock.recv(128)
+            #print('received data is', rData)
         except Exception :
             retVal = -1
         else :
@@ -208,7 +211,7 @@ async def main() :
         g.initialize(config)              # Initialize the globals
 
     g.bconnected = "True" #Simulation has no serial connection
-
+    
     g.update()
 
     if g.bconnected == "True":

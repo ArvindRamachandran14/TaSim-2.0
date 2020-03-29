@@ -90,7 +90,7 @@ class TaSim() :
 		except Exception :
 			return
 		cmd = cmdBytes.decode('utf-8')
-		# print(cmd)
+		#print(cmd)
 		if cmd == 'quit' :
 			self.bDone = True
 			reply = cmd
