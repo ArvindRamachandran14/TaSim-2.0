@@ -196,7 +196,7 @@ class MainForm(Tk) :
 
         elif str(self.log_btn_text.get()) == 'stop logging':
 
-            #self.cons.log_data()
+            self.cons.stop_logging()
 
             self.log_btn_text.set('log data')
 

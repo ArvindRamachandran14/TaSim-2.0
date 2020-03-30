@@ -90,6 +90,7 @@ class TaSim() :
 		except Exception :
 			return
 		cmd = cmdBytes.decode('utf-8')
+		
 		#print(cmd)
 		if cmd == 'quit' :
 			self.bDone = True
@@ -107,6 +108,8 @@ class TaSim() :
 
 			if bOK :
 				if cmdParts[0] == 'g' :
+
+					
 					if parm == 'tcc' :
 						reply = 'v {0:.2f}'.format(self.TCC)
 					elif parm == 'tcc' :
@@ -126,7 +129,11 @@ class TaSim() :
 							self.TCC, self.TSC, self.TDP, self.Wgt, self.pH2O, self.pCO2)
 					else :
 						reply = 'e INVPARM'
+
+						#print('reply sent from tasim is', reply)
+
 				elif cmdParts[0] == 's' :
+					print('command sent to tasim is', cmd)
 					if len(cmdParts) == 3 :
 						try :
 							val = float(cmdParts[2])

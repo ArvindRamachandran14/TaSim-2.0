@@ -16,3 +16,5 @@ class globals_:
         self.sample_weight = []
 
         self.time_list = []
+
+        self.blogging = False

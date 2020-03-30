@@ -13,21 +13,19 @@ baud_rate = 9600
 cfg = {}                        # Config object
 tty = "/dev/ttyUSB0"                      # TTY or COM port to use for TA comms
 bconnected = "False"
-blogging = "True"
 time_out = 5
 time_interval = 5
 
 # initialize
 # Initialize globals from the cfg object
 def initialize(config) :
-    global cfg, tty, baud_rate, time_out, time_interval, ser, bconnected, blogging
+    global cfg, tty, baud_rate, time_out, time_interval, ser, bconnected
     cfg = config                            # Set the cfg
     tty = cfg["tty"]
     baud_rate = cfg["baud_rate"]
     time_out = cfg["time_out"]
     time_interval = cfg["time_interval"]
     bconnected = "False"
-    blogging = "True"
     update()
 
 def update():
@@ -43,8 +41,6 @@ def update():
     cfg["time_interval"] = time_interval
 
     cfg["bconnected"] = bconnected
-
-    cfg["blogging"] = blogging
 
     print(cfg)
 

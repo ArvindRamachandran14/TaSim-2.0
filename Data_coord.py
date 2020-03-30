@@ -15,6 +15,7 @@ import tkinter as tk
 import json
 #import pykbhit as pykb
 import global_tech_var as g_tech_instance
+import dicttoxml
 
 encoding = 'utf-8'
 loop = None
@@ -57,7 +58,8 @@ class consumer() :
         self.mmfd = None
         self.lastIdx = -1
         self.recsGot = 0
-        self.f = open("data.txt", "w+")
+        self.f = open('data_file', "w+")
+        #self.f = open('data_file_'+str(datetime.now())+'.xml', "w+")
         #self.kb = pykb.KBHit()
 
     # consume
@@ -75,6 +77,8 @@ class consumer() :
 
             tad = TAData.from_buffer(tash.data[self.lastIdx])
 
+            temp_dict = {}
+
             if tad.SC_T1 > 0.0:
                 
                 self.g_sys_instance.Temperatures_SC.append(tad.SC_T1)
@@ -91,13 +95,28 @@ class consumer() :
 
                 self.g_sys_instance.time_list.append(tad.recTime)
 
-            if g_tech_instance.blogging == "True": 
+                temp_dict['time'] = str(datetime.now())
 
-                print('Data logging\n')
+                temp_dict['SC_T1'] = tad.SC_T1
 
-                self.f.write('Data logging\n')
+                temp_dict['CC_T1'] = tad.CC_T1
 
-            # The only thing done with the data is to print its here.
+                temp_dict['DPG_T1'] = tad.DPG_T1
+
+                temp_dict['pCO2'] = tad.pCO2
+
+                temp_dict['pH2O'] = tad.pH2O
+
+                temp_dict['Sample_weight'] = tad.Sample_weight
+
+            xmlstring = dicttoxml.dicttoxml(temp_dict, attr_type=False, custom_root='TA Data')
+
+            if self.g_sys_instance.blogging == True: 
+
+                #print(xmlstring.decode("utf-8"))
+
+                self.f.write(xmlstring.decode("utf-8")+'\n')
+
             '''
             print('P: {0:4d} {1:10.3f} {2:10.3f} {3:10.3f} {4:10.3f} {5:10.3f} {6:10.3f} {7:10.3f} {8:d}'.format( \
                 tad.recNum, tad.recTime, \
@@ -138,21 +157,15 @@ class consumer() :
 
     def log_data(self, mainform_object):
 
-        with open('taui.json', 'r') as fCfg :
-            
-            config = json.loads(fCfg.read())
+        self.g_sys_instance.blogging = True
 
-            g_tech_instance.blogging = "True"
-
-        if g_tech_instance.blogging == "True":
-
-            mainform_object.log_btn_text.set("stop logging")
+        mainform_object.log_btn_text.set("stop logging")
 
     def stop_logging(self):
 
-        self.f.close()
+        self.g_sys_instance.blogging = False
 
-        g_tech_instance.blogging = "False"
+        self.f.close()
 
     
     def send_command_to_PC(self, command):
@@ -163,9 +176,11 @@ class consumer() :
 
         tash.command[0:len(cmdBuf)] = cmdBuf #adding command to shared memory
 
+        time.sleep(0.05) #Small time delay needed to get response back
+
         reply = bytearray(tash.reply).decode(encoding).rstrip('\x00') # Decoding reply from shared memory
 
-        #print(reply)
+        #print('reply from TADAQ after decoding is ', reply)
 
         #print(type(reply))
 

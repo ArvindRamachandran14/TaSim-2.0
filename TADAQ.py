@@ -139,7 +139,7 @@ class producer() :
                 tash = TAShare.from_buffer(self.mmShare)
                 command = bytearray(tash.command).decode(encoding).rstrip('\x00')
                 if not command == '' :
-                    print(f'Command: {command}')
+                    #print(f'Command received in TADAQ is: {command}')
                     for idx in range(0,80) :
                         tash.reply[idx] = 0
                         tash.command[idx] = 0
@@ -148,6 +148,9 @@ class producer() :
                         sReply = 'OK'
                     else :
                         sReply = self.getDataFromTA(command)
+
+
+                    #print('Reply is', sReply)
 
                     # Put the reply into the shared reply buffer
                     repBuf = bytearray(sReply, encoding)
@@ -179,13 +182,10 @@ class producer() :
 
         #print(dt.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S'))
 
-        #print('sending command to tasim', cmd)
-
         cmdBytes = bytearray(cmd, 'utf-8')
         try :
             self.sock.send(cmdBytes)
             rData = self.sock.recv(128)
-            #print('received data is', rData)
         except Exception :
             retVal = -1
         else :
@@ -199,7 +199,11 @@ class producer() :
                 else :
                     retval = sData
             else :
+                #print('received data at TADAQ is', rData)
+                #print('sending command to tasim', cmd)
                 retval = sData
+                #print('received data at TADAQ is', retval)
+
         return retval
 
 # main program
@@ -211,7 +215,7 @@ async def main() :
         g.initialize(config)              # Initialize the globals
 
     g.bconnected = "True" #Simulation has no serial connection
-    
+
     g.update()
 
     if g.bconnected == "True":
