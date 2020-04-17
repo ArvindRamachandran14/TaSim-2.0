@@ -28,7 +28,7 @@ class CtrlMon(Frame) :
         self.exp_btn_text = StringVar()
         self.log_btn_text.set('Record data')
         self.exp_btn_text.set('Start experiment')
-        self.plot1_range = 7 
+        self.plot1_range = 7 #7 data points leads to 15 second data
         self.plot2_range = 7 
         self.plot3_range = 7 
         self.buildContent()
