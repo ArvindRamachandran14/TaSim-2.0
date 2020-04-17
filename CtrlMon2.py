@@ -51,7 +51,7 @@ class CtrlMon2(Frame) :
         self.ax2.set_xlabel('Time (sec)')
         self.ax2.set_ylabel('pH20 (mmol/mol)')
         self.ax2.set_autoscalex_on(True)
-        self.ax2.set_ybound(0, 20)
+        self.ax2.set_ybound(0, 50)
         self.ax2.set_autoscaley_on(False)
         self.ax2.grid(True, 'major', 'both')
         #plt.subplots_adjust(left=0.1, right=0.9, top=0.9, bottom=0.1)
@@ -79,13 +79,13 @@ class CtrlMon2(Frame) :
 
     def animate_pCO2(self, i):
 
-        self.ax1.plot(self.g_sys_instance.time_list, self.g_sys_instance.pCO2_list)
+        self.ax1.plot(self.g_sys_instance.time_list[800::1], self.g_sys_instance.pCO2_list[800::1])
 
     def animate_pH2O(self, i):
 
-        self.ax2.plot(self.g_sys_instance.time_list, self.g_sys_instance.pH2O_list)
+        self.ax2.plot(self.g_sys_instance.time_list[800::1], self.g_sys_instance.pH2O_list[800::1])
 
     def animate_sw(self, i):
 
-        self.ax3.plot(self.g_sys_instance.time_list, self.g_sys_instance.sample_weight)
+        self.ax3.plot(self.g_sys_instance.time_list[800::1], self.g_sys_instance.sample_weight[800::1])
 

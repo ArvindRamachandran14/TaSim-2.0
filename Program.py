@@ -11,9 +11,11 @@ import CtrlMon
 import CtrlMon2
 import global_sys_var as g_sys
 import Data_coord
+import datetime
 
 
 from MainForm import MainForm
+
 
 
 def reset_bconnected():
@@ -49,17 +51,19 @@ def main(argv) :
 
     def apploop():
 
-        with open('taui.json', 'r') as fCfg :
+        #with open('taui.json', 'r') as fCfg :
             
-            config = json.loads(fCfg.read())
+        #config = json.loads(fCfg.read())
 
-            bconnected = config["bconnected"]
+        #bconnected = config["bconnected"]
         
-        if mainForm.connect_btn_text.get() == "Disconnect":
+        if mainForm.connect_btn_text.get() == "Disconnect" and g_sys_instance.run_experiment == True:
     
             #print('Consumption in progress')
 
             cons.consume() #indentation removed, consume all the time
+
+            mainForm.status_time_text.set('Run time: '+ str(datetime.timedelta(seconds=round(g_sys_instance.time_list[-1]))))
 
         mainForm.after(2000, apploop)
 

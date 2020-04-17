@@ -6,7 +6,7 @@
 # 20191112: KDT = Original issue
 
 import tkinter as tk
-from tkinter import Tk, ttk, Frame, Menu, Menubutton, Button, Label, StringVar, OptionMenu
+from tkinter import Tk, ttk, Frame, Menu, Menubutton, Button, Label, StringVar, OptionMenu, filedialog
 import sys
 from datetime import datetime
 import CtrlSetup
@@ -47,7 +47,6 @@ class MainForm(Tk) :
         self.minsize(height = 700, width = 1024) # setting window size
         self.protocol("WM_DELETE_WINDOW", self.onClosing) 
         self.connect_btn_text = StringVar()
-        self.log_btn_text = StringVar()
         self.buildMenuBar(container)
         self.buildserialBar(container)
         self.buildCtrlTab(container)
@@ -65,8 +64,11 @@ class MainForm(Tk) :
         # Menu
         menuBar = tk.Menu(container)
         fileMenu = tk.Menu(menuBar, tearoff=0)
-        fileMenu.add_command(label='Mew', command=self.onFileNew)
+        fileMenu.add_command(label='New', command=self.onFileNew)
         fileMenu.add_command(label='Open...', command=self.onFileOpen)
+        fileMenu.add_separator()
+        fileMenu.add_command(label='Save', command=self.onFileNew)
+        fileMenu.add_command(label='Save as', command=self.onFileOpen)
         fileMenu.add_separator()
         fileMenu.add_command(label='Exit', command=self.onFileExit)
         menuBar.add_cascade(label='File', menu=fileMenu)
@@ -119,11 +121,11 @@ class MainForm(Tk) :
 
         self.button.grid(row=0, column=4)
 
-        self.button = Button(self.serialBar, textvariable=self.log_btn_text, command=self.log_data)
+        #self.button = Button(self.serialBar, textvariable=self.log_btn_text, command=self.log_data)
 
-        self.log_btn_text.set("log data")
+        #self.log_btn_text.set("log data")
 
-        self.button.grid(row=0, column=5)
+        #self.button.grid(row=0, column=5)
 
         #print(self.connect_btn_text.get())
 
@@ -132,14 +134,27 @@ class MainForm(Tk) :
     # a text status message on the left and the experiment time on
     # the right.  The time is not being updated in this prototype code.
 
-    def buildStatusBar(self, container) :
+    def buildStatusBar(self, container):
+
+        self.status_label_text = StringVar()
+
+        self.status_time_text = StringVar()
+
         statusBar = tk.Frame(container, relief=tk.SUNKEN, bd=2)
 
         statusBar.grid(row=2, column=0, sticky=tk.E+tk.W) #Status bar is positioned at the bottom and extends fully horizontally
  
-        tk.Label(statusBar, text='Idle').pack(side=tk.LEFT)
+        self.status_label =  Label(statusBar, textvariable=self.status_label_text)
 
-        tk.Label(statusBar, text='Time').pack(side=tk.RIGHT)
+        self.status_label_text.set('Idle')
+
+        self.status_label.pack(side=tk.LEFT)
+
+        self.status_time = Label(statusBar, textvariable=self.status_time_text)
+
+        self.status_time_text.set('Run time: NA')
+
+        self.status_time.pack(side=tk.RIGHT)
 
 
     def buildCtrlTab(self, container) :
@@ -147,9 +162,9 @@ class MainForm(Tk) :
         ################# Hosts the different tabs such as SetUp, Monitor, Terminal, and Config #################
         
         self.ctrlTab = ttk.Notebook(container)
-        self.tabSetup = CtrlSetup.CtrlSetup(self.ctrlTab)
+        self.tabSetup = CtrlSetup.CtrlSetup(self.ctrlTab, self.cons)
         self.ctrlTab.add(self.tabSetup, text = 'Setup')
-        self.tabMon = CtrlMon.CtrlMon(self.ctrlTab, self.g_sys_instance)
+        self.tabMon = CtrlMon.CtrlMon(self.ctrlTab, self.g_sys_instance, self.cons, self)
         self.tabMon2 = CtrlMon2.CtrlMon2(self.ctrlTab, self.g_sys_instance)
 
         self.ctrlTab.add(self.tabMon, text = 'Monitor 1')
@@ -188,23 +203,27 @@ class MainForm(Tk) :
 
         time.sleep(4)
 
-    def log_data(self):
+    def onFileNew(self):
+        
+        filename  = filedialog.asksaveasfilename(initialdir = "./",title = "Select file",filetypes = (("xml files","*.xml"),("all files","*.*")))
 
-        if str(self.log_btn_text.get()) == "log data":
+        if filename != '':
 
-            self.cons.log_data(self)
+            self.cons.f = open(filename, "w+")
 
-        elif str(self.log_btn_text.get()) == 'stop logging':
-
-            self.cons.stop_logging()
-
-            self.log_btn_text.set('log data')
-
-    def onFileNew(self) :
-        popupmsg("Not Implemented")
 
     def onFileOpen(self) :
-        popupmsg("Not Implemented")
+
+        ftypes = [('xml files', '*.xml'), ('All files', '*')]
+        dlg = filedialog.Open(self, filetypes = ftypes)
+        filename = dlg.show()
+
+        if filename != '':
+
+            self.cons.f = open(filename, "a")
+
+
+        #popupmsg("Not Implemented")
 
     def onFileExit(self) :
         # Need to do cleanup here, save files, etc. before quitting.

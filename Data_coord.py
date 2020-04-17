@@ -58,7 +58,7 @@ class consumer() :
         self.mmfd = None
         self.lastIdx = -1
         self.recsGot = 0
-        self.f = open('data_file', "w+")
+        self.f = None
         #self.f = open('data_file_'+str(datetime.now())+'.xml', "w+")
         #self.kb = pykb.KBHit()
 
@@ -111,6 +111,20 @@ class consumer() :
 
             xmlstring = dicttoxml.dicttoxml(temp_dict, attr_type=False, custom_root='TA Data')
 
+            self.g_sys_instance.time_list.pop(0)
+
+            self.g_sys_instance.Temperatures_SC.pop(0)
+
+            self.g_sys_instance.Temperatures_CC.pop(0)
+
+            self.g_sys_instance.Temperatures_DPG.pop(0)
+
+            self.g_sys_instance.pH2O_list.pop(0)
+
+            self.g_sys_instance.pCO2_list.pop(0)
+
+            self.g_sys_instance.sample_weight.pop(0)
+
             if self.g_sys_instance.blogging == True: 
 
                 #print(xmlstring.decode("utf-8"))
@@ -155,11 +169,11 @@ class consumer() :
 
             mainform_object.connect_btn_text.set("Disconnect")
 
-    def log_data(self, mainform_object):
+    def log_data(self, monitor_object):
 
         self.g_sys_instance.blogging = True
 
-        mainform_object.log_btn_text.set("stop logging")
+        monitor_object.log_btn_text.set("Stop recording")
 
     def stop_logging(self):
 
@@ -177,6 +191,8 @@ class consumer() :
         tash.command[0:len(cmdBuf)] = cmdBuf #adding command to shared memory
 
         time.sleep(0.05) #Small time delay needed to get response back
+
+        #Get the reply until its not empty, but also have a time out incase there was no commmand or the connection broke
 
         reply = bytearray(tash.reply).decode(encoding).rstrip('\x00') # Decoding reply from shared memory
 
