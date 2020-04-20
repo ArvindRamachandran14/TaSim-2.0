@@ -131,6 +131,7 @@ class producer() :
                 '''
                 
                 yield from asyncio.sleep(self.interval)
+        
         return 0
         
     async def doCmd(self) :
