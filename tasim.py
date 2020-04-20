@@ -30,6 +30,7 @@ import socket
 from math import exp
 import Config
 import TaModel
+import pykbhit as pykb
 
 # TaSim
 # TODO: Revise class to handle TaModel
@@ -37,6 +38,8 @@ class TaSim() :
 	def __init__(self, cfg) :
 		self.cfg = cfg
 		self.tam = TaModel.TaModel(cfg)
+		self.kb = pykb.KBHit()
+		self.cmdLine = ''
 		self.deltaT = cfg.deltaT 
 		self.bDone = False					# Done flag
 		self.sel = None						# Selector
@@ -56,7 +59,8 @@ class TaSim() :
 		self.tam.cycle()
 
 	# doReqCmd
-	# This function does the command process.  It handles the following commands:
+	# This function does the command process for commands received via the socket.
+	#   It handles the following commands:
 	#	g <parm>, where parm in ['tcc', 'tsc', 'tdp', 'wgt', 'pco2', 'ph20', 'all']
 	#	s <parm>, where parm in ['tcc', 'tsc', 'tdp']
 	#	quit
@@ -73,7 +77,30 @@ class TaSim() :
 			cmd = cmdBytes.decode('utf-8')
 		else :
 			return bOK
-		# print(cmd)
+		reply = self.executeCmd(cmd)
+		replyBytes = bytearray(reply, 'utf-8')
+		try :
+			conn.send(replyBytes)	 # send the reply
+		except Exception :
+			return bOK
+
+	# doLocalCmd
+	# Handles commands input locally.  It is called when a key is pressed on the 
+	# keyboard.
+	def doLocalCmd(self) :
+		ch = self.kb.getch()
+		if ord(ch) == 10 :
+			reply = self.executeCmd(self.cmdLine)
+			print(reply)
+			self.cmdLine = ''
+		else :
+			self.cmdLine = self.cmdLine + ch
+
+	# executeCmd
+	# Execute the command passed in the argument.  It nandle set commands, get commands, and
+	# quit.
+	def executeCmd(self, cmd) :
+		bOK = True
 		if cmd == 'quit' :
 			self.bDone = True
 			reply = cmd
@@ -113,7 +140,7 @@ class TaSim() :
 						reply = 'OK'
 						sVal = cmdParts[2].lower()
 						if parm == "bypass" :
-							val = True if sVal in self.noList else False
+							val = False if sVal in self.noList else True
 							self.tam.sc.bBypass = val
 						elif parm == "inject" :
 							if len(cmdParts == 4) :
@@ -147,12 +174,7 @@ class TaSim() :
 				else :
 					reply = 'e INVCMD'
 
-		replyBytes = bytearray(reply, 'utf-8')
-		try :
-			conn.send(replyBytes)	 # send the reply
-		except Exception :
-			return bOK
-		return bOK
+		return reply
 
 	# accept methogd
 	# Accept the connection
@@ -167,12 +189,12 @@ class TaSim() :
 	# taAccept
 	# Use the selector to 
 	def taAccept(self) :
-		tTimeout = 0.1						# select timeout time wait more than 100s 
-		nCompute = int(self.deltaT / tTimeout) # 2/0.1 = 20
-		n = nCompute - 1 
+		tTimeout = 0.1						# select timeout time
+		nCompute = int(self.deltaT / tTimeout)
+		n = nCompute - 1
 		while not self.bDone :
-			events = self.sel.select(tTimeout) # checks with a thing called selector 
-			for key, mask in events: 
+			events = self.sel.select(tTimeout)
+			for key, mask in events:
 				bOK = True
 				callback = key.data
 				bOK = callback(key.fileobj, mask)
@@ -182,6 +204,8 @@ class TaSim() :
 					self.sel.unregister(self.sock)
 					self.sel.register(self.sock, selectors.EVENT_READ, self.accept)	
 					self.bSockRecover = True
+			if self.kb.kbhit() :
+				self.doLocalCmd()
 			n += 1
 			if (n % nCompute) == 0 :
 				self.taCompute()		
@@ -198,7 +222,7 @@ class TaSim() :
 # main program
 # Modify the taSim line to change the time constants
 def main() :
-	#print("TaSim V0.90.00")
+	print("TaSim V0.90.00")
 	cfg = Config.Config()
 	cfg.ReadConfig('tasim.ini')
 	taSim = TaSim(cfg)

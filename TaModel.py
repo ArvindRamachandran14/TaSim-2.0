@@ -12,7 +12,7 @@ import numpy as np
 # Temperature units are degC.
 # Note that this is at the module level, so others can use it.
 def ph2oSat(T) :
-	return 610.78 * exp((T * 17.2684) / (T + 238.3)) #T in C
+	return 610.78 * exp((T * 17.2684) / (T + 238.3))
 
 # TaData
 # Defines the data that is stored on each cycle for debug purposes.
@@ -50,19 +50,22 @@ class DPG :
 
 	# cycle
 	# Update the TDP, ph2oDP, and return the updated ph2oFL.
+	# The assumption here is that the water evaporates/conedenses to/from the
+	# boundary layer essentially instantaneously 
 	def cycle(self, args) :
 		TFL = args[0]
 		ph2oFL = args[1]
 		pco2FL = args[2]
 
+		retVals = [self.TDP, self.ph2oDP, self.pco2DP]
 		# Update
 		self.TDP = self.TDPset + (self.TDP - self.TDPset) * self.TDPfactor
 		self.ph2oDP = ph2oSat(self.TDP)
 		ph2oMax = ph2oSat(TFL)
 		if ph2oFL < ph2oMax :
 			ph2oFL = self.ph2oDP + (ph2oFL - self.ph2oDP) * self.TDPfactor
-		rVals = [TFL, ph2oFL, pco2FL, self.TDP]
-		return rVals
+		recVals = [TFL, ph2oFL, pco2FL, self.TDP]
+		return (retVals, recVals)
 
 # CC - Conditioning Chamber
 class CC() :
@@ -86,6 +89,7 @@ class CC() :
 		TFL = args[0]
 		ph2oFL = args[1]
 		pco2FL = args[2]
+		retVals = [self.TCCprev, self.ph2oCCprev, self.pco2CCprev]
 
 		# Update the temperature
 		self.TCCprev = self.TCC
@@ -105,12 +109,13 @@ class CC() :
 		self.pco2CC = self.pco2CCprev + dpco2FL + dpco2Inj
 
 		# Update the ph2oCC
-		# self.ph2oCC = self.ph2oCCprev
+		self.ph2oCCprev = self.ph2oCC
 		dph2oFL = self.DV * (ph2oFL - self.ph2oCC) / self.cfg.VolCC
 		self.ph2oCC = self.ph2oCC + dph2oFL
 
 		# Done return the previous values
-		return (self.TCC, self.ph2oCC, self.pco2CC)
+		recVals = [self.TCC, self.ph2oCC, self.pco2CC]
+		return (retVals, recVals)
 
 # SC - Sample Chamber
 class SC :
@@ -132,28 +137,30 @@ class SC :
 		ph2oFL = args[1]
 		pco2FL = args[2]
 
+		retVals = args		# [self.TSCprev, self.ph2oSCprev, self.pco2SCprev]
+
+		# Update the temperature
+		self.TSCprev = self.TSC
+		self.TSC = self.TSCset + (self.TSCprev - self.TSCset) * self.TSCfactor
+
 		# Check for bypass, and update if not
 		if not self.bBypass :
-			# Update the temperature
-			self.TSCprev = self.TSC
-			self.TSC = self.TSCset + (self.TSCprev - self.TSCset) * self.TSCfactor
 			dTSCFL = self.DV * (TFL - self.TSCprev) / self.cfg.VolSC
 			self.TSC += dTSCFL
 
 			# Update the pco2SC
 			self.pco2SCprev = self.pco2SC
-			dpco2FL = self.DV * (pco2FL - self.pco2SC) / self.cfg.VolSC
+			dpco2FL = self.DV * (pco2FL - self.pco2SCprev) / self.cfg.VolSC
 			self.pco2SC = self.pco2SC + dpco2FL
 
 			# Update the ph2oSC
-			# self.ph2oSC = self.ph2oSCprev
-			dph2oFL = self.DV * (ph2oFL - self.ph2oSC) / self.cfg.VolSC
+			self.ph2oSCprev = self.ph2oSC
+			dph2oFL = self.DV * (ph2oFL - self.ph2oSCprev) / self.cfg.VolSC
 			self.ph2oSC = self.ph2oSC + dph2oFL
-			rVals = [self.TSC, self.ph2oSC, self.pco2SC]
-		else :
-			rVals = args
 
-		return rVals
+		recVals = [self.TSC, self.ph2oSC, self.pco2SC]
+
+		return (retVals, recVals)
 
 # Scale
 # Placeholder, can't do any updates until the sorbent model is created and 
@@ -180,14 +187,18 @@ class TaModel :
 					self.sc.TSC, self.sc.ph2oSC, self.sc.pco2SC, \
 					self.dpg.TDP, self.dpg.ph2oDP, self.dpg.pco2DP, self.scale.wgt)
 		self.data[self.idx] = dRec
-		#print(f'Count: {self.count} T: {self.count * self.cfg.deltaT} ph2o: {self.data[self.idx].ph2oSC}')
+		print(f'Count:- {self.count} T: {self.count * self.cfg.deltaT}')
+		print(f'   CC:- TCC: {round(self.cc.TCC, 3)} ph2o: {round(self.cc.ph2oCC,1)} pco2: {round(self.cc.pco2CC,1)}')
+		print(f'   SC:- TSC: {round(self.sc.TSC, 3)} ph2o: {round(self.sc.ph2oSC,1)} pco2: {round(self.sc.pco2SC,1)}')
+		print(f'  DPG:- TDP: {round(self.dpg.TDP, 3)} ph2o: {round(self.dpg.ph2oDP,1)} pco2: {round(self.dpg.pco2DP,1)}')
+		
 
 	def cycle(self) :
 		dRec = self.data[self.idx]				# Last record stored
 		args = [dRec.Tdp, dRec.ph2oDP, dRec.pco2DP]
-		rValsCC = self.cc.cycle(args)			# Cycle cc
-		rValsSC = self.sc.cycle(rValsCC)		# Cycle sc
-		rValsDPG = self.dpg.cycle(rValsSC)		# Cycle dpg
+		rValsCC, recValsCC = self.cc.cycle(args)			# Cycle cc
+		rValsSC, recValsSC = self.sc.cycle(rValsCC)			# Cycle sc
+		recValsDPG = self.dpg.cycle(rValsSC)[1]				# Cycle dpg
 
 		# Adjust count and data index
 		self.count += 1
@@ -196,13 +207,15 @@ class TaModel :
 
 		# Build the data record and store it
 		dRecUPD = \
-			TaData(self.count, rValsCC[0], rValsCC[1], rValsCC[2], \
-					rValsSC[0], rValsSC[1], rValsSC[2], \
-					rValsDPG[0], rValsDPG[1], rValsDPG[2], self.scale.wgt)
+			TaData(self.count, recValsCC[0], recValsCC[1], recValsCC[2], \
+					recValsSC[0], recValsSC[1], recValsSC[2], \
+					recValsDPG[0], recValsDPG[1], recValsDPG[2], self.scale.wgt)
 		self.data[self.idx] = dRecUPD
-		if (self.count % self.bufSize) == 0 :
-			pass
-			#print(f'Count: {self.count} T: {self.count * self.cfg.deltaT} ph2o: {self.data[self.idx].ph2oSC}')
+		if (self.count % int(self.bufSize / 20)) == 0 :
+			print(f'Count:- {self.count} T: {self.count * self.cfg.deltaT}')
+			print(f'   CC:- TCC: {round(self.cc.TCC,3)} ph2o: {round(self.cc.ph2oCC,1)} pco2: {round(self.cc.pco2CC,1)}')
+			print(f'   SC:- TSC: {round(self.sc.TSC,3)} ph2o: {round(self.sc.ph2oSC,1)} pco2: {round(self.sc.pco2SC,1)}')
+			print(f'  DPG:- TDP: {round(self.dpg.TDP,3)} ph2o: {round(self.dpg.ph2oDP,1)} pco2: {round(self.dpg.pco2DP,1)}')
 
 
 
