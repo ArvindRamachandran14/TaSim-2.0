@@ -109,7 +109,7 @@ class consumer() :
 
                 temp_dict['Sample_weight'] = tad.Sample_weight
 
-            xmlstring = dicttoxml.dicttoxml(temp_dict, attr_type=False, custom_root='TA Data')
+            xmlstring = dicttoxml.dicttoxml(temp_dict, attr_type=False, custom_root='TAData')
 
             self.g_sys_instance.time_list.pop(0)
 
