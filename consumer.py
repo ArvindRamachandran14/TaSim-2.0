@@ -91,7 +91,7 @@ class consumer() :
 			tash = TAShare.from_buffer(self.mmShare)
 			if not bNeedReply :
 				if self.kb.kbhit() :
-					ch = self.kb.getch()
+					ch = self.kb.getch() 
 					if ord(ch) == 10 :      # Carriage return
 						cmdParts = line.split(' ')
 						cmd = cmdParts[0].upper()
@@ -130,7 +130,7 @@ class consumer() :
 					bNeedReply = False
 					if bGotExitCmd :
 						self.bDone = True
-s
+
 			await asyncio.sleep(0.050)
 		
 	def initialize(self) :

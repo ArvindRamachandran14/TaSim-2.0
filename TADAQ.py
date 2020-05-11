@@ -1,24 +1,20 @@
 #! /usr/local/bin/python3 
 # -*- coding: utf-8 -*-
 
+
 from ctypes import c_int, c_double, c_byte, c_bool, Structure, sizeof #creates c type structures
 from random import random #random numbers
 import mmap #memory map
 import os 
 from datetime import datetime
-
 import datetime as dt 
-
 import asyncio #timing to work right asychronous call - go and read the data and the meanwhile you can do other things
 import serial
 import xml.etree.ElementTree as ET
 import time
-
 import global_tech_var as g
-
 import sys
 import json
-
 encoding = 'utf-8' # covers straight ascii 8 bit char codes 
 loop = None #variable timeer uses
 recCount = 21 #how many records are in the shared memory 
@@ -50,7 +46,6 @@ class TAShare(Structure) :
             ('data', TAData * recCount)]
 
 class producer() :
-
     def __init__(self, ser) :
         self.ser = ser
         self.startTime = None
@@ -63,7 +58,6 @@ class producer() :
         self.mmfd = None
         self.startTime = None
         self.sem = None # Added semaphore instance here
-
         self.initialize()
        
 
