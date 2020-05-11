@@ -25,6 +25,8 @@ class CtrlMon2(Frame) :
 
     def buildContent(self) :
 
+        # Plot Partial pressure of CO2
+
         self.grp1 = LabelFrame(self, text = 'Partial pressure of CO2')
         self.grp1.grid(row=1,column=1, padx=5, pady=5)
         self.fig1 = Figure(figsize=(3.8, 3.8))
@@ -41,7 +43,7 @@ class CtrlMon2(Frame) :
         self.cnvs1.get_tk_widget().grid(row=1, column=1)
         #self.cnvs1.get_tk_widget().pack(side=tk.RIGHT, fill=tk.BOTH, expand=True)
 
-        # Partial pressures
+        # Plot Partial pressure of H2O
         self.grp2 = LabelFrame(self, text = 'Partial pressure of H2O')
         self.grp2.grid(row=1,column=1, padx=5, pady=5)
         self.fig2 = Figure(figsize=(3.8, 3.8))
@@ -58,7 +60,7 @@ class CtrlMon2(Frame) :
         self.cnvs2.get_tk_widget().grid(row=1, column=2)
         #self.cnvs2.get_tk_widget().pack(side=tk.RIGHT, fill=tk.BOTH, expand=True)
 
-        # Sample weight
+        # Plot Sample weight
         self.grp3 = LabelFrame(self, text = 'Sample Weight')
         self.grp3.grid(row=1,column=2, padx=5, pady=5)
         self.fig3 = Figure(figsize=(3.8, 3.8))

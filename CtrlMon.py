@@ -41,6 +41,8 @@ class CtrlMon(Frame) :
         self.label3 = Label(self, text = 'Dew Point Generator Temperatures')
         self.label3.grid(row = 0, column = 2, padx = 3, pady = 3, sticky='e')
 
+        # Plot Sample Chamber temperature
+
         self.fig1 = Figure(figsize=(3.8, 3.8))
         self.ax1 = self.fig1.add_subplot(111)
         self.ax1.set_xlabel('Time (sec)')
@@ -54,7 +56,7 @@ class CtrlMon(Frame) :
         self.cnvs1.get_tk_widget().grid(row=1, column=0)
         #self.cnvs1.get_tk_widget().pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
       
-        # Conditioning Chamber temperature
+        # Plot Conditioning Chamber temperature
 
         self.fig2 = Figure(figsize=(3.8, 3.8))
         self.ax2 = self.fig2.add_subplot(111)
@@ -69,7 +71,8 @@ class CtrlMon(Frame) :
         self.cnvs2.get_tk_widget().grid(row=1, column=1)
         #self.cnvs2.get_tk_widget().pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
 
-        # Sample weight
+        # Plot DPG temperature
+
         self.fig3 = Figure(figsize=(3.8, 3.8))
         self.ax3 = self.fig3.add_subplot(111)
         self.ax3.set_xlabel('Time (sec)')

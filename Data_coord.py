@@ -47,13 +47,12 @@ class TAShare(Structure) :
             ('data', TAData * recCount)]
 
 class consumer() :
-    def __init__(self, interval, g_sys_instance) :
+    def __init__(self, g_sys_instance) :
 
         #self.g_tech_instance= g_tech_instance
         self.g_sys_instance = g_sys_instance
         self.startTime = None
         self.bDone = False
-        self.interval = interval
         self.recNum = 0
         self.taShare = None
         self.taData = None
@@ -117,7 +116,7 @@ class consumer() :
         if shFile.is_file() :
             os.remove('taShare')
 
-        Popen(['python3.7', 'TADAQ.py', serial_port, baud_rate, time_out])
+        Popen(['python3.7', 'TADAQ.py', serial_port, baud_rate, time_out]) #Starts the TADAQ program
 
         time.sleep(2)
 
@@ -125,23 +124,23 @@ class consumer() :
             
             config = json.loads(fCfg.read())
 
-            bconnected = config["bconnected"]
+            bconnected = config["bconnected"] 
 
         if bconnected == "True":
 
             self.initialize()
 
-            mainform_object.btn_text.set("Disconnect")   
+            mainform_object.btn_text.set("Disconnect")  #Is this necessary?
 
     def send_command_to_PC(self, command):
 
         tash = TAShare.from_buffer(self.mmShare)
 
-        cmdBuf = bytearray(command, encoding)
+        cmdBuf = bytearray(command, encoding) 
 
-        tash.command[0:len(cmdBuf)] = cmdBuf
+        tash.command[0:len(cmdBuf)] = cmdBuf #adding command to shared memory
 
-        reply = bytearray(tash.reply).decode(encoding).rstrip('\x00')
+        reply = bytearray(tash.reply).decode(encoding).rstrip('\x00') # Decoding reply from shared memory
 
         #print(reply)
 
@@ -155,7 +154,7 @@ class consumer() :
 
         tash = TAShare.from_buffer(self.mmShare)
 
-        cmdBuf = bytearray('@{EXIT}', encoding)
+        cmdBuf = bytearray('@{EXIT}', encoding) #send the EXIT command to the shared memory, the TADAQ reads this and exits thhe program
 
         tash.command[0:len(cmdBuf)] = cmdBuf
 
