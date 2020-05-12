@@ -17,7 +17,6 @@ import datetime
 from MainForm import MainForm
 
 
-
 def reset_bconnected():
 
     g_tech_instance.bconnected = "False" 
@@ -81,7 +80,7 @@ def main(argv) :
 
     ani_pH2O = animation.FuncAnimation(mainForm.tabMon2.fig2, mainForm.tabMon2.animate_pH2O, interval=1000)
 
-    animate_sw= animation.FuncAnimation(mainForm.tabMon2.fig3, mainForm.tabMon2.animate_sw, interval=1000)
+    animate_sw = animation.FuncAnimation(mainForm.tabMon2.fig3, mainForm.tabMon2.animate_sw, interval=1000)
 
     mainForm.mainloop()
 

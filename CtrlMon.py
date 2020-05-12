@@ -177,7 +177,7 @@ class CtrlMon(Frame) :
 
     def animate_SC(self, i):
 
-        self.ax1.clear()
+        #self.ax1.clear()
 
         self.ax1.set_xlabel('Time (sec)')
         self.ax1.set_ylabel('Temperature ($^\circ$C)')
@@ -196,7 +196,7 @@ class CtrlMon(Frame) :
 
     def animate_CC(self, i):
 
-        self.ax2.clear()
+       #self.ax2.clear()
 
         self.ax2.set_xlabel('Time (sec)')
         self.ax2.set_ylabel('Temperature ($^\circ$C)')
@@ -213,8 +213,7 @@ class CtrlMon(Frame) :
 
     def animate_DPG(self, i):
 
-        self.ax3.clear()
-
+        #self.ax3.clear()
         self.ax3.set_xlabel('Time (sec)')
         self.ax3.set_ylabel('Temperature ($^\circ$C)')
         self.ax3.set_autoscalex_on(True)
