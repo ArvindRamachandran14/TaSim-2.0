@@ -31,15 +31,10 @@ class CtrlMon(Frame) :
         self.plot1_range = 7 #7 data points leads to 15 second data
         self.plot2_range = 7 
         self.plot3_range = 7 
+        self.slider_list = [1, 15, 30, 60]
         self.buildContent()
 
     def buildContent(self) :
-
-        variable_temp = StringVar(self)
-        variable_temp.set("Sample Chamber")
-
-        variable_pressure = StringVar(self)
-        variable_pressure.set("pCO2")
 
         self.label = Label(self, text ="")
 
@@ -64,24 +59,20 @@ class CtrlMon(Frame) :
         self.label3 = Label(self, text = 'Dew Point Generator Temperatures')
         self.label3.grid(row = 5, column = 2, padx = 3, pady = 3)
 
-        #Label(self, text = 'A').grid(row=6, column=0)
+        self.toolbarframe1 = Frame(self)
 
-        #Label(self, text = 'B').grid(row=6, column=1)
+        self.toolbarframe2 = Frame(self)
 
-        #Label(self, text = 'C').grid(row=6, column=2)
+        self.toolbarframe3 = Frame(self)
 
-        self.scale1 = Scale(self, from_=15, to=60, resolution=15, orient=HORIZONTAL, label='Plot range (s)')#, command=set_plot_range(1))
+        self.scale1 = Scale(self, from_=min(self.slider_list), to=max(self.slider_list), command=self.scale_value_check1, orient=HORIZONTAL, label='Plot range (m)')#, command=set_plot_range(1))
         self.scale1.grid(row=6, column=0, rowspan=1)
 
-
-        self.scale2 = Scale(self, from_=15, to=60, resolution=15, orient=HORIZONTAL, label='Plot range (s)')#, command=set_plot_range(2))
+        self.scale2 = Scale(self, from_=min(self.slider_list), to=max(self.slider_list), command=self.scale_value_check2, orient=HORIZONTAL, label='Plot range (m)')#, command=set_plot_range(2))
         self.scale2.grid(row=6, column=1, rowspan=1)
 
-        #Label(self, text = '2').grid(row=9, column=1)
-
-        self.scale3 = Scale(self, from_=15, to=60, resolution=15, orient=HORIZONTAL, label='Plot range (s)')#, command=set_plot_range(3))
+        self.scale3 = Scale(self, from_=min(self.slider_list), to=max(self.slider_list), command=self.scale_value_check3, orient=HORIZONTAL, label='Plot range (m)')#, command=set_plot_range(3))
         self.scale3.grid(row=6, column=2, rowspan=1)
-
 
         # Plot Sample Chamber temperature
 
@@ -97,6 +88,10 @@ class CtrlMon(Frame) :
       
         self.cnvs1 = FigureCanvasTkAgg(self.fig1, self)
         self.cnvs1.get_tk_widget().grid(row=7, column=0)
+
+        #self.toolbarframe1.grid(row=8, column=0)
+
+        #self.toolbar1 = NavigationToolbar2Tk(self.cnvs1,self.toolbarframe1)
        
         #self.cnvs1.get_tk_widget().pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
       
@@ -114,6 +109,11 @@ class CtrlMon(Frame) :
    
         self.cnvs2 = FigureCanvasTkAgg(self.fig2, self)
         self.cnvs2.get_tk_widget().grid(row=7, column=1)
+
+        #self.toolbarframe2.grid(row=8, column=1)
+
+        #self.toolbar2 = NavigationToolbar2Tk(self.cnvs2,self.toolbarframe2)
+
        
         #self.cnvs2.get_tk_widget().pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
 
@@ -131,6 +131,12 @@ class CtrlMon(Frame) :
    
         self.cnvs3 = FigureCanvasTkAgg(self.fig3, self)
         self.cnvs3.get_tk_widget().grid(row=7, column=2)
+
+        #self.toolbarframe3.grid(row=8, column=2)
+
+        #self.toolbar3 = NavigationToolbar2Tk(self.cnvs3,self.toolbarframe3)
+
+
        
         #self.cnvs3.get_tk_widget().pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
 
@@ -150,6 +156,25 @@ class CtrlMon(Frame) :
             self.plot3_range = self.scale3.get()
     '''
 
+    def scale_value_check1(self, value):
+
+        newvalue = min(self.slider_list, key=lambda x:abs(x-float(value)))
+       
+        self.scale1.set(newvalue)
+
+    def scale_value_check2(self, value):
+
+        newvalue = min(self.slider_list, key=lambda x:abs(x-float(value)))
+       
+        self.scale2.set(newvalue)
+
+    def scale_value_check3(self, value):
+
+        newvalue = min(self.slider_list, key=lambda x:abs(x-float(value)))
+       
+        self.scale3.set(newvalue)
+
+
     def animate_SC(self, i):
 
         self.ax1.clear()
@@ -161,11 +186,13 @@ class CtrlMon(Frame) :
         self.ax1.set_autoscaley_on(False)
         self.ax1.grid(True, 'major', 'both')
 
-        range = self.scale1.get() #converting seconds to list range
+        plot_range = self.scale1.get()*60 #converting seconds to list range
 
-        index = int(range/15.0)
+        #print('range type', type(range))
 
-        self.ax1.plot(self.g_sys_instance.time_list[(1000-self.plot1_range*index)::index], self.g_sys_instance.Temperatures_SC[(1000-self.plot1_range*index)::index], 'k')
+        index = int(plot_range/15.0)
+
+        self.ax1.plot(self.g_sys_instance.time_list[(10000-self.plot1_range*index)::index], self.g_sys_instance.Temperatures_SC[(10000-self.plot1_range*index)::index], 'k')
 
     def animate_CC(self, i):
 
@@ -178,11 +205,11 @@ class CtrlMon(Frame) :
         self.ax2.set_autoscaley_on(False)
         self.ax2.grid(True, 'major', 'both')
 
-        range = self.scale2.get() #converting seconds to list range
+        plot_range = self.scale2.get()*60 #converting seconds to list range
 
-        index = int(range/15.0)
+        index = int(plot_range/15.0)
 
-        self.ax2.plot(self.g_sys_instance.time_list[(1000-self.plot2_range*index)::index], self.g_sys_instance.Temperatures_CC[(1000-self.plot2_range*index)::index], 'k')
+        self.ax2.plot(self.g_sys_instance.time_list[(10000-self.plot2_range*index)::index], self.g_sys_instance.Temperatures_CC[(10000-self.plot2_range*index)::index], 'k')
 
     def animate_DPG(self, i):
 
@@ -195,11 +222,11 @@ class CtrlMon(Frame) :
         self.ax3.set_autoscaley_on(False)
         self.ax3.grid(True, 'major', 'both')
 
-        range = self.scale3.get() #converting seconds to list range
+        plot_range = self.scale3.get()*60 #converting seconds to list range
 
-        index = int(range/15.0)
+        index = int(plot_range/15.0)
 
-        self.ax3.plot(self.g_sys_instance.time_list[(1000-self.plot3_range*index)::index], self.g_sys_instance.Temperatures_DPG[(1000-self.plot3_range*index)::index], 'k')
+        self.ax3.plot(self.g_sys_instance.time_list[(10000-self.plot3_range*index)::index], self.g_sys_instance.Temperatures_DPG[(10000-self.plot3_range*index)::index], 'k')
 
     def run_experiment(self):
 
