@@ -116,7 +116,7 @@ class consumer() :
         if shFile.is_file() :
             os.remove('taShare')
 
-        Popen(['python3.7', 'TADAQ.py', serial_port, baud_rate, time_out]) #Starts the TADAQ program
+        Popen(['python3.8', 'TADAQ.py', serial_port, baud_rate, time_out]) #Starts the TADAQ program
 
         time.sleep(2)
 
