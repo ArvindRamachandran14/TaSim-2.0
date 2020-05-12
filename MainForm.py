@@ -142,9 +142,9 @@ class MainForm(Tk) :
         ################# Hosts the different tabs such as SetUp, Monitor, Terminal, and Config #################
         
         self.ctrlTab = ttk.Notebook(container)
-        self.tabSetup = CtrlSetup.CtrlSetup(self.ctrlTab)
+        self.tabSetup = CtrlSetup.CtrlSetup(self.ctrlTab, self.cons)
         self.ctrlTab.add(self.tabSetup, text = 'Setup')
-        self.tabMon = CtrlMon.CtrlMon(self.ctrlTab, self.g_sys_instance)
+        self.tabMon = CtrlMon.CtrlMon(self.ctrlTab, self.g_sys_instance, self.cons, self)
         self.tabMon2 = CtrlMon2.CtrlMon2(self.ctrlTab, self.g_sys_instance)
 
         self.ctrlTab.add(self.tabMon, text = 'Monitor 1')
@@ -173,7 +173,7 @@ class MainForm(Tk) :
 
         if str(self.btn_text.get()) == "Connect":
 
-           self.cons.Connect(self, self.tty_variable.get(), self.baud_rate_variable.get(), str(time_out)) #TAD_rec_count is the total number of record
+           self.cons.Connect(self, str(time_out)) #TAD_rec_count is the total number of record
         
         elif str(self.btn_text.get()) == "Disconnect":
 

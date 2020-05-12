@@ -3,7 +3,6 @@
 
 # This is a conumer example.
 
-import serial
 from ctypes import c_int, c_double, c_byte, c_bool, Structure, sizeof
 from random import random
 import mmap
@@ -16,6 +15,7 @@ import tkinter as tk
 import json
 #import pykbhit as pykb
 import global_tech_var as g_tech_instance
+import dicttoxml
 
 encoding = 'utf-8'
 loop = None
@@ -27,12 +27,10 @@ class TAData(Structure) :
         ('recNum', c_int),
         ('recTime', c_double),
         ('SC_T1', c_double),
-        ('SC_T2', c_double),
         ('CC_T1', c_double),
         ('DPG_T1', c_double),
         ('pH2O', c_double),
         ('pCO2', c_double),
-        ('Dew_point_temp', c_double),
         ('Sample_weight', c_double),
         ('Status', c_int)
         ]
@@ -60,6 +58,8 @@ class consumer() :
         self.mmfd = None
         self.lastIdx = -1
         self.recsGot = 0
+        self.f = None
+        #self.f = open('data_file_'+str(datetime.now())+'.xml', "w+")
         #self.kb = pykb.KBHit()
 
     # consume
@@ -77,6 +77,8 @@ class consumer() :
 
             tad = TAData.from_buffer(tash.data[self.lastIdx])
 
+            temp_dict = {}
+
             if tad.SC_T1 > 0.0:
                 
                 self.g_sys_instance.Temperatures_SC.append(tad.SC_T1)
@@ -93,12 +95,47 @@ class consumer() :
 
                 self.g_sys_instance.time_list.append(tad.recTime)
 
-            # The only thing done with the data is to print its here.
+                temp_dict['time'] = str(datetime.now())
+
+                temp_dict['SC_T1'] = tad.SC_T1
+
+                temp_dict['CC_T1'] = tad.CC_T1
+
+                temp_dict['DPG_T1'] = tad.DPG_T1
+
+                temp_dict['pCO2'] = tad.pCO2
+
+                temp_dict['pH2O'] = tad.pH2O
+
+                temp_dict['Sample_weight'] = tad.Sample_weight
+
+            xmlstring = dicttoxml.dicttoxml(temp_dict, attr_type=False, custom_root='TAData')
+
+            self.g_sys_instance.time_list.pop(0)
+
+            self.g_sys_instance.Temperatures_SC.pop(0)
+
+            self.g_sys_instance.Temperatures_CC.pop(0)
+
+            self.g_sys_instance.Temperatures_DPG.pop(0)
+
+            self.g_sys_instance.pH2O_list.pop(0)
+
+            self.g_sys_instance.pCO2_list.pop(0)
+
+            self.g_sys_instance.sample_weight.pop(0)
+
+            if self.g_sys_instance.blogging == True: 
+
+                #print(xmlstring.decode("utf-8"))
+
+                self.f.write(xmlstring.decode("utf-8")+'\n')
+
             '''
-            print('P: {0:4d} {1:10.3f} {2:10.3f} {3:10.3f} {4:10.3f} {5:10.3f} {6:10.3f} {7:10.3f} {8:10.3f} {9:10.3f} {10:d}'.format( \
+            print('P: {0:4d} {1:10.3f} {2:10.3f} {3:10.3f} {4:10.3f} {5:10.3f} {6:10.3f} {7:10.3f} {8:d}'.format( \
                 tad.recNum, tad.recTime, \
-                tad.SC_T1, tad.SC_T2, tad.CC_T1, tad.DPG_T1, \
-                tad.pH2O, tad.pCO2, tad.Dew_point_temp, \
+                tad.SC_T1, tad.CC_T1, tad.DPG_T1, \
+                tad.pH2O, tad.pCO2,\
                 tad.Sample_weight, tad.Status))
             '''
             self.recsGot += 1
@@ -110,13 +147,13 @@ class consumer() :
         self.mmfd = open('taShare', 'r+b')
         self.mmShare = mmap.mmap(self.mmfd.fileno(), sizeof(TAShare))
 
-    def Connect(self, mainform_object, serial_port, baud_rate, time_out):
+    def Connect(self, mainform_object, time_out):
         
         shFile = Path('taShare')
         if shFile.is_file() :
             os.remove('taShare')
 
-        Popen(['python3.8', 'TADAQ.py', serial_port, baud_rate, time_out]) #Starts the TADAQ program
+        Popen(['python3.7', 'TADAQ.py']) #Starts the TADAQ program
 
         time.sleep(2)
 
@@ -130,8 +167,21 @@ class consumer() :
 
             self.initialize()
 
-            mainform_object.btn_text.set("Disconnect")  #Is this necessary?
+            mainform_object.connect_btn_text.set("Disconnect")
 
+    def log_data(self, monitor_object):
+
+        self.g_sys_instance.blogging = True
+
+        monitor_object.log_btn_text.set("Stop recording")
+
+    def stop_logging(self):
+
+        self.g_sys_instance.blogging = False
+
+        self.f.close()
+
+    
     def send_command_to_PC(self, command):
 
         tash = TAShare.from_buffer(self.mmShare)
@@ -140,9 +190,13 @@ class consumer() :
 
         tash.command[0:len(cmdBuf)] = cmdBuf #adding command to shared memory
 
+        time.sleep(0.05) #Small time delay needed to get response back
+
+        #Get the reply until its not empty, but also have a time out incase there was no commmand or the connection broke
+
         reply = bytearray(tash.reply).decode(encoding).rstrip('\x00') # Decoding reply from shared memory
 
-        #print(reply)
+        #print('reply from TADAQ after decoding is ', reply)
 
         #print(type(reply))
 

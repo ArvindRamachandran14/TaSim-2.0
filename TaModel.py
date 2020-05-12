@@ -57,14 +57,15 @@ class DPG :
 		ph2oFL = args[1]
 		pco2FL = args[2]
 
-		retVals = [self.TDP, self.ph2oDP, self.pco2DP]
+		retVals = [TFL, ph2oFL, pco2FL]
 		# Update
 		self.TDP = self.TDPset + (self.TDP - self.TDPset) * self.TDPfactor
 		self.ph2oDP = ph2oSat(self.TDP)
 		ph2oMax = ph2oSat(TFL)
 		if ph2oFL < ph2oMax :
 			ph2oFL = self.ph2oDP + (ph2oFL - self.ph2oDP) * self.TDPfactor
-		recVals = [TFL, ph2oFL, pco2FL, self.TDP]
+		retVals[1] = ph2oFL
+		recVals = [self.TDP, ph2oFL, pco2FL]
 		return (retVals, recVals)
 
 # CC - Conditioning Chamber
@@ -157,6 +158,7 @@ class SC :
 			self.ph2oSCprev = self.ph2oSC
 			dph2oFL = self.DV * (ph2oFL - self.ph2oSCprev) / self.cfg.VolSC
 			self.ph2oSC = self.ph2oSC + dph2oFL
+			retVals[0] = self.TSCprev
 
 		recVals = [self.TSC, self.ph2oSC, self.pco2SC]
 
@@ -182,6 +184,7 @@ class TaModel :
 		self.idx = 0
 		self.bufSize = int(60 / cfg.deltaT)
 		self.data = np.zeros(self.bufSize, dtype=object, order='C')
+		self.cycleArgs = [self.cc.TCC, self.cc.ph2oCC, self.cc.pco2CC]
 		dRec = \
 			TaData(self.count, self.cc.TCC, self.cc.ph2oCC, self.cc.pco2CC, \
 					self.sc.TSC, self.sc.ph2oSC, self.sc.pco2SC, \
@@ -194,11 +197,11 @@ class TaModel :
 		
 
 	def cycle(self) :
-		dRec = self.data[self.idx]				# Last record stored
-		args = [dRec.Tdp, dRec.ph2oDP, dRec.pco2DP]
-		rValsCC, recValsCC = self.cc.cycle(args)			# Cycle cc
+		# dRec = self.data[self.idx]				# Last record stored
+		rValsCC, recValsCC = self.cc.cycle(self.cycleArgs)			# Cycle cc
 		rValsSC, recValsSC = self.sc.cycle(rValsCC)			# Cycle sc
-		recValsDPG = self.dpg.cycle(rValsSC)[1]				# Cycle dpg
+		rValsDPG, recValsDPG = self.dpg.cycle(rValsSC)		# Cycle dpg
+		self.cycleArgs = rValsDPG
 
 		# Adjust count and data index
 		self.count += 1
