@@ -128,9 +128,9 @@ class TaSim() :
 					elif parm == 'wgt' :
 						reply = 'v {0:.2f}'.format(dR.Wgt)
 					elif parm == 'ph2o' :
-						reply = 'v {0:d}'.format(dR.ph2oSC)
+						reply = 'v {0:.2f}'.format(dR.ph2oSC)
 					elif parm == 'pco2' :
-						reply = 'v {0:d}'.format(dR.pco2SC)
+						reply = 'v {0:.2f}'.format(dR.pco2SC)
 					elif parm == 'all' :
 						reply =  'v {0:.2f},{1:.2f},{2:.2f},{3:.2f},{4:.2f},{5:2f}'.format( \
 							dR.Tcc, dR.Tsc, dR.Tdp, dR.Wgt, dR.ph2oSC, dR.pco2SC)

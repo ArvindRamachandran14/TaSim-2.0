@@ -177,7 +177,9 @@ class CtrlMon(Frame) :
 
     def animate_SC(self, i):
 
-        #self.ax1.clear()
+        self.ax1.clear()
+
+        #print(self.g_sys_instance.Temperatures_SC[-1])
 
         self.ax1.set_xlabel('Time (sec)')
         self.ax1.set_ylabel('Temperature ($^\circ$C)')
@@ -192,11 +194,13 @@ class CtrlMon(Frame) :
 
         index = int(plot_range/15.0)
 
+        #self.ax1.plot(self.g_sys_instance.time_list[::index], self.g_sys_instance.Temperatures_SC[::index])
+
         self.ax1.plot(self.g_sys_instance.time_list[(10000-self.plot1_range*index)::index], self.g_sys_instance.Temperatures_SC[(10000-self.plot1_range*index)::index], 'k')
 
     def animate_CC(self, i):
 
-       #self.ax2.clear()
+        self.ax2.clear()
 
         self.ax2.set_xlabel('Time (sec)')
         self.ax2.set_ylabel('Temperature ($^\circ$C)')
@@ -205,15 +209,16 @@ class CtrlMon(Frame) :
         self.ax2.set_autoscaley_on(False)
         self.ax2.grid(True, 'major', 'both')
 
-        plot_range = self.scale2.get()*60 #converting seconds to list range
+        plot_range = self.scale2.get()*60 #converting seconds to list range 15 
 
-        index = int(plot_range/15.0)
+        index = int(plot_range/15.0) #60
 
         self.ax2.plot(self.g_sys_instance.time_list[(10000-self.plot2_range*index)::index], self.g_sys_instance.Temperatures_CC[(10000-self.plot2_range*index)::index], 'k')
 
     def animate_DPG(self, i):
 
-        #self.ax3.clear()
+        self.ax3.clear()
+
         self.ax3.set_xlabel('Time (sec)')
         self.ax3.set_ylabel('Temperature ($^\circ$C)')
         self.ax3.set_autoscalex_on(True)
@@ -223,7 +228,7 @@ class CtrlMon(Frame) :
 
         plot_range = self.scale3.get()*60 #converting seconds to list range
 
-        index = int(plot_range/15.0)
+        index = int(plot_range/15.0) 
 
         self.ax3.plot(self.g_sys_instance.time_list[(10000-self.plot3_range*index)::index], self.g_sys_instance.Temperatures_DPG[(10000-self.plot3_range*index)::index], 'k')
 
