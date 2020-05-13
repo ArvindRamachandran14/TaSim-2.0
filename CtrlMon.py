@@ -178,7 +178,6 @@ class CtrlMon(Frame) :
     def animate_SC(self, i):
 
         self.ax1.clear()
-
         self.ax1.set_xlabel('Time (sec)')
         self.ax1.set_ylabel('Temperature ($^\circ$C)')
         self.ax1.set_autoscalex_on(True)
@@ -204,6 +203,7 @@ class CtrlMon(Frame) :
         self.ax2.set_ybound(10, 40)
         self.ax2.set_autoscaley_on(False)
         self.ax2.grid(True, 'major', 'both')
+
 
         plot_range = self.scale2.get()*60 #converting seconds to list range
 

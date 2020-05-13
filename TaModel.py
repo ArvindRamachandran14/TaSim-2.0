@@ -224,10 +224,3 @@ class TaModel :
 
 		
 
-
-
-	
-
-
-
-

@@ -28,7 +28,6 @@ def initialize(config) :
     bconnected = "False"
     update()
 
-
 def update():
 
     #Updates json file with new parameters

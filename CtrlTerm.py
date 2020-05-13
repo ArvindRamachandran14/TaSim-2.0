@@ -46,4 +46,10 @@ class CtrlTerm(Frame) :
 
         print('reply on the consumer end after decoding is', reply)
 
+        command = self.input_text.get("end-1c linestart", "end-1c lineend") 
+        
+        reply = self.cons.send_command_to_PC(command)
+
+        #print('reply on the consumer end after decoding is', reply)
+
         self.input_text.insert(tk.END,'\n'+reply)

@@ -11,7 +11,7 @@ import CtrlMon
 import CtrlMon2
 import global_sys_var as g_sys
 import Data_coord
-
+import datetime
 
 from MainForm import MainForm
 
@@ -54,12 +54,15 @@ def main(argv) :
             config = json.loads(fCfg.read())
 
             bconnected = config["bconnected"]
+    
         
-        if mainForm.btn_text.get() == "Disconnect":
+        if mainForm.connect_btn_text.get() == "Disconnect" and g_sys_instance.run_experiment == True:
     
             #print('Consumption in progress')
 
-            cons.consume()
+            cons.consume() #indentation removed, consume all the time
+
+            mainForm.status_time_text.set('Run time: '+ str(datetime.timedelta(seconds=round(g_sys_instance.time_list[-1]))))
 
         mainForm.after(2000, apploop)
 
@@ -77,7 +80,7 @@ def main(argv) :
 
     ani_pH2O = animation.FuncAnimation(mainForm.tabMon2.fig2, mainForm.tabMon2.animate_pH2O, interval=1000)
 
-    animate_sw= animation.FuncAnimation(mainForm.tabMon2.fig3, mainForm.tabMon2.animate_sw, interval=1000)
+    animate_sw = animation.FuncAnimation(mainForm.tabMon2.fig3, mainForm.tabMon2.animate_sw, interval=1000)
 
     mainForm.mainloop()
 

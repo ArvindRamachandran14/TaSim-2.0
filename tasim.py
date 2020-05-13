@@ -108,7 +108,6 @@ class TaSim() :
 		else :
 			# Handle the command
 			cmd = cmd.lower()
-			print(cmd)
 			cmdParts = cmd.split(' ', 3)
 			if len(cmdParts) < 2 :
 				reply = 'e INVCMD'
@@ -233,5 +232,3 @@ def main() :
 
 # Main program
 main()
-
-

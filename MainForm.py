@@ -6,7 +6,7 @@
 # 20191112: KDT = Original issue
 
 import tkinter as tk
-from tkinter import Tk, ttk, Frame, Menu, Menubutton, Button, Label, StringVar, OptionMenu
+from tkinter import Tk, ttk, Frame, Menu, Menubutton, Button, Label, StringVar, OptionMenu, filedialog
 import sys
 from datetime import datetime
 import CtrlSetup
@@ -25,7 +25,6 @@ class MainForm(Tk) :
     
     def __init__(self, g_sys_instance, cons, *args, **kwargs) :
         
-        # self.bconnected = False
 
         tk.Tk.__init__(self, *args, **kwargs) 
 
@@ -47,7 +46,7 @@ class MainForm(Tk) :
 
         self.minsize(height = 700, width = 1024) # setting window size
         self.protocol("WM_DELETE_WINDOW", self.onClosing) 
-        self.btn_text = StringVar()
+        self.connect_btn_text = StringVar()
         self.buildMenuBar(container)
         self.buildserialBar(container)
         self.buildCtrlTab(container)
@@ -65,8 +64,11 @@ class MainForm(Tk) :
         # Menu
         menuBar = tk.Menu(container)
         fileMenu = tk.Menu(menuBar, tearoff=0)
-        fileMenu.add_command(label='Mew', command=self.onFileNew)
+        fileMenu.add_command(label='New', command=self.onFileNew)
         fileMenu.add_command(label='Open...', command=self.onFileOpen)
+        fileMenu.add_separator()
+        fileMenu.add_command(label='Save', command=self.onFileNew)
+        fileMenu.add_command(label='Save as', command=self.onFileOpen)
         fileMenu.add_separator()
         fileMenu.add_command(label='Exit', command=self.onFileExit)
         menuBar.add_cascade(label='File', menu=fileMenu)
@@ -113,28 +115,46 @@ class MainForm(Tk) :
 
         self.baud_rate_list.grid(row=0, column=3)        
 
-        self.button = Button(self.serialBar, textvariable=self.btn_text, command=self.connect)
+        self.button = Button(self.serialBar, textvariable=self.connect_btn_text, command=self.connect)
         
-        self.btn_text.set("Connect")
-
-        print(self.btn_text.get())
+        self.connect_btn_text.set("Connect")
 
         self.button.grid(row=0, column=4)
 
+        #self.button = Button(self.serialBar, textvariable=self.log_btn_text, command=self.log_data)
+
+        #self.log_btn_text.set("log data")
+
+        #self.button.grid(row=0, column=5)
+
+        #print(self.connect_btn_text.get())
 
     # buildStatusBar
     # Make the status bar on the bottom of the screen.  This has
     # a text status message on the left and the experiment time on
     # the right.  The time is not being updated in this prototype code.
 
-    def buildStatusBar(self, container) :
+    def buildStatusBar(self, container):
+
+        self.status_label_text = StringVar()
+
+        self.status_time_text = StringVar()
+
         statusBar = tk.Frame(container, relief=tk.SUNKEN, bd=2)
 
         statusBar.grid(row=2, column=0, sticky=tk.E+tk.W) #Status bar is positioned at the bottom and extends fully horizontally
  
-        tk.Label(statusBar, text='Idle').pack(side=tk.LEFT)
+        self.status_label =  Label(statusBar, textvariable=self.status_label_text)
 
-        tk.Label(statusBar, text='Time').pack(side=tk.RIGHT)
+        self.status_label_text.set('Idle')
+
+        self.status_label.pack(side=tk.LEFT)
+
+        self.status_time = Label(statusBar, textvariable=self.status_time_text)
+
+        self.status_time_text.set('Run time: NA')
+
+        self.status_time.pack(side=tk.RIGHT)
 
 
     def buildCtrlTab(self, container) :
@@ -171,29 +191,39 @@ class MainForm(Tk) :
 
         time_out = 3
 
-        if str(self.btn_text.get()) == "Connect":
+        if str(self.connect_btn_text.get()) == "Connect":
 
            self.cons.Connect(self, str(time_out)) #TAD_rec_count is the total number of record
         
-        elif str(self.btn_text.get()) == "Disconnect":
+        elif str(self.connect_btn_text.get()) == "Disconnect":
 
             self.cons.Disconnect()
 
-            self.btn_text.set("Connect")
+            self.connect_btn_text.set("Connect")
 
         time.sleep(4)
 
-        if g_tech_instance.bconnected == "True":# Check for connection via global connection flag
+    def onFileNew(self):
+        
+        filename  = filedialog.asksaveasfilename(initialdir = "./",title = "Select file",filetypes = (("xml files","*.xml"),("all files","*.*")))
 
-            #print('Connected')
+        if filename != '':
 
-            self.btn_text.set("Disconnect") #Update "connect" button to "disconnect" 
-           
-    def onFileNew(self) :
-        popupmsg("Not Implemented")
+            self.cons.f = open(filename, "w+")
+
 
     def onFileOpen(self) :
-        popupmsg("Not Implemented")
+
+        ftypes = [('xml files', '*.xml'), ('All files', '*')]
+        dlg = filedialog.Open(self, filetypes = ftypes)
+        filename = dlg.show()
+
+        if filename != '':
+
+            self.cons.f = open(filename, "a")
+
+
+        #popupmsg("Not Implemented")
 
     def onFileExit(self) :
         # Need to do cleanup here, save files, etc. before quitting.
@@ -201,30 +231,6 @@ class MainForm(Tk) :
 
     def onClosing(self) :
         self.onFileExit()
-
-    def machineloop():
-
-        if self.bconnected:
-
-            if self.cmd != '':
-
-                self.cmd = '$GET'
-
-                self.parm = 'ALL_DATA'
-
-            bok, dat_buf = self.conns.submit(self.cmd, self.parm)
-
-            self.cmd = ''
-
-            self.parm = ''
-
-            if bok:
-
-                pass
-
-                # To do: Do something dat_buf to update widgets
-
-                #: Update the forms - monitor, set up etc..
 
 def popupmsg(msg):
     popup = tk.Tk()
@@ -234,3 +240,4 @@ def popupmsg(msg):
     B1 = ttk.Button(popup, text="Okay", command = popup.destroy)
     #B1.pack()
     popup.mainloop()
+

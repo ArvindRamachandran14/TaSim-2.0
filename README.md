@@ -1,15 +1,9 @@
-# TAGUI-2.0
 
-This is the second version of a GUI that was built to assist with experiments to be run on the Thermodynamic Analyzer
+# TaSim 2.0
 
-This GUI allows you to
+This repository is created to simulate the synchronous functioning of the TAC, TADAQ, and the TAGUI 2.0
 
-1. Connect to the TAC be specifying the serial port and the baud rate
+TaSim 2.0 is an upgrade on TaSim program, to better simulate the characteristics of the TA
 
-2. Monitor system variables such as temperatures, relative humidity, partial pressures, sample weight in real time 
-
-3. Control temperatures and relative humidity by sending set points
-
-4. Send commands to the thermo analyzer and receive responses via a termial interface
-
-This directory contains scripts that enable the functioning of a graphical user interface used to control the Thermo Analyzer
+This simulation is being run due the CNCE labs at ASU being shut down due to COVID 19
+>>>>>>> updated_tasim
